@@ -1,0 +1,1056 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn//css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Monda:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,IME," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Doublemine" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="##前言
+&amp;emsp;&amp;emsp;由于最近做的一个Android项目需要用到用户的输入一些字符，常规的输入法输入非常的不方便。因此有必要自定义一个输入法来完成这个过程。此处给出一个简单的输入法Demo来帮助理解自定义输入法的一些实现过程。
+
+有关输入法的一些说明，请参见:Create a Android IME">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Create a Simple Android Keyboard">
+<meta property="og:url" content="https://notes.wanghao.work/2015-09-04-Create-a-Simple-Android-Keyboard.html">
+<meta property="og:site_name" content="Doublemine">
+<meta property="og:description" content="##前言
+&amp;emsp;&amp;emsp;由于最近做的一个Android项目需要用到用户的输入一些字符，常规的输入法输入非常的不方便。因此有必要自定义一个输入法来完成这个过程。此处给出一个简单的输入法Demo来帮助理解自定义输入法的一些实现过程。
+
+有关输入法的一些说明，请参见:Create a Android IME">
+<meta property="og:image" content="http://i3.piimg.com/37ae2bfdf945c18e.png">
+<meta property="og:image" content="http://i3.piimg.com/f337c436d68dcc22.png">
+<meta property="og:image" content="http://i3.piimg.com/fed92e215ec17e4f.png">
+<meta property="og:image" content="http://i3.piimg.com/4c72f6d152c54dee.png">
+<meta property="og:image" content="http://i3.piimg.com/2195d3987d5dddd1.png">
+<meta property="og:image" content="http://i1.piimg.com/e15673195304af50.jpg">
+<meta property="og:updated_time" content="2016-11-06T01:31:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Create a Simple Android Keyboard">
+<meta name="twitter:description" content="##前言
+&amp;emsp;&amp;emsp;由于最近做的一个Android项目需要用到用户的输入一些字符，常规的输入法输入非常的不方便。因此有必要自定义一个输入法来完成这个过程。此处给出一个简单的输入法Demo来帮助理解自定义输入法的一些实现过程。
+
+有关输入法的一些说明，请参见:Create a Android IME">
+<meta name="twitter:image" content="http://i3.piimg.com/37ae2bfdf945c18e.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '11339369',
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://notes.wanghao.work/2015-09-04-Create-a-Simple-Android-Keyboard.html"/>
+
+
+  <title> Create a Simple Android Keyboard | Doublemine </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Doublemine</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'aoQ6PufFyscKxkPmNGnx','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Create a Simple Android Keyboard
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-09-04T15:12:11+08:00" content="2015-09-04">
+              2015-09-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015-09-04-Create-a-Simple-Android-Keyboard.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015-09-04-Create-a-Simple-Android-Keyboard.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015-09-04-Create-a-Simple-Android-Keyboard.html" class="leancloud_visitors" data-flag-title="Create a Simple Android Keyboard">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>##前言</p>
+<p>&emsp;&emsp;由于最近做的一个Android项目需要用到用户的输入一些字符，常规的输入法输入非常的不方便。因此有必要自定义一个输入法来完成这个过程。此处给出一个简单的输入法Demo<br>来帮助理解自定义输入法的一些实现过程。</p>
+<ul>
+<li><strong>有关输入法的一些说明，请参见:<a href="http://notes.xiamo.tk/2015-04-01-Create-an-Android-IME.html" target="_blank" rel="external">Create a Android IME</a></strong></li>
+</ul>
+<a id="more"></a>
+<p>##准备工作</p>
+<p>&emsp;&emsp;磨刀不误砍柴工，创建一个Android是需要一点点准备工作的,选择一个好的IDE能够提高我们编码的效率：</p>
+<ul>
+<li>Android Studio（推荐）</li>
+<li>Android SDK</li>
+</ul>
+<p>本博文的编写环境为Android Studio，如果你还在使用Eclipse的话，转到Android Studio上来吧！如果对上述IDE的下载感到茫然的话，推荐一个国内Android开发的好网站：<a href="http://www.androiddevtools.cn/" target="_blank" rel="external">http://www.androiddevtools.cn</a>。</p>
+<p>##创建一个Android项目</p>
+<ul>
+<li>打开Android Studio，创建一个新的Android项目，命名为<code>SimpleKeyboard</code>，如下图：</li>
+</ul>
+<p><img src="http://i3.piimg.com/37ae2bfdf945c18e.png" alt="" title="创建一个SimpleKeyboard项目"></p>
+<ul>
+<li>最小的Android支持版本我们在这里选择API 9也就是Android 2.3咯：</li>
+</ul>
+<p><img src="http://i3.piimg.com/f337c436d68dcc22.png" alt="" title="设置最小SDK支持版本"></p>
+<ul>
+<li>由于我们只是一个单独的键盘Demo，为了达到极致精简，还是不需要Activity了，因此我们选择<code>Add No Activity</code>：</li>
+</ul>
+<p><img src="http://i3.piimg.com/fed92e215ec17e4f.png" alt="" title="选择Add No Activity"></p>
+<p>点击Finish，这样就完成了我们Android Keyboard项目的创建了。这个等待Gradle构建完成，因为我们这个项目是没有Activity的，因此我们需要按照如下图稍微配置一下：</p>
+<p><img src="http://i3.piimg.com/4c72f6d152c54dee.png" alt=""></p>
+<p><img src="http://i3.piimg.com/2195d3987d5dddd1.png" alt=""></p>
+<p>##编辑AndroidManifest.xml文件</p>
+<p>&emsp;&emsp;键盘在Android系统中被识别为一个输入法编辑器（IME），IME作为一个Service运行。只有在AndroidManifest.xml文件中通过<code>android.permission.BIND_INPUT_METHOD</code>权限声明的Service并且响应<code>android.view.im</code>这个元数据动作才能够被Android系统正确的识别为IME。因此，我们在<code>AndroidManifest.xml</code>文件中的application标签对中添加如下代码：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">service</span></span></div><div class="line">          <span class="attr">android:name</span>=<span class="string">".SimpleIME"</span></div><div class="line">          <span class="attr">android:label</span>=<span class="string">"@string/custom_ime"</span></div><div class="line">          <span class="attr">android:permission</span>=<span class="string">"android.permission.BIND_INPUT_METHOD"</span>&gt;</div><div class="line">          <span class="tag">&lt;<span class="name">meta-data</span></span></div><div class="line">              <span class="attr">android:name</span>=<span class="string">"android.view.im"</span></div><div class="line">              <span class="attr">android:resource</span>=<span class="string">"@xml/method"</span> /&gt;</div><div class="line">          <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">              <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.view.InputMethod"</span> /&gt;</span></div><div class="line">          <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">service</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>##创建method.xml</p>
+<blockquote>
+<p>&emsp;&emsp;在上面的Service声明中，meta-data标签声明引用了一个叫做<code>method.xml</code>的文件，如果没有这个文件，那么Android系统将不能够识别我们的Service为一个有效的IME Service。这个文件包含了有关输入法及其子类的详细信息。</p>
+</blockquote>
+<p>在我们的Demo中，我们定义一个<code>subtyoe</code>来声明输入法的显示名称以及其语言环境：（如果没有res/xml目录的话，创建一个并将下面的内容添加到该目录的method.xml文件中）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">input-method</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">subtype</span></span></div><div class="line">        <span class="attr">android:imeSubtypeLocale</span>=<span class="string">"zh_CN"</span></div><div class="line">        <span class="attr">android:imeSubtypeMode</span>=<span class="string">"keyboard"</span></div><div class="line">        <span class="attr">android:label</span>=<span class="string">"tk_xiamo_notes"</span> /&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">input-method</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>如果你对label中直接写死字符串这种做法比较有强迫症的话，可以将其抽取到Strings.xml文件中。</p>
+<p>##定义键盘布局</p>
+<p>&emsp;&emsp;我们的键盘布局比较简单，仅仅包含了一个KeyboardView，因此在<code>layout</code>目录中创建一个<code>keyboard.xml</code>文件，并添加一下内容：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">android.inputmethodservice.KeyboardView</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/keyboard"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:layout_alignParentBottom</span>=<span class="string">"true"</span></div><div class="line">    <span class="attr">android:keyPreviewLayout</span>=<span class="string">"@layout/preview"</span> /&gt;</div></pre></td></tr></table></figure>
+<p>其中需要说明的是：</p>
+<ul>
+<li><code>layout_alignParentBottom</code>属性设置为<code>true</code>来保证键盘会在设备屏幕的底端弹出而不是在其它什么地方弹出。</li>
+<li><code>keyPreviewLayout</code>属性用于按下按键时暂短的按键预览。这里我们由于图方便省事，就用一个TextView来预览吧~</li>
+</ul>
+<p>在<code>layout</code>目录下创建一个preview.xml文件，并在其中添加如下内容：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">TextView</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:gravity</span>=<span class="string">"center"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"#A6A6A6"</span></div><div class="line">    <span class="attr">android:textStyle</span>=<span class="string">"bold"</span></div><div class="line">    <span class="attr">android:textSize</span>=<span class="string">"30sp"</span></div><div class="line">    &gt;</div><div class="line"><span class="tag">&lt;/<span class="name">TextView</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>##定义键盘按键</p>
+<blockquote>
+<p>键盘按键所代表的键值以及其位置等详细信息都被指定在一个xml文件中，每个独立的键盘按键至少都必须包含一下两个属性：</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>keyLabel</td>
+<td>决定这个按键上显示的字符信息</td>
+</tr>
+<tr>
+<td>codes</td>
+<td>决定这个按键的对应的字符信息所代表的键值</td>
+</tr>
+</tbody>
+</table>
+<p><strong>例如：定义一个字母A的按键那么它的<code>codes</code>属性值应该为：97，<code>keyLabel</code>属性值应该为A。</strong></p>
+<p>如果一个按键关联了多个键值，那么点击该按键输出的字符依赖于敲击该按键的次数。</p>
+<p><strong>例如：如果一个按键拥有三个键值：63、33、58:</strong></p>
+<table>
+<thead>
+<tr>
+<th>敲击该按键的次数</th>
+<th>输出的字符</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1次</td>
+<td>?</td>
+</tr>
+<tr>
+<td>2次</td>
+<td>!</td>
+</tr>
+<tr>
+<td>3次</td>
+<td>:</td>
+</tr>
+</tbody>
+</table>
+<p>当然了，除了上述属性之外，一个按键还有一些其他的属性：</p>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>keyEdgeFlags</td>
+<td>可以设置的值有：right或者left，该属性通常用在一行最左边或者最右边的按键上用于表示按键的排布</td>
+</tr>
+<tr>
+<td>keyWidth</td>
+<td>定义一个按键的宽度，通常该宽度值被定义为一个百分比值</td>
+</tr>
+<tr>
+<td>isRepeatable</td>
+<td>如果这个属性被设置为true的话，长按被设置为该属性的按键将会在长按这段时间中多次重复该按键的动作。通过，在删除键或者空格键中设置该属性为true</td>
+</tr>
+</tbody>
+</table>
+<p>键盘上的按键通过Row标识为一组按键，比较推荐的做法是限制每组中最多10枚按键，这样的话，每个按键的宽度等于键盘宽度的10%。在本Demo中，按键高度被设置为60dp，这个数值可以任意调整。但是推荐不要低于48dp。</p>
+<p>在<code>res/xml</code>目录中，创建一个<code>qwerty.xml</code>文件，并添加以下内容完成按键的定义：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">Keyboard</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:horizontalGap</span>=<span class="string">"0px"</span></div><div class="line">    <span class="attr">android:keyHeight</span>=<span class="string">"60dp"</span></div><div class="line">    <span class="attr">android:keyWidth</span>=<span class="string">"10%p"</span></div><div class="line">    <span class="attr">android:verticalGap</span>=<span class="string">"0px"</span></div><div class="line">    &gt;</div><div class="line">    <span class="tag">&lt;<span class="name">Row</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"49"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"left"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"1"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"50"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"2"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"51"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"3"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"52"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"4"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"53"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"5"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"54"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"6"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"55"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"7"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"56"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"8"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"57"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"9"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"48"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"right"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"0"</span> /&gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">Row</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"113"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"left"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"q"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"119"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"w"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"101"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"e"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"114"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"r"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"116"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"t"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"121"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"y"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"117"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"u"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"105"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"i"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"111"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"o"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"112"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"right"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"p"</span> /&gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">Row</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"97"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"left"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"a"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"115"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"s"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"100"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"d"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"102"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"f"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"103"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"g"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"104"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"h"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"106"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"j"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"107"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"k"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"108"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"l"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"35,64"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"right"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"\#\@"</span> /&gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">Row</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"-1"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"left"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"↑"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"122"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"z"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"120"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"x"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"99"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"c"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"118"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"v"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"98"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"b"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"110"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"n"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"109"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"m"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"46"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"."</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"63,33,58"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"right"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"\?!:"</span> /&gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">Row</span> <span class="attr">android:rowEdgeFlags</span>=<span class="string">"bottom"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"44"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"left"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">","</span></div><div class="line">            <span class="attr">android:keyWidth</span>=<span class="string">"10%p"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"47"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"/"</span></div><div class="line">            <span class="attr">android:keyWidth</span>=<span class="string">"10%p"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"32"</span></div><div class="line">            <span class="attr">android:isRepeatable</span>=<span class="string">"true"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"SPACE"</span></div><div class="line">            <span class="attr">android:keyWidth</span>=<span class="string">"40%p"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"-5"</span></div><div class="line">            <span class="attr">android:isRepeatable</span>=<span class="string">"true"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"Del"</span></div><div class="line">            <span class="attr">android:keyWidth</span>=<span class="string">"20%p"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"-4"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"right"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"Done"</span></div><div class="line">            <span class="attr">android:keyWidth</span>=<span class="string">"20%p"</span> /&gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">Keyboard</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>##创建Service类</p>
+<p>创建一个java类，命名为<code>SimpleIME.java</code>（与AndroidManifest.xml文件中的定义向对应）：</p>
+<ul>
+<li><code>SimpleIME</code>类应该继承至<code>InputMethodService</code>类。</li>
+<li><code>SimpleIME</code>类应该实现<code>OnKeyboardActionListener</code>接口，该接口包含了键盘被点击或者被按下时回调的一些函数。</li>
+</ul>
+<p>创建完成之后，将以下内容添加到该文件中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> tk.xiamo.notes.simplekeyboard;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.inputmethodservice.InputMethodService;</div><div class="line"><span class="keyword">import</span> android.inputmethodservice.Keyboard;</div><div class="line"><span class="keyword">import</span> android.inputmethodservice.KeyboardView;</div><div class="line"><span class="keyword">import</span> android.media.AudioManager;</div><div class="line"><span class="keyword">import</span> android.view.KeyEvent;</div><div class="line"><span class="keyword">import</span> android.view.View;</div><div class="line"><span class="keyword">import</span> android.view.inputmethod.InputConnection;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleIME</span> <span class="keyword">extends</span> <span class="title">InputMethodService</span> <span class="keyword">implements</span> <span class="title">KeyboardView</span>.<span class="title">OnKeyboardActionListener</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> KeyboardView keyboardView;</div><div class="line">    <span class="keyword">private</span> Keyboard keyboard;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> caps = <span class="keyword">false</span>;<span class="comment">//大小写转换</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * onKey方法用于处理键盘与其他应用程序输入域进行交互。</div><div class="line">     * getCurrentInputConnection 这个方法被用于获取其它应用程序的输入域，一旦我们获取到这个Connection对象，我们就可以使用以下方法了：</div><div class="line">     * commitText ：输出一个或者多个字符到输入域中。</div><div class="line">     * deleteSurroundingText ：从输入域中删除一个或者多个字符。</div><div class="line">     * sendKeyEvent ：发送一个事件（如KEYCODE_ENTER）到外部的应用程序。</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onKey</span><span class="params">(<span class="keyword">int</span> primaryCode, <span class="keyword">int</span>[] keyCodes)</span> </span>&#123;</div><div class="line">        InputConnection inputConnection = getCurrentInputConnection();</div><div class="line">        playClick(primaryCode);</div><div class="line">        <span class="keyword">switch</span> (primaryCode) &#123;</div><div class="line">            <span class="keyword">case</span> Keyboard.KEYCODE_DELETE:</div><div class="line">                inputConnection.deleteSurroundingText(<span class="number">1</span>, <span class="number">0</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> Keyboard.KEYCODE_SHIFT:</div><div class="line">                caps = !caps;</div><div class="line">                keyboardView.setShifted(caps);</div><div class="line">                keyboardView.invalidateAllKeys();</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> Keyboard.KEYCODE_DONE:</div><div class="line">                inputConnection.sendKeyEvent(<span class="keyword">new</span> KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER));</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                <span class="keyword">char</span> code = (<span class="keyword">char</span>) primaryCode;</div><div class="line">                <span class="keyword">if</span> (Character.isLetter(code) &amp;&amp; caps) &#123;</div><div class="line">                    code = Character.toUpperCase(code);</div><div class="line">                &#125;</div><div class="line">                inputConnection.commitText(String.valueOf(code), <span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 当键盘被创建的时候，onCreateInputView方法将会被自动调用。所有的Service成员变量可以在该方法中被初始化。</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">onCreateInputView</span><span class="params">()</span> </span>&#123;</div><div class="line">        keyboardView = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard, <span class="keyword">null</span>);</div><div class="line">        keyboard = <span class="keyword">new</span> Keyboard(<span class="keyword">this</span>, R.xml.qwerty);</div><div class="line">        keyboardView.setKeyboard(keyboard);</div><div class="line">        keyboardView.setOnKeyboardActionListener(<span class="keyword">this</span>);</div><div class="line">        <span class="keyword">return</span> keyboardView;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * <span class="doctag">@param</span> keyCode 按键的键码</div><div class="line">     *                对指定的按键播放不同的按键声音</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">playClick</span><span class="params">(<span class="keyword">int</span> keyCode)</span> </span>&#123;</div><div class="line">        AudioManager am = (AudioManager) getSystemService(AUDIO_SERVICE);</div><div class="line">        <span class="keyword">switch</span> (keyCode) &#123;</div><div class="line">            <span class="keyword">case</span> <span class="number">32</span>:</div><div class="line">                am.playSoundEffect(AudioManager.FX_KEYPRESS_SPACEBAR);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> Keyboard.KEYCODE_DONE:</div><div class="line">            <span class="keyword">case</span> <span class="number">10</span>:</div><div class="line">                am.playSoundEffect(AudioManager.FX_KEYPRESS_RETURN);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> Keyboard.KEYCODE_DELETE:</div><div class="line">                am.playSoundEffect(AudioManager.FX_KEYPRESS_DELETE);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                am.playSoundEffect(AudioManager.FX_KEYPRESS_STANDARD);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onText</span><span class="params">(CharSequence text)</span> </span>&#123;&#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swipeLeft</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swipeRight</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swipeDown</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swipeUp</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPress</span><span class="params">(<span class="keyword">int</span> primaryCode)</span> </span>&#123;&#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRelease</span><span class="params">(<span class="keyword">int</span> primaryCode)</span> </span>&#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>需要特别说明的是：一旦用户在键盘上按下了一个按键，onKey方法将会带着被按下的按键的所代表的键值参数而被调用，基于键值的不同，将会执行以下动作：</strong></p>
+<table>
+<thead>
+<tr>
+<th>键值</th>
+<th>指定的动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KEYCODE_DELETE</td>
+<td>将会使用deleteSurroundingText 方法删除光标左侧的一个字符。</td>
+</tr>
+<tr>
+<td>KEYCODE_DONE</td>
+<td>将会激发一个KEYCODE_ENTER 事件。</td>
+</tr>
+<tr>
+<td>KEYCODE_SHIFT</td>
+<td>caps变量的值将会被改变并且通过setShifted方法更新键盘的状态。整个键盘都会被重新绘制来保证状态改变之后按键的label标签可以被更新。其中：invalidateAllKeys 方法将可以重绘所有按键。</td>
+</tr>
+<tr>
+<td>普通键值</td>
+<td>将会被简单的转换为一个字符然后发送到文本输入域中，如果caps变量被设置为true，那么按键字符都将被转换为大写。</td>
+</tr>
+</tbody>
+</table>
+<p>##编译运行</p>
+<p>编译运行，在手机上运行的效果如下图：</p>
+<p><img src="http://i1.piimg.com/e15673195304af50.jpg" alt="" title="键盘运行效果"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag">#Android</a>
+          
+            <a href="/tags/IME/" rel="tag">#IME</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015-08-28-同时部署PPTP-Server-and-OpenConnect-Server.html" rel="next" title="部署PPTP and OpenConnect VPN">
+                <i class="fa fa-chevron-left"></i> 部署PPTP and OpenConnect VPN
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015-10-21-为NexT主题添加文章阅读量统计功能.html" rel="prev" title="为NexT主题添加文章阅读量统计功能">
+                为NexT主题添加文章阅读量统计功能 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015-09-04-Create-a-Simple-Android-Keyboard.html"
+     data-title="Create a Simple Android Keyboard"
+     data-content=""
+     data-url="https://notes.wanghao.work/2015-09-04-Create-a-Simple-Android-Keyboard.html">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015-09-04-Create-a-Simple-Android-Keyboard.html"
+           data-title="Create a Simple Android Keyboard" data-url="https://notes.wanghao.work/2015-09-04-Create-a-Simple-Android-Keyboard.html">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="夏末" />
+          <p class="site-author-name" itemprop="name">夏末</p>
+          <p class="site-description motion-element" itemprop="description">Keep fucking the world</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/_xiamo" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/___xiamo/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Instagram
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/doublemine" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/wanghao19940820" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://jiangtaoquite.github.io/" title="Kevin" target="_blank">Kevin</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.kisence.com/" title="kisence" target="_blank">kisence</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">夏末</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"doublemine"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("jNtrKbh7n1iCujKSNNQ2AlH3", "l5SnKfDysKAOoMwfpVAFUDTR");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

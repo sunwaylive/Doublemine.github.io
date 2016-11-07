@@ -1,0 +1,1022 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn//css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Monda:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Debian,Linux,Exim4,服务器," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Doublemine" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="###前言
+
+由于博主在DigitalOcean上购入了一台VPS,并在上面搭建托管了一些服务，不定时的需要登录到服务器上进行管理查看错误日志，比较麻烦。于是打算编写一个shell脚本，来监控服务器的一些问题，并在发现问题的时候自动邮件通知到我。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Debian下配置exim4 邮件服务器">
+<meta property="og:url" content="https://notes.wanghao.work/2015-04-27-Debian下配置exim4-邮件服务器.html">
+<meta property="og:site_name" content="Doublemine">
+<meta property="og:description" content="###前言
+
+由于博主在DigitalOcean上购入了一台VPS,并在上面搭建托管了一些服务，不定时的需要登录到服务器上进行管理查看错误日志，比较麻烦。于是打算编写一个shell脚本，来监控服务器的一些问题，并在发现问题的时候自动邮件通知到我。">
+<meta property="og:image" content="http://i3.piimg.com/5468f666400f4765.jpg">
+<meta property="og:image" content="http://i3.piimg.com/6b56408a64016c4f.jpg">
+<meta property="og:image" content="http://i3.piimg.com/60bfc1ae6462025a.jpg">
+<meta property="og:image" content="http://i3.piimg.com/8c8a5fd6997e07f8.jpg">
+<meta property="og:image" content="http://i3.piimg.com/0361c3bae4e09b4b.jpg">
+<meta property="og:image" content="http://i3.piimg.com/fb1bc44dba574379.jpg">
+<meta property="og:image" content="http://i3.piimg.com/869d4e0d3ef4c9bc.jpg">
+<meta property="og:image" content="http://i3.piimg.com/142101ddb8358d8f.jpg">
+<meta property="og:updated_time" content="2016-11-06T01:31:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Debian下配置exim4 邮件服务器">
+<meta name="twitter:description" content="###前言
+
+由于博主在DigitalOcean上购入了一台VPS,并在上面搭建托管了一些服务，不定时的需要登录到服务器上进行管理查看错误日志，比较麻烦。于是打算编写一个shell脚本，来监控服务器的一些问题，并在发现问题的时候自动邮件通知到我。">
+<meta name="twitter:image" content="http://i3.piimg.com/5468f666400f4765.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '11339369',
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://notes.wanghao.work/2015-04-27-Debian下配置exim4-邮件服务器.html"/>
+
+
+  <title> Debian下配置exim4 邮件服务器 | Doublemine </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Doublemine</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'aoQ6PufFyscKxkPmNGnx','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Debian下配置exim4 邮件服务器
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-27T11:19:53+08:00" content="2015-04-27">
+              2015-04-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015-04-27-Debian下配置exim4-邮件服务器.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015-04-27-Debian下配置exim4-邮件服务器.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015-04-27-Debian下配置exim4-邮件服务器.html" class="leancloud_visitors" data-flag-title="Debian下配置exim4 邮件服务器">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>###前言</p>
+<blockquote>
+<p>由于博主在<a href="https://www.digitalocean.com/?refcode=f07fa4a5aaf1" target="_blank" rel="external">DigitalOcean</a>上购入了一台VPS,并在上面搭建托管了一些服务，不定时的需要登录到服务器上进行管理查看错误日志，比较麻烦。于是打算编写一个<code>shell</code>脚本，来监控服务器的一些问题，并在发现问题的时候自动邮件通知到我。</p>
+</blockquote>
+<a id="more"></a>
+<blockquote>
+<p>因此，第一步当然得是有一个可用的MTA服务器了。还好Debian默认安装了<code>Exim4</code>,可以直接使用。</p>
+</blockquote>
+<p>###安装exim4</p>
+<ul>
+<li>如果你的服务器或者Linux上没有安装<code>exim4</code>，请执行以下命令进行安装：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># apt-get install exim4-daemon-light mailutils</span></div></pre></td></tr></table></figure>
+<p>###配置exim4</p>
+<blockquote>
+<p>配置<code>exim4</code>有两种方式:</p>
+</blockquote>
+<ol>
+<li>使用图形化界面配置</li>
+<li>编辑配置文件进行配置</li>
+</ol>
+<p>在这里我们还是选择比较亲民的图形化界面配置吧。。（博主懒~~）</p>
+<p>####图形化界面配置exim4</p>
+<p>在终端中运行以下命令:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># dpkg-reconfigure exim4-config</span></div></pre></td></tr></table></figure>
+<p>#####配置邮件系统类型</p>
+<blockquote>
+<p>将会出现一个图形化的配置界面。如下图所示:</p>
+</blockquote>
+<center><img src="http://i3.piimg.com/5468f666400f4765.jpg" alt=""></center>
+
+<p>根据自己的需要选择:</p>
+<ul>
+<li>这里博主考虑到只需要能够发送邮件即可，加上安全性考虑，选择<code>mail sent by smarthost;no local mail</code>。</li>
+<li>如果你是要搭建邮件服务器，进行接收和发送邮件。请选择<code>internet site;mail is sent and received directly using SMTP</code>。</li>
+</ul>
+<p>#####系统邮件名称</p>
+<blockquote>
+<p>回车过后，将会来到配置系统邮件名称的界面，如图:</p>
+</blockquote>
+<center><img src="http://i3.piimg.com/6b56408a64016c4f.jpg" alt=""></center>
+
+<p>此处填写你用来发送邮件的邮件域名。例如:你的邮件地址为:<font color="red"><code>xiamo@gmail.com</code></font>,则此处填写为<font color="red"><code>gmail.com</code></font></p>
+<p>#####监听入站STMP连接IP地址</p>
+<blockquote>
+<p>回车过后，将会配置exim4要监听的入站STMP连接的ip地址，如图:</p>
+</blockquote>
+<p><img src="http://i3.piimg.com/60bfc1ae6462025a.jpg" alt=""></p>
+<p>博主填写的为<code>127.0.0.1</code>，这表示只监听本地端口，也就是只有本机才能够发邮件，外部不能访问。</p>
+<p>#####其它可接收邮件的目的地址</p>
+<blockquote>
+<p>回车过后，将会配置其它可以接收邮件的目的地址，如图：</p>
+</blockquote>
+<p><img src="http://i3.piimg.com/8c8a5fd6997e07f8.jpg" alt=""></p>
+<p>此处直接留空即可。</p>
+<p>#####配置本地可见域名</p>
+<blockquote>
+<p>回车确认之后，将会配置本地用户可见的域名，如图:</p>
+</blockquote>
+<p><img src="http://i3.piimg.com/0361c3bae4e09b4b.jpg" alt=""></p>
+<p>此处和配置<code>系统邮件名称</code>一样，填写发邮件的邮箱域名。例如:<code>gmail.com</code>。</p>
+<p>#####配置发邮件的主机名。</p>
+<blockquote>
+<p>回车确认之后，将会配置发邮件使用的smarthost的ip地址或主机名，如图:</p>
+</blockquote>
+<p><img src="http://i3.piimg.com/fb1bc44dba574379.jpg" alt=""></p>
+<p>此处填写外部的STMP地址，因为博主使用的gmail，所以填写的是Gmail的STMP地址:<code>smtp.gmail.com</code>。</p>
+<p>#####配置DNS查询量</p>
+<blockquote>
+<p>回车确认之后，将会配置DNS查询量，如图:</p>
+</blockquote>
+<p><img src="http://i3.piimg.com/869d4e0d3ef4c9bc.jpg" alt=""></p>
+<p>此处选择<code>NO</code>，来提高响应速度。如果您的服务器资源宝贵可以使用<code>Yes</code>。不过可能会出现一些延迟问题。</p>
+<p>#####配置文件拆分</p>
+<blockquote>
+<p>回车过后，将会询问你是否要将配置文件拆分为小文件，如图:</p>
+</blockquote>
+<p><img src="http://i3.piimg.com/142101ddb8358d8f.jpg" alt=""></p>
+<p>此处建议选择<code>NO</code>，如果你不搭建复杂的邮件服务器的话，保持默认就可以了。不用拆分配置文件。</p>
+<blockquote>
+<p>至此，图形化界面就完成配置了。不过呢，现在还不能发送邮件，还需要一些其他的配置。</p>
+</blockquote>
+<p>####修改配置文件</p>
+<p>#####配置发送邮箱的账号和密码</p>
+<p>现在需要配置发送邮件的邮箱账号和密码，需要编辑<code>/etc/exim4/passwd.client</code>这个文件。使用命令:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># vim /etc/exim4/passwwd.client</span></div></pre></td></tr></table></figure>
+<p>在文件末尾加入以下内容:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">*:xiamo@gmail.com:password</div></pre></td></tr></table></figure></p>
+<p>格式为: <font color="red"><code>发件邮箱STMP服务器:发件邮箱账号:发件邮箱密码</code></font>,因为我们在图形化界面中已经配置过STMP服务器地址了，所以这里可以使用通配符<code>*</code>代替。当然，你也可以填写SMTP地址:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">stmp.gmail.com:xiamo@gmail.com:password</div></pre></td></tr></table></figure>
+<p>#####配置系统邮箱</p>
+<p>现在，我们需要配置系统<code>mail</code>命令的默认邮箱，需要编辑<code>/etc/email-addresses</code>这个文件。使用命令:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># vim /etc/email-addresses</span></div></pre></td></tr></table></figure>
+<p>在文件末尾加入以下内容:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root: xiamo@gmail.com</div></pre></td></tr></table></figure>
+<p>格式为:<font color-red=""><code>系统用户名: 发件邮箱地址</code></font>。注意：冒号<code>:</code>后有一个空格。</p>
+<p>#####配置exim4，使其支持明文密码</p>
+<p>现在，我们需要对<code>/etc/exim4/exim4.conf.template</code>这个文件进行编辑，使用命令:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># vim /etc/exim4/exim4.conf.template</span></div></pre></td></tr></table></figure>
+<p>在<code>1996</code>行上一行，也就是<code>cram_md5:</code>上方（博主的文件是1996行）加入以下内容:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AUTH_CLIENT_ALLOW_NOTLS_PASSWORDS=1</div></pre></td></tr></table></figure>
+<p>然后保存退出。</p>
+<p>键入以下命令重启<code>exim4</code>：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># service exim4 restart</span></div></pre></td></tr></table></figure></p>
+<p>至此，exim4邮件配置就完成了。是不是很简单呢~~</p>
+<p>###发送测试邮件</p>
+<p>配置完成需要发送一封测试邮件看看服务可用不呢~，键入命令:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># mail wanghaokoko1994@gmail.com</span></div></pre></td></tr></table></figure>
+<p>其中，<code>wanghaokoko1994@gmail.com</code>为你想要发送到的邮箱地址，接着按提示输入主题、邮件内容。然后再使用<code>Ctrl</code> + <code>D</code>组合键完成输入，即可完成发送:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mail wanghaokoko1994@gmail.com</div><div class="line">Subject: <span class="built_in">test</span> email</div><div class="line">hello,this is a <span class="built_in">test</span> email!</div><div class="line">EOT</div></pre></td></tr></table></figure></p>
+<p>###可能出现的错误</p>
+<p>有的时候可能会遇到exim4抛出的错误，如下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">debian ALERT: exim paniclog /var/<span class="built_in">log</span>/exim4/paniclog has non-zero size, mail system possibly broken</div></pre></td></tr></table></figure></p>
+<p>针对这个情况，可以使用以下方法解决:</p>
+<ul>
+<li>停止<code>exim4</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service exim4 stop</div></pre></td></tr></table></figure>
+<ul>
+<li>删除<code>paniclog</code>文件</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm /var/<span class="built_in">log</span>/exim4/paniclog</div></pre></td></tr></table></figure>
+<ul>
+<li>启动<code>exim4</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service exim4 start</div></pre></td></tr></table></figure>
+<p>这样，错误问题就完美解决了~</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Debian/" rel="tag">#Debian</a>
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+            <a href="/tags/Exim4/" rel="tag">#Exim4</a>
+          
+            <a href="/tags/服务器/" rel="tag">#服务器</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015-04-24-Linux-学习笔记-软件包管理.html" rel="next" title="Linux 学习笔记-软件包管理">
+                <i class="fa fa-chevron-left"></i> Linux 学习笔记-软件包管理
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015-04-29-欢迎光临我的博客.html" rel="prev" title="欢迎">
+                欢迎 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015-04-27-Debian下配置exim4-邮件服务器.html"
+     data-title="Debian下配置exim4 邮件服务器"
+     data-content=""
+     data-url="https://notes.wanghao.work/2015-04-27-Debian下配置exim4-邮件服务器.html">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015-04-27-Debian下配置exim4-邮件服务器.html"
+           data-title="Debian下配置exim4 邮件服务器" data-url="https://notes.wanghao.work/2015-04-27-Debian下配置exim4-邮件服务器.html">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="夏末" />
+          <p class="site-author-name" itemprop="name">夏末</p>
+          <p class="site-description motion-element" itemprop="description">Keep fucking the world</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/_xiamo" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/___xiamo/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Instagram
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/doublemine" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/wanghao19940820" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://jiangtaoquite.github.io/" title="Kevin" target="_blank">Kevin</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.kisence.com/" title="kisence" target="_blank">kisence</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">夏末</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"doublemine"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("jNtrKbh7n1iCujKSNNQ2AlH3", "l5SnKfDysKAOoMwfpVAFUDTR");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>

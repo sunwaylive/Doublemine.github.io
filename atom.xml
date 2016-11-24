@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://notes.wanghao.work/"/>
-  <updated>2016-11-24T13:53:53.000Z</updated>
+  <updated>2016-11-24T14:11:04.000Z</updated>
   <id>https://notes.wanghao.work/</id>
   
   <author>
@@ -14,6 +14,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Mac自带VNC Client</title>
+    <link href="https://notes.wanghao.work/2016-11-24-Mac%E8%87%AA%E5%B8%A6VNC-Client.html"/>
+    <id>https://notes.wanghao.work/2016-11-24-Mac自带VNC-Client.html</id>
+    <published>2016-11-24T13:57:28.000Z</published>
+    <updated>2016-11-24T14:11:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>由于有需要远程VNC的需要，苦苦寻找一款Mac上比较好使的VNC Client，结果经人指点，发现原来MacOS自带了VNC Client，只是没有在Launchpad中显示罢了。使用<code>command</code>+<code>space</code> 调出<code>Spotlight搜索</code>键入<code>screen Sharing.app</code>即可。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;由于有需要远程VNC的需要，苦苦寻找一款Mac上比较好使的VNC Client，结果经人指点，发现原来MacOS自带了VNC Client，只是没有在Launchpad中显示罢了。使用&lt;code&gt;command&lt;/code&gt;+&lt;code&gt;space&lt;/code&gt; 调出&lt;co
+    
+    </summary>
+    
+    
+      <category term="Mac" scheme="https://notes.wanghao.work/tags/Mac/"/>
+    
+      <category term="Tips" scheme="https://notes.wanghao.work/tags/Tips/"/>
+    
+  </entry>
   
   <entry>
     <title>开启Git大小写敏感</title>
@@ -38,9 +61,9 @@
     </summary>
     
     
-      <category term="Git" scheme="https://notes.wanghao.work/tags/Git/"/>
-    
       <category term="Tips" scheme="https://notes.wanghao.work/tags/Tips/"/>
+    
+      <category term="Git" scheme="https://notes.wanghao.work/tags/Git/"/>
     
   </entry>
   
@@ -1631,160 +1654,6 @@ xiamo("xiamo's note");
     
     
       <category term="欢迎" scheme="https://notes.wanghao.work/tags/%E6%AC%A2%E8%BF%8E/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Debian下配置exim4 邮件服务器</title>
-    <link href="https://notes.wanghao.work/2015-04-27-Debian%E4%B8%8B%E9%85%8D%E7%BD%AEexim4-%E9%82%AE%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8.html"/>
-    <id>https://notes.wanghao.work/2015-04-27-Debian下配置exim4-邮件服务器.html</id>
-    <published>2015-04-27T03:19:53.000Z</published>
-    <updated>2016-11-06T01:31:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>###前言</p>
-<blockquote>
-<p>由于博主在<a href="https://www.digitalocean.com/?refcode=f07fa4a5aaf1" target="_blank" rel="external">DigitalOcean</a>上购入了一台VPS,并在上面搭建托管了一些服务，不定时的需要登录到服务器上进行管理查看错误日志，比较麻烦。于是打算编写一个<code>shell</code>脚本，来监控服务器的一些问题，并在发现问题的时候自动邮件通知到我。</p>
-</blockquote>
-<a id="more"></a>
-<blockquote>
-<p>因此，第一步当然得是有一个可用的MTA服务器了。还好Debian默认安装了<code>Exim4</code>,可以直接使用。</p>
-</blockquote>
-<p>###安装exim4</p>
-<ul>
-<li>如果你的服务器或者Linux上没有安装<code>exim4</code>，请执行以下命令进行安装：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># apt-get install exim4-daemon-light mailutils</span></div></pre></td></tr></table></figure>
-<p>###配置exim4</p>
-<blockquote>
-<p>配置<code>exim4</code>有两种方式:</p>
-</blockquote>
-<ol>
-<li>使用图形化界面配置</li>
-<li>编辑配置文件进行配置</li>
-</ol>
-<p>在这里我们还是选择比较亲民的图形化界面配置吧。。（博主懒~~）</p>
-<p>####图形化界面配置exim4</p>
-<p>在终端中运行以下命令:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># dpkg-reconfigure exim4-config</span></div></pre></td></tr></table></figure>
-<p>#####配置邮件系统类型</p>
-<blockquote>
-<p>将会出现一个图形化的配置界面。如下图所示:</p>
-</blockquote>
-<center><img src="http://i3.piimg.com/5468f666400f4765.jpg" alt=""></center>
-
-<p>根据自己的需要选择:</p>
-<ul>
-<li>这里博主考虑到只需要能够发送邮件即可，加上安全性考虑，选择<code>mail sent by smarthost;no local mail</code>。</li>
-<li>如果你是要搭建邮件服务器，进行接收和发送邮件。请选择<code>internet site;mail is sent and received directly using SMTP</code>。</li>
-</ul>
-<p>#####系统邮件名称</p>
-<blockquote>
-<p>回车过后，将会来到配置系统邮件名称的界面，如图:</p>
-</blockquote>
-<center><img src="http://i3.piimg.com/6b56408a64016c4f.jpg" alt=""></center>
-
-<p>此处填写你用来发送邮件的邮件域名。例如:你的邮件地址为:<font color="red"><code>xiamo@gmail.com</code></font>,则此处填写为<font color="red"><code>gmail.com</code></font></p>
-<p>#####监听入站STMP连接IP地址</p>
-<blockquote>
-<p>回车过后，将会配置exim4要监听的入站STMP连接的ip地址，如图:</p>
-</blockquote>
-<p><img src="http://i3.piimg.com/60bfc1ae6462025a.jpg" alt=""></p>
-<p>博主填写的为<code>127.0.0.1</code>，这表示只监听本地端口，也就是只有本机才能够发邮件，外部不能访问。</p>
-<p>#####其它可接收邮件的目的地址</p>
-<blockquote>
-<p>回车过后，将会配置其它可以接收邮件的目的地址，如图：</p>
-</blockquote>
-<p><img src="http://i3.piimg.com/8c8a5fd6997e07f8.jpg" alt=""></p>
-<p>此处直接留空即可。</p>
-<p>#####配置本地可见域名</p>
-<blockquote>
-<p>回车确认之后，将会配置本地用户可见的域名，如图:</p>
-</blockquote>
-<p><img src="http://i3.piimg.com/0361c3bae4e09b4b.jpg" alt=""></p>
-<p>此处和配置<code>系统邮件名称</code>一样，填写发邮件的邮箱域名。例如:<code>gmail.com</code>。</p>
-<p>#####配置发邮件的主机名。</p>
-<blockquote>
-<p>回车确认之后，将会配置发邮件使用的smarthost的ip地址或主机名，如图:</p>
-</blockquote>
-<p><img src="http://i3.piimg.com/fb1bc44dba574379.jpg" alt=""></p>
-<p>此处填写外部的STMP地址，因为博主使用的gmail，所以填写的是Gmail的STMP地址:<code>smtp.gmail.com</code>。</p>
-<p>#####配置DNS查询量</p>
-<blockquote>
-<p>回车确认之后，将会配置DNS查询量，如图:</p>
-</blockquote>
-<p><img src="http://i3.piimg.com/869d4e0d3ef4c9bc.jpg" alt=""></p>
-<p>此处选择<code>NO</code>，来提高响应速度。如果您的服务器资源宝贵可以使用<code>Yes</code>。不过可能会出现一些延迟问题。</p>
-<p>#####配置文件拆分</p>
-<blockquote>
-<p>回车过后，将会询问你是否要将配置文件拆分为小文件，如图:</p>
-</blockquote>
-<p><img src="http://i3.piimg.com/142101ddb8358d8f.jpg" alt=""></p>
-<p>此处建议选择<code>NO</code>，如果你不搭建复杂的邮件服务器的话，保持默认就可以了。不用拆分配置文件。</p>
-<blockquote>
-<p>至此，图形化界面就完成配置了。不过呢，现在还不能发送邮件，还需要一些其他的配置。</p>
-</blockquote>
-<p>####修改配置文件</p>
-<p>#####配置发送邮箱的账号和密码</p>
-<p>现在需要配置发送邮件的邮箱账号和密码，需要编辑<code>/etc/exim4/passwd.client</code>这个文件。使用命令:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># vim /etc/exim4/passwwd.client</span></div></pre></td></tr></table></figure>
-<p>在文件末尾加入以下内容:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">*:xiamo@gmail.com:password</div></pre></td></tr></table></figure></p>
-<p>格式为: <font color="red"><code>发件邮箱STMP服务器:发件邮箱账号:发件邮箱密码</code></font>,因为我们在图形化界面中已经配置过STMP服务器地址了，所以这里可以使用通配符<code>*</code>代替。当然，你也可以填写SMTP地址:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">stmp.gmail.com:xiamo@gmail.com:password</div></pre></td></tr></table></figure>
-<p>#####配置系统邮箱</p>
-<p>现在，我们需要配置系统<code>mail</code>命令的默认邮箱，需要编辑<code>/etc/email-addresses</code>这个文件。使用命令:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># vim /etc/email-addresses</span></div></pre></td></tr></table></figure>
-<p>在文件末尾加入以下内容:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root: xiamo@gmail.com</div></pre></td></tr></table></figure>
-<p>格式为:<font color-red=""><code>系统用户名: 发件邮箱地址</code></font>。注意：冒号<code>:</code>后有一个空格。</p>
-<p>#####配置exim4，使其支持明文密码</p>
-<p>现在，我们需要对<code>/etc/exim4/exim4.conf.template</code>这个文件进行编辑，使用命令:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># vim /etc/exim4/exim4.conf.template</span></div></pre></td></tr></table></figure>
-<p>在<code>1996</code>行上一行，也就是<code>cram_md5:</code>上方（博主的文件是1996行）加入以下内容:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AUTH_CLIENT_ALLOW_NOTLS_PASSWORDS=1</div></pre></td></tr></table></figure>
-<p>然后保存退出。</p>
-<p>键入以下命令重启<code>exim4</code>：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># service exim4 restart</span></div></pre></td></tr></table></figure></p>
-<p>至此，exim4邮件配置就完成了。是不是很简单呢~~</p>
-<p>###发送测试邮件</p>
-<p>配置完成需要发送一封测试邮件看看服务可用不呢~，键入命令:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># mail wanghaokoko1994@gmail.com</span></div></pre></td></tr></table></figure>
-<p>其中，<code>wanghaokoko1994@gmail.com</code>为你想要发送到的邮箱地址，接着按提示输入主题、邮件内容。然后再使用<code>Ctrl</code> + <code>D</code>组合键完成输入，即可完成发送:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mail wanghaokoko1994@gmail.com</div><div class="line">Subject: <span class="built_in">test</span> email</div><div class="line">hello,this is a <span class="built_in">test</span> email!</div><div class="line">EOT</div></pre></td></tr></table></figure></p>
-<p>###可能出现的错误</p>
-<p>有的时候可能会遇到exim4抛出的错误，如下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">debian ALERT: exim paniclog /var/<span class="built_in">log</span>/exim4/paniclog has non-zero size, mail system possibly broken</div></pre></td></tr></table></figure></p>
-<p>针对这个情况，可以使用以下方法解决:</p>
-<ul>
-<li>停止<code>exim4</code></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service exim4 stop</div></pre></td></tr></table></figure>
-<ul>
-<li>删除<code>paniclog</code>文件</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm /var/<span class="built_in">log</span>/exim4/paniclog</div></pre></td></tr></table></figure>
-<ul>
-<li>启动<code>exim4</code></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service exim4 start</div></pre></td></tr></table></figure>
-<p>这样，错误问题就完美解决了~</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;###前言&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;由于博主在&lt;a href=&quot;https://www.digitalocean.com/?refcode=f07fa4a5aaf1&quot;&gt;DigitalOcean&lt;/a&gt;上购入了一台VPS,并在上面搭建托管了一些服务，不定时的需要登录到服务器上进行管理查看错误日志，比较麻烦。于是打算编写一个&lt;code&gt;shell&lt;/code&gt;脚本，来监控服务器的一些问题，并在发现问题的时候自动邮件通知到我。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="https://notes.wanghao.work/categories/Linux/"/>
-    
-    
-      <category term="Debian" scheme="https://notes.wanghao.work/tags/Debian/"/>
-    
-      <category term="Linux" scheme="https://notes.wanghao.work/tags/Linux/"/>
-    
-      <category term="Exim4" scheme="https://notes.wanghao.work/tags/Exim4/"/>
-    
-      <category term="服务器" scheme="https://notes.wanghao.work/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     
   </entry>
   

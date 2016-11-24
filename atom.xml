@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://notes.wanghao.work/"/>
-  <updated>2016-11-06T01:31:11.000Z</updated>
+  <updated>2016-11-24T13:53:53.000Z</updated>
   <id>https://notes.wanghao.work/</id>
   
   <author>
@@ -14,6 +14,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>开启Git大小写敏感</title>
+    <link href="https://notes.wanghao.work/2016-11-24-%E5%BC%80%E5%90%AFGit%E5%A4%A7%E5%B0%8F%E5%86%99%E6%95%8F%E6%84%9F.html"/>
+    <id>https://notes.wanghao.work/2016-11-24-开启Git大小写敏感.html</id>
+    <published>2016-11-24T13:35:57.000Z</published>
+    <updated>2016-11-24T13:53:53.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近公司开发的项目的时候，自己或者队友都经常会手抖针对某些文件的命名规范大小写写错。（毕竟入冬了。。）尤其是包名小写手抖写成大写了。。又由于我设置Android Studio新建文件自动添加到Git，一来二往，导致推上服务器之后发现自己命名有问题，顺手改成小写，这个时候问题就来了。</p>
+<p>由于Git默认是大小写不敏感的，导致我这边虽然修改了，然而队友那边还是老样子，可能会导致后续的提交出现问题让项目无法编译通过，虽然不是什么大问题，稍微小改一下就行。然而鉴于这种问题出现了几次，每次都手动修改还是挺闹心的。我们还是来动手让Git区分大小写吧。</p>
+<p>如果只是想应用于当前项目，那么在当前项目中使用执行以下<code>Git命令</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git config core.ignorecase false</div></pre></td></tr></table></figure>
+<p>当然，如果想一劳永逸的话，推荐还是做一个全局配置:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git config --global core.ignorecase false</div></pre></td></tr></table></figure>
+<p>这样之后的项目都不用担心大小写都问题闹心了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近公司开发的项目的时候，自己或者队友都经常会手抖针对某些文件的命名规范大小写写错。（毕竟入冬了。。）尤其是包名小写手抖写成大写了。。又由于我设置Android Studio新建文件自动添加到Git，一来二往，导致推上服务器之后发现自己命名有问题，顺手改成小写，这个时候问题
+    
+    </summary>
+    
+    
+      <category term="Git" scheme="https://notes.wanghao.work/tags/Git/"/>
+    
+      <category term="Tips" scheme="https://notes.wanghao.work/tags/Tips/"/>
+    
+  </entry>
   
   <entry>
     <title>基于LeanCloud、Telegram实现多说评论推送</title>
@@ -1756,338 +1785,6 @@ xiamo("xiamo's note");
       <category term="Exim4" scheme="https://notes.wanghao.work/tags/Exim4/"/>
     
       <category term="服务器" scheme="https://notes.wanghao.work/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux 学习笔记-软件包管理</title>
-    <link href="https://notes.wanghao.work/2015-04-24-Linux-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86.html"/>
-    <id>https://notes.wanghao.work/2015-04-24-Linux-学习笔记-软件包管理.html</id>
-    <published>2015-04-24T02:06:02.000Z</published>
-    <updated>2016-11-06T01:31:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="RPM软件包管理"><a href="#RPM软件包管理" class="headerlink" title="RPM软件包管理"></a>RPM软件包管理</h1><h3 id="rpm包管理查询"><a href="#rpm包管理查询" class="headerlink" title="rpm包管理查询"></a>rpm包管理查询</h3><p>参数选项:</p>
-<ul>
-<li><code>-a</code> 查询所有已安装的软件包</li>
-<li><code>-f</code> 查询文件所属软件包</li>
-<li><code>-p</code> 查询软件包</li>
-<li><code>-i</code> 显示软件包信息</li>
-<li><code>-l</code> 显示软件包中的文件列表</li>
-<li><code>-d</code> 显示被标注为文档的文件列表</li>
-<li><code>-c</code> 显示被标注为配置文件的文件列表</li>
-</ul>
-<a id="more"></a>
-<blockquote>
-<p>rpm查询应用案列:</p>
-</blockquote>
-<ol>
-<li>查看软件是否被安装:</li>
-</ol>
-<blockquote>
-<p><code>rpm -q xxxx软件包名</code>将显示指定的软件包名是否被安装。<br>以下示例将显示<code>sudo</code>命令是否被安装:</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -q sudo</span></div></pre></td></tr></table></figure>
-<blockquote>
-<p><code>-qa</code>将会显示所有被安装的软件包，从中过滤指定的软件包，可以使用管道组合命令:<br><code>rpm -qa | grep xxxx软件包名</code>来查看指定软件包是否被安装。</p>
-</blockquote>
-<p>以下示例将查询<code>sudo</code>命令是否被安装:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -qa | grep sudo</span></div></pre></td></tr></table></figure>
-<ol>
-<li>查询文件隶属的软件包: <blockquote>
-<p><code>rpm --qf xxxx软件包名</code> 其中<code>f</code>代表file的意思。</p>
-</blockquote>
-</li>
-</ol>
-<p>以下示例为查询<code>/etc/services</code>文件所属的软件包:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -qf /etc/services</span></div></pre></td></tr></table></figure>
-<ol>
-<li>查询软件包信息:<blockquote>
-<p><code>rpm -qi xxx软件包名</code>查询已安装包信息<br><code>rpm -qip xxxx.rpm</code>查询指定rpm软件包信息（未安装包信息）</p>
-</blockquote>
-</li>
-</ol>
-<p>以下示例为查询<code>sudo</code>命令软件包的信息:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -qi sudo</span></div></pre></td></tr></table></figure>
-<ol>
-<li>查询软件包安装文件：<blockquote>
-<p><code>rpm -ql xxx软件包名</code>查询已安装软件包安装了哪些文件<br><code>rpm -qlp xxxx.rpm</code>查询指定的rpm软件包将会安装哪些文件（未安装包安装将会安装的文件） </p>
-</blockquote>
-</li>
-</ol>
-<p>以下示例为显示<code>sudo</code>命令软件包安装的文件:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -ql sudo</span></div></pre></td></tr></table></figure>
-<ol>
-<li>查询软件包帮助文档:<blockquote>
-<p><code>rpm -qd xxx软件包名</code> 查询已安装的软件包安装的帮助文档<br><code>rpm -qdp xxx.rpm</code> 查询指定rpm软件包将会安装的帮助文档（未安装软件包将会安装的帮助文档）</p>
-</blockquote>
-</li>
-</ol>
-<p>以下示例将会显示<code>sudo</code>命令安装的帮助文档:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -qd sudo</span></div></pre></td></tr></table></figure>
-<ol>
-<li>查询软件包配置文件： <blockquote>
-<p><code>rpm -qc xxxx软件包名</code> 查询已安装软件包包含的配置文件<br><code>rpmm -qcp xxxx.rpm</code> 查询指定rpm软件包将会安装的配置文件（为安装软件包将会安装的配置文件）</p>
-</blockquote>
-</li>
-</ol>
-<p>以下示例将会显示<code>sudo</code>命令安装的配置文件:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -qc sudo</span></div></pre></td></tr></table></figure>
-<p>学会这些，可以查看linux系统中的文件隶属于那个软件包，再查看该软件包的信息，以确定该软件包是否需要来确定软件包的开启与否。来达到服务器的精简不必要的软件运行以降低负载。</p>
-<p>###rpm软件包的安装、卸载</p>
-<p>####卸载软件包:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#  rpm -e xxx软件包名</span></div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>其中<code>xxx软件包名</code>为软件包名称。<br>注意:如果其它软件包有依赖关系，卸载时会产生提示信息。可以使用–nodeps强行卸载。</p>
-</blockquote>
-<p>以下为强制卸载<code>samba</code>软件包 示例:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -e --nodeps samba</span></div></pre></td></tr></table></figure>
-<p>####安装本地rpm软件包:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -ivh xxxxxxxxx.rpm</span></div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>其中<code>-ivh</code>代表的意思为:</p>
-<ul>
-<li>i :安装（install）</li>
-<li>v :显示安装过程中的详细信息</li>
-<li>h :用<code>#</code>号显示安装进度（hash）</li>
-<li>U :用大写的U来表示升级安装（update）</li>
-</ul>
-</blockquote>
-<p>升级安装示例:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -Uvh xxxxx.rpm</span></div></pre></td></tr></table></figure></p>
-<p>如果想忽略进度和安装信息，直接安装可使用:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># rpm -i xxxxxxxxx.rpm</div></pre></td></tr></table></figure>
-<p>####安装本地软件包附带参数说明:</p>
-<p><code>--excludedocs</code></p>
-<blockquote>
-<p>不安装软件包中的文档文件(如果你已经足够熟悉这个软件包并且服务器空间紧张的话）</p>
-</blockquote>
-<p>以下为示例:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -ivh --excludedocs xxxxx.rpm</span></div></pre></td></tr></table></figure>
-<p><code>--prefix PATH</code></p>
-<blockquote>
-<p>将软件包安装到由<code>PATH</code>指定的路径下,通常不建议这样做或者说这样指定无效果。因为大部分rpm软件包在打包的时候开发人员指定了安装时软件包文件存放的位置了。</p>
-</blockquote>
-<p>以下为示例:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -ivh --prefix=/usr/xiamo/ xxxx.rpm</span></div></pre></td></tr></table></figure>
-<p><code>--test</code></p>
-<blockquote>
-<p>只对安装进行测试，并不实际安装。实际环境中比较有用的一个参数，可以测试安装软件包需要哪些依赖需要是否存在安装兼容性问题等等。</p>
-</blockquote>
-<p>以下为示例:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -ivh --test xxxx.rpm</span></div></pre></td></tr></table></figure>
-<p><code>--replacepkgs</code></p>
-<blockquote>
-<p>覆盖安装<br>软件包已经被安装,如果要覆盖安装该软件包，例如某个软件包的某个文件丢失，就可以覆盖安装。可以再命令行上使用该参数.</p>
-</blockquote>
-<p>以下为示例:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -ivh --replacepkgs xxxx.rpm</span></div></pre></td></tr></table></figure>
-<p><code>--replacefiles</code></p>
-<blockquote>
-<p>文件冲突<br>如果要安装的软件包中有一个文件已在安装其它软件包时安装，会出现错误信息，要想让rpm忽略该错误信息，请使用命令行选项。</p>
-</blockquote>
-<p>以下为示例:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -ivh --replacefiles xxxx.rpm</span></div></pre></td></tr></table></figure>
-<p><code>--nodeps</code></p>
-<blockquote>
-<p>未解决依赖关系<br>rpm软件包可能依赖于其它软件包，在安装了特定的软件包之后才能安装该软件包。你必须安装完所有依赖的软件包，才能解决这个问题。强制安装使用该选项。事实上，这样做安装好的软件包十有八九是无法运行的。这也是rpm比较头疼的地方。还好yum解决了这个问题:)</p>
-</blockquote>
-<p>以下为示例:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -ivh --nodeps xxx.rpm</span></div></pre></td></tr></table></figure>
-<p>###rpm软件包校验</p>
-<blockquote>
-<p>在linux日常应用中，可能其它管理员误操作将某个软件包的文件更改了，这个时候，为了查看哪些文件被更改，就必须校验软件包是否被更改。<br><code>rpm -V 软件名称</code>将会校验指定的已安装的软件包。</p>
-<ul>
-<li>如果软件包没有被做过任何修改，那么执行该命令将不会有任何提示信息。</li>
-<li>如果软件包被改动过，那么将会出现提示信息。</li>
-</ul>
-</blockquote>
-<p>以下为提示信息代表的含义:</p>
-<ul>
-<li><code>5</code> 文件的md5校验值</li>
-<li><code>S</code> 文件大小</li>
-<li><code>L</code> 链接文件</li>
-<li><code>T</code> 文件的创建时间</li>
-<li><code>D</code> 设备文件按</li>
-<li><code>U</code> 文件的用户</li>
-<li><code>G</code> 文件的用户组</li>
-<li><code>M</code> 文件的权限</li>
-</ul>
-<p>###rpm软件包文件提取</p>
-<ul>
-<li><p>解压所有文件到当前目录</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm2cpio xxxxxx.rpm | cpio -idv</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>解压指定文件到当前目录</p>
-</li>
-</ul>
-<blockquote>
-<p>以下命令将指定的rpm解包，并将其中的的<code>/etc/inittab</code>文件提取到当前目录得<code>etc</code>目录下。（当前目录的<code>etc</code>目录下将会有一个<code>inittab</code>文件。)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm2cpio xxxx.rpm | cpio -idv ./etc/inittab</span></div></pre></td></tr></table></figure></p>
-</blockquote>
-<p>##yum软件包管理工具</p>
-<p>应用yum包管理工具的好处:</p>
-<blockquote>
-<ul>
-<li>自动解决软件包依赖关系</li>
-<li>方便的软件包升级</li>
-<li>软件包可信任</li>
-</ul>
-</blockquote>
-<p>缺点:</p>
-<blockquote>
-<ul>
-<li>比rpm慢（需要读取yum源）</li>
-<li>需要联网</li>
-</ul>
-</blockquote>
-<p>###yum软件包常用选项:</p>
-<ul>
-<li>安装<blockquote>
-<p><code>yum install xxx软件包名</code>将会在yum源查找并安装该软件包。</p>
-</blockquote>
-</li>
-</ul>
-<p>以下为安装<code>sudo</code>命令示例:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># yum install sudo</span></div></pre></td></tr></table></figure></p>
-<ul>
-<li>检测升级 <blockquote>
-<p><code>yum check-update xxxx软件包名</code>将会在yum源查询指定软件是否有更新可用。(不会安装更新）</p>
-</blockquote>
-</li>
-</ul>
-<p>以下为检测<code>sudo</code>命令是否有更新可用示例:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># yum check-update sudo</span></div></pre></td></tr></table></figure></p>
-<blockquote>
-<font color="red">如果不指定软件包名，将检测升级所有软件包。（只检测，不进行升级操作)</font>
-
-</blockquote>
-<p>以下为检测所有安装的软件包是否有更新可用:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># yum check-update</span></div></pre></td></tr></table></figure></p>
-<ul>
-<li>升级<blockquote>
-<p><code>yum update xxx软件包名</code>将会更新升级指定的软件包（如果有更新可用的话），因此次命令最好配合<code>yum check-update</code>使用。</p>
-</blockquote>
-</li>
-</ul>
-<p>以下为升级安装<code>sudo</code>软件包示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># yum update sudo</span></div></pre></td></tr></table></figure></p>
-<ul>
-<li>软件包查询<blockquote>
-<p><code>yum list</code>列出yum源上所有的软件包,并标注哪些软件包已安装，哪些软件包可更新。（此命令不时列出系统安装的软件包哦，而是yum源上的。所有一般不建议直接这样执行。可以使用管道配合<code>more</code>命令来分页查看。</p>
-</blockquote>
-</li>
-</ul>
-<p>以下为使用示例:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># yum list</span></div><div class="line"><span class="comment"># yum list | more</span></div></pre></td></tr></table></figure></p>
-<p>列出yum源上指定的软件包可以管道配合<code>grep</code>，以下为示例:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># yum list | grep sudo</span></div></pre></td></tr></table></figure>
-<ul>
-<li>软件包信息<blockquote>
-<p><code>yum info xxx软件包名</code> 列出软件包的详细信息以及软件包的作用介绍。</p>
-</blockquote>
-</li>
-</ul>
-<p>以下示例将会列出<code>sudo</code>命令的详细说明,以及该软件包的作用介绍:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># yum info sudo</span></div></pre></td></tr></table></figure></p>
-<ul>
-<li>卸载<blockquote>
-<p><code>yum remove xxxx软件名</code> 卸载指定的软件包</p>
-</blockquote>
-</li>
-</ul>
-<p>以下示例将会卸载<code>sudo</code>命令:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># yum remove sudo</span></div></pre></td></tr></table></figure></p>
-<ul>
-<li>帮助<blockquote>
-<p>查看更多的关系yum的帮助信息,来更好的了解yum软件包管理机制并且灵活的使用。</p>
-</blockquote>
-</li>
-</ul>
-<p>示例:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># yum --help</span></div><div class="line"><span class="comment"># man yum</span></div></pre></td></tr></table></figure></p>
-<p>##源代码包安装</p>
-<blockquote>
-<p>源码安装不同于二进制包安装，它有着很高的自由度。可以个性化定制。但是也往往存在着缺少编译器而无法正常编译安装以及安装之后配置文件的管理问题。</p>
-</blockquote>
-<p>应用举例:</p>
-<blockquote>
-<p>此处用<code>proftpd</code>举例。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># tar -zxvf proftpd-1.3.3d.tar.gz (解压源码包）</span></div><div class="line"><span class="comment"># cd proftpf-1.3.3d （进入源码包目录）</span></div><div class="line"><span class="comment"># ./config --prefix=/usr/local/proftpd （配置安装路径）</span></div><div class="line"><span class="comment"># make (编译）</span></div><div class="line"><span class="comment"># make install  （安装）</span></div></pre></td></tr></table></figure>
-<blockquote>
-<p>软件下载地址: <a href="http://www.proftpd.org" target="_blank" rel="external">www.proftpd.org</a></p>
-</blockquote>
-<p>其中，配置安装路径是非常必要的，因为源码安装不同于二进制安装。通常没有统一的卸载命令。存在管理不方便以及卸载不干净等问题。因此需要统一指定安装目录。习惯性的，将<code>/usr/local</code>设置为软件的安装目录，后面再跟上软件包的名称建立安装文件夹。</p>
-<p>##脚本安装</p>
-<blockquote>
-<p>过于简单，就不解释了。。。</p>
-</blockquote>
-<p>##APT软件包管理</p>
-<ul>
-<li>搜索软件包<blockquote>
-<p><code>apt-cache search xxx软件包名</code>将会搜索指定的软件包，并列出其所有的相关软件的信息。类似于<code>yum list</code></p>
-</blockquote>
-</li>
-</ul>
-<p>以下示例将会列出<code>sudo</code>命令的软件包:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># apt-cache search sudo</span></div></pre></td></tr></table></figure></p>
-<ul>
-<li>软件包信息<blockquote>
-<p><code>apt-cache show xxx软件包名</code>将会显示软件包的详细信息，并列出其作用介绍。类比于<code>yum info</code>。</p>
-</blockquote>
-</li>
-</ul>
-<p>以下示例将会显示<code>sudo</code>软件有关详细信息:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># apt-cache show sudo</span></div></pre></td></tr></table></figure></p>
-<ul>
-<li>安装<blockquote>
-<p><code>apt-get install xxx软件包名</code>将会安装制定的软件包。</p>
-<ul>
-<li><code>reinstall</code>参数替换install将会覆盖安装制定软件包。</li>
-<li><code>-f</code>参数将会修复安装制定软件包。</li>
-</ul>
-</blockquote>
-</li>
-</ul>
-<p>以下示例将会安装、覆盖安装、修复安装<code>sudo</code>：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># apt-get install sudo (安装）</span></div><div class="line"><span class="comment"># apt-get reinstall sudo （覆盖安装）</span></div><div class="line"><span class="comment"># apt-get install -f sudo （修复安装）</span></div></pre></td></tr></table></figure></p>
-<ul>
-<li>删除卸载<blockquote>
-<p><code>apt-get remove xxx软件包名</code>将会卸载指定的软件包。</p>
-<ul>
-<li><code>autoremove</code>将会自动卸载依赖关系软件包（连同主程序的依赖一起卸载）</li>
-<li><code>--purge</code>连同软件的配置文件一起删除（不保留配置文件）。</li>
-</ul>
-</blockquote>
-</li>
-</ul>
-<p>以下示例将会卸载、连同依赖一起卸载、不保留配置文件卸载<code>sudo</code>：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># apt-get remove sudo (卸载）</span></div><div class="line"><span class="comment"># apt-get autoremove sudo （连同卸载sudo的依赖）</span></div><div class="line"><span class="comment"># apt-get remove --purge （卸载sudo以及配置文件）</span></div></pre></td></tr></table></figure></p>
-<ul>
-<li>更新软件源<blockquote>
-<p><code>apt-get update</code>更新软件源</p>
-</blockquote>
-</li>
-</ul>
-<p>示例:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># apt-get update</span></div></pre></td></tr></table></figure></p>
-<ul>
-<li>更新已安装软件包<blockquote>
-<p><code>apt-get upgrade</code>将会对已经安装的软件包进行更新。</p>
-</blockquote>
-</li>
-</ul>
-<p>示例:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># apt-get upgrade</span></div></pre></td></tr></table></figure></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;RPM软件包管理&quot;&gt;&lt;a href=&quot;#RPM软件包管理&quot; class=&quot;headerlink&quot; title=&quot;RPM软件包管理&quot;&gt;&lt;/a&gt;RPM软件包管理&lt;/h1&gt;&lt;h3 id=&quot;rpm包管理查询&quot;&gt;&lt;a href=&quot;#rpm包管理查询&quot; class=&quot;headerlink&quot; title=&quot;rpm包管理查询&quot;&gt;&lt;/a&gt;rpm包管理查询&lt;/h3&gt;&lt;p&gt;参数选项:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-a&lt;/code&gt; 查询所有已安装的软件包&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-f&lt;/code&gt; 查询文件所属软件包&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-p&lt;/code&gt; 查询软件包&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-i&lt;/code&gt; 显示软件包信息&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-l&lt;/code&gt; 显示软件包中的文件列表&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-d&lt;/code&gt; 显示被标注为文档的文件列表&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-c&lt;/code&gt; 显示被标注为配置文件的文件列表&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-      <category term="学习笔记" scheme="https://notes.wanghao.work/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="linux" scheme="https://notes.wanghao.work/tags/linux/"/>
-    
-      <category term="rpm" scheme="https://notes.wanghao.work/tags/rpm/"/>
-    
-      <category term="apt" scheme="https://notes.wanghao.work/tags/apt/"/>
-    
-      <category term="yum" scheme="https://notes.wanghao.work/tags/yum/"/>
     
   </entry>
   

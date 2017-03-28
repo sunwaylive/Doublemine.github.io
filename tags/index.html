@@ -5,16 +5,19 @@
   
 
 
-<html class="theme-next muse use-motion">
+<html class="theme-next muse use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
 
 
 
@@ -75,9 +78,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="Hexo, NexT" />
@@ -91,7 +94,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
 
 
 
@@ -111,38 +114,52 @@
 
 
 
-<script type="text/javascript" id="hexo.configuration">
+<script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
+    root: '/',
     scheme: 'Muse',
-    sidebar: {"position":"left","display":"post"},
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
     fancybox: true,
     motion: true,
     duoshuo: {
-      userId: '11339369',
-      author: 'Author'
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
   };
 </script>
 
 
 
-
   <link rel="canonical" href="https://notes.wanghao.work/tags/"/>
+
+
+
 
 
   <title>
   
 
   
-    标签 | Doublemine
+    tags | Doublemine
   
 </title>
 </head>
 
-<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
+
+
+
+
 
 
 
@@ -158,29 +175,33 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container sidebar-position-right  ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">Doublemine</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Doublemine</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
   </div>
-  <p class="site-subtitle"></p>
-</div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
 <nav class="site-nav">
@@ -267,6 +288,8 @@
   
 </nav>
 
+
+
  </div>
     </header>
 
@@ -277,14 +300,22 @@
             
 
   <div id="posts" class="posts-expand">
+  <header class="post-header">
+
+	<h2 class="post-title" itemprop="name headline">tags</h2>
+
+
+
+</header>
+
     
     
       <div class="tag-cloud">
         <div class="tag-cloud-title">
-            目前共计 36 个标签
+            目前共计 39 个标签
         </div>
         <div class="tag-cloud-tags">
-          <a href="/tags/Activity/" style="font-size: 12px; color: #ccc">Activity</a> <a href="/tags/Android/" style="font-size: 30px; color: #111">Android</a> <a href="/tags/Android-Studio/" style="font-size: 16.5px; color: #9d9d9d">Android Studio</a> <a href="/tags/Debian/" style="font-size: 12px; color: #ccc">Debian</a> <a href="/tags/Exim4/" style="font-size: 12px; color: #ccc">Exim4</a> <a href="/tags/Git/" style="font-size: 21px; color: #6f6f6f">Git</a> <a href="/tags/Hexo/" style="font-size: 25.5px; color: #404040">Hexo</a> <a href="/tags/IME/" style="font-size: 12px; color: #ccc">IME</a> <a href="/tags/KeyStore/" style="font-size: 12px; color: #ccc">KeyStore</a> <a href="/tags/LeanCloud/" style="font-size: 12px; color: #ccc">LeanCloud</a> <a href="/tags/Linux/" style="font-size: 21px; color: #6f6f6f">Linux</a> <a href="/tags/Mac/" style="font-size: 12px; color: #ccc">Mac</a> <a href="/tags/MySQL/" style="font-size: 12px; color: #ccc">MySQL</a> <a href="/tags/Proxy/" style="font-size: 12px; color: #ccc">Proxy</a> <a href="/tags/Python/" style="font-size: 12px; color: #ccc">Python</a> <a href="/tags/Retrofit/" style="font-size: 12px; color: #ccc">Retrofit</a> <a href="/tags/RxJava/" style="font-size: 12px; color: #ccc">RxJava</a> <a href="/tags/SHELL/" style="font-size: 12px; color: #ccc">SHELL</a> <a href="/tags/Telegram/" style="font-size: 12px; color: #ccc">Telegram</a> <a href="/tags/Tips/" style="font-size: 16.5px; color: #9d9d9d">Tips</a> <a href="/tags/android/" style="font-size: 12px; color: #ccc">android</a> <a href="/tags/apt/" style="font-size: 12px; color: #ccc">apt</a> <a href="/tags/digitalocean/" style="font-size: 12px; color: #ccc">digitalocean</a> <a href="/tags/linux/" style="font-size: 12px; color: #ccc">linux</a> <a href="/tags/rpm/" style="font-size: 12px; color: #ccc">rpm</a> <a href="/tags/shadowsocks/" style="font-size: 12px; color: #ccc">shadowsocks</a> <a href="/tags/yum/" style="font-size: 12px; color: #ccc">yum</a> <a href="/tags/动画/" style="font-size: 12px; color: #ccc">动画</a> <a href="/tags/多说/" style="font-size: 12px; color: #ccc">多说</a> <a href="/tags/影音/" style="font-size: 12px; color: #ccc">影音</a> <a href="/tags/服务器/" style="font-size: 12px; color: #ccc">服务器</a> <a href="/tags/欢迎/" style="font-size: 12px; color: #ccc">欢迎</a> <a href="/tags/激活/" style="font-size: 12px; color: #ccc">激活</a> <a href="/tags/短片/" style="font-size: 12px; color: #ccc">短片</a> <a href="/tags/科学上网/" style="font-size: 12px; color: #ccc">科学上网</a> <a href="/tags/笔记/" style="font-size: 16.5px; color: #9d9d9d">笔记</a>
+          <a href="/tags/Activity/" style="font-size: 12px; color: #ccc">Activity</a> <a href="/tags/Android/" style="font-size: 30px; color: #111">Android</a> <a href="/tags/Android-Studio/" style="font-size: 21px; color: #6f6f6f">Android Studio</a> <a href="/tags/Debian/" style="font-size: 12px; color: #ccc">Debian</a> <a href="/tags/Exim4/" style="font-size: 12px; color: #ccc">Exim4</a> <a href="/tags/FFmpeg/" style="font-size: 12px; color: #ccc">FFmpeg</a> <a href="/tags/Git/" style="font-size: 21px; color: #6f6f6f">Git</a> <a href="/tags/Hexo/" style="font-size: 25.5px; color: #404040">Hexo</a> <a href="/tags/IME/" style="font-size: 12px; color: #ccc">IME</a> <a href="/tags/JNI/" style="font-size: 12px; color: #ccc">JNI</a> <a href="/tags/KeyStore/" style="font-size: 12px; color: #ccc">KeyStore</a> <a href="/tags/LeanCloud/" style="font-size: 12px; color: #ccc">LeanCloud</a> <a href="/tags/Linux/" style="font-size: 21px; color: #6f6f6f">Linux</a> <a href="/tags/Mac/" style="font-size: 12px; color: #ccc">Mac</a> <a href="/tags/MySQL/" style="font-size: 12px; color: #ccc">MySQL</a> <a href="/tags/NDK/" style="font-size: 12px; color: #ccc">NDK</a> <a href="/tags/Proxy/" style="font-size: 12px; color: #ccc">Proxy</a> <a href="/tags/Python/" style="font-size: 12px; color: #ccc">Python</a> <a href="/tags/Retrofit/" style="font-size: 12px; color: #ccc">Retrofit</a> <a href="/tags/RxJava/" style="font-size: 12px; color: #ccc">RxJava</a> <a href="/tags/SHELL/" style="font-size: 12px; color: #ccc">SHELL</a> <a href="/tags/Telegram/" style="font-size: 12px; color: #ccc">Telegram</a> <a href="/tags/Tips/" style="font-size: 16.5px; color: #9d9d9d">Tips</a> <a href="/tags/android/" style="font-size: 12px; color: #ccc">android</a> <a href="/tags/apt/" style="font-size: 12px; color: #ccc">apt</a> <a href="/tags/digitalocean/" style="font-size: 12px; color: #ccc">digitalocean</a> <a href="/tags/linux/" style="font-size: 12px; color: #ccc">linux</a> <a href="/tags/rpm/" style="font-size: 12px; color: #ccc">rpm</a> <a href="/tags/shadowsocks/" style="font-size: 12px; color: #ccc">shadowsocks</a> <a href="/tags/yum/" style="font-size: 12px; color: #ccc">yum</a> <a href="/tags/动画/" style="font-size: 12px; color: #ccc">动画</a> <a href="/tags/多说/" style="font-size: 12px; color: #ccc">多说</a> <a href="/tags/影音/" style="font-size: 12px; color: #ccc">影音</a> <a href="/tags/服务器/" style="font-size: 12px; color: #ccc">服务器</a> <a href="/tags/欢迎/" style="font-size: 12px; color: #ccc">欢迎</a> <a href="/tags/激活/" style="font-size: 12px; color: #ccc">激活</a> <a href="/tags/短片/" style="font-size: 12px; color: #ccc">短片</a> <a href="/tags/科学上网/" style="font-size: 12px; color: #ccc">科学上网</a> <a href="/tags/笔记/" style="font-size: 16.5px; color: #9d9d9d">笔记</a>
         </div>
       </div>
     
@@ -316,35 +347,44 @@
 
       
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
                alt="夏末" />
           <p class="site-author-name" itemprop="name">夏末</p>
-          <p class="site-description motion-element" itemprop="description">Keep fucking the world</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
         </div>
         <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">27</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
-          </div>
 
           
-            <div class="site-state-item site-state-categories">
-              
-                <span class="site-state-item-count">9</span>
-                <span class="site-state-item-name">分类</span>
-              
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
             </div>
           
 
           
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
             <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">36</span>
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -433,7 +473,12 @@
           </div>
         
 
+        
+
+
       </section>
+
+      
 
       
 
@@ -457,6 +502,7 @@
   <span class="author" itemprop="copyrightHolder">夏末</span>
 </div>
 
+
 <div class="powered-by">
   由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
 </div>
@@ -468,15 +514,20 @@
   </a>
 </div>
 
+
         
 
         
       </div>
     </footer>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
   </div>
 
   
@@ -496,6 +547,9 @@
 
 
   
+
+
+
 
 
 
@@ -521,58 +575,66 @@
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
-
-
-
-  
-  
-
-  
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
 
 
 
   
-
-  
-    
   
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"doublemine"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
-    
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
   
 
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+	
 
 
 
 
 
   
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "ab25f03b76f745679d8e34f72217e141",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
   
 
+
+
+
+
+
+
+
+
+
   
+
+
+
+
 
   
 
@@ -686,6 +748,9 @@
   
 
   
+
+  
+
 
 </body>
 </html>

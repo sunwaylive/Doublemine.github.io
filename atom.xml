@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://notes.wanghao.work/"/>
-  <updated>2016-11-24T14:11:04.000Z</updated>
+  <updated>2017-03-28T14:00:23.000Z</updated>
   <id>https://notes.wanghao.work/</id>
   
   <author>
@@ -14,6 +14,186 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Android Studio生成Java方法描述符</title>
+    <link href="https://notes.wanghao.work/2017-03-21-Android-Studio%E6%94%AF%E6%8C%81%E7%94%9F%E6%88%90Java-Native%E6%96%B9%E6%B3%95%E7%AD%BE%E5%90%8D.html"/>
+    <id>https://notes.wanghao.work/2017-03-21-Android-Studio支持生成Java-Native方法签名.html</id>
+    <published>2017-03-21T13:32:50.000Z</published>
+    <updated>2017-03-28T14:00:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在日常的Android NDK开发中，会不可避免的用到C与Java代码相互调用的情况。Java调用C的方法还好，C调用Java的方法就比较麻烦了。需要编写看着就头疼的Java方法描述符才能正确的调用Java方法。</p>
+<p>其中常见的Java方法域和描述符如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Java类型</th>
+<th style="text-align:center">签名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center">Z</td>
+</tr>
+<tr>
+<td style="text-align:center">Byte</td>
+<td style="text-align:center">B</td>
+</tr>
+<tr>
+<td style="text-align:center">Char</td>
+<td style="text-align:center">C</td>
+</tr>
+<tr>
+<td style="text-align:center">Short</td>
+<td style="text-align:center">S</td>
+</tr>
+<tr>
+<td style="text-align:center">Int</td>
+<td style="text-align:center">I</td>
+</tr>
+<tr>
+<td style="text-align:center">Long</td>
+<td style="text-align:center">J</td>
+</tr>
+<tr>
+<td style="text-align:center">Float</td>
+<td style="text-align:center">F</td>
+</tr>
+<tr>
+<td style="text-align:center">Double</td>
+<td style="text-align:center">D</td>
+</tr>
+<tr>
+<td style="text-align:center">Fully-qualified-class</td>
+<td style="text-align:center">Lfully-qualified-class</td>
+</tr>
+<tr>
+<td style="text-align:center">type[]</td>
+<td style="text-align:center">[type</td>
+</tr>
+<tr>
+<td style="text-align:center">Method type</td>
+<td style="text-align:center">(arg-type)ret-type</td>
+</tr>
+</tbody>
+</table>
+<p>通过上述对照表，我们可以通过C代码查找一个为<code>String</code>类型的Java静态字段，例如:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">jfieldID staticJavaFieldId;</div><div class="line">staticJavaFieldId = env-&gt;GetStaticFieldID(clazz, <span class="string">"mStaticField"</span>, <span class="string">"Ljava/lang/String;"</span>);</div><div class="line"><span class="comment">/**</span></div><div class="line">* do something...</div><div class="line">**/</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<hr>
+<p>当然，这不是这篇文章的重点。如果你拥有超凡的记忆力能够一眼脑补出需要操作的Java对象对应的在虚拟机的描述符的话，那么可以不用往下看了。否则，可能都会觉得这种方法并不可靠。毕竟我们不可能记住所有的类型对应的域和描述符。好在JDK为我们提供了这样的一个命令行工具<code>javap</code>.</p>
+<p>借助<code>javap</code>我们可以很方便的得知一个<code>class</code>文件其中包含对应的描述符。如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">javap -s -p com.xiamo.test.Message</div><div class="line">Compiled from &quot;Message.java&quot;</div><div class="line">public class com.xiamo.test.Message &#123;</div><div class="line">  private static final java.lang.String TAG;</div><div class="line">    descriptor: Ljava/lang/String;</div><div class="line">  public static final int CHECK_POINT;</div><div class="line">    descriptor: I</div><div class="line">  public static final int ERROR_NOT_SERVER;</div><div class="line">    descriptor: I</div><div class="line">  public int errorCode;</div><div class="line">    descriptor: I</div><div class="line">  public java.lang.String message;</div><div class="line">    descriptor: Ljava/lang/String;</div><div class="line">  public com.xiamo.test.Message();</div><div class="line">    descriptor: ()V</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在日常的Android NDK开发中，会不可避免的用到C与Java代码相互调用的情况。Java调用C的方法还好，C调用Java的方法就比较麻烦了。需要编写看着就头疼的Java方法描述符才能正确的调用Java方法。&lt;/p&gt;
+&lt;p&gt;其中常见的Java方法域和描述符如下表所示：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;Java类型&lt;/th&gt;
+&lt;th style=&quot;text-align:center&quot;&gt;签名&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Boolean&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Z&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Byte&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;B&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Char&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;C&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Short&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;S&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Int&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;I&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Long&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;J&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Float&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;F&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Double&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;D&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Fully-qualified-class&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Lfully-qualified-class&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;type[]&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;[type&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;Method type&lt;/td&gt;
+&lt;td style=&quot;text-align:center&quot;&gt;(arg-type)ret-type&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;通过上述对照表，我们可以通过C代码查找一个为&lt;code&gt;String&lt;/code&gt;类型的Java静态字段，例如:&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;jfieldID staticJavaFieldId;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;staticJavaFieldId = env-&amp;gt;GetStaticFieldID(clazz, &lt;span class=&quot;string&quot;&gt;&quot;mStaticField&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;Ljava/lang/String;&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;* do something...&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;**/&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="Android" scheme="https://notes.wanghao.work/tags/Android/"/>
+    
+      <category term="Android Studio" scheme="https://notes.wanghao.work/tags/Android-Studio/"/>
+    
+      <category term="JNI" scheme="https://notes.wanghao.work/tags/JNI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>FFmpeg折腾笔记之编译FFmpeg</title>
+    <link href="https://notes.wanghao.work/2017-01-13-FFmpeg%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0%E4%B9%8B%E7%BC%96%E8%AF%91FFmpeg.html"/>
+    <id>https://notes.wanghao.work/2017-01-13-FFmpeg折腾笔记之编译FFmpeg.html</id>
+    <published>2017-01-13T13:58:04.000Z</published>
+    <updated>2017-03-13T16:36:05.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>​        又有很久没有写新的文章了，感觉再不写点什么东西博客草都长满了。于是打算折腾下FFmpeg，记录下折腾的过程，以熟悉Android NDK开发的基本操作。过程中有地方有错误欢迎指出，如果你对这个方面有所了解，欢迎讨论指教。</p>
+<h4 id="编译环境"><a href="#编译环境" class="headerlink" title="编译环境"></a>编译环境</h4><ul>
+<li><a href="https://ffmpeg.org/releases/ffmpeg-2.8.11.tar.bz2" target="_blank" rel="external">FFmpeg 2.8.11 “Feynman”</a></li>
+<li>Mac OS X </li>
+<li>NDK  <code>14.0.3770861</code></li>
+</ul>
+<p>下载完成FFmpeg源码之后，先对源码根目录中的<code>configure</code>文件进行修改以适应Android平台。因为默认编译出来的动态库文件版本号在<code>.so</code>之后，例如：<code>libavcodec.so.56.60.100</code>。Android平台对这种格式不能很好的识别（如果你不介意一个一个修改文件名的话）。通过<code>Vim</code>或者其他文本编辑器打开<code>configure</code>文件的第<code>2934</code>行（如果你下载的FFmpeg版本和我的一样的话）将:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SLIBNAME_WITH_MAJOR=&apos;$(SLIBNAME).$(LIBMAJOR)&apos;</div><div class="line">LIB_INSTALL_EXTRA_CMD=&apos;$$(RANLIB) &quot;$(LIBDIR)/$(LIBNAME)&quot;&apos;</div><div class="line">SLIB_INSTALL_NAME=&apos;$(SLIBNAME_WITH_VERSION)&apos;</div><div class="line">SLIB_INSTALL_LINKS=&apos;$(SLIBNAME_WITH_MAJOR) $(SLIBNAME)&apos;</div></pre></td></tr></table></figure>
+<p>修改为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SLIBNAME_WITH_MAJOR=&apos;$(SLIBPREF)$(FULLNAME)-$(LIBMAJOR)$(SLIBSUF)&apos;  </div><div class="line">LIB_INSTALL_EXTRA_CMD=&apos;$$(RANLIB)&quot;$(LIBDIR)/$(LIBNAME)&quot;&apos;  </div><div class="line">SLIB_INSTALL_NAME=&apos;$(SLIBNAME_WITH_MAJOR)&apos;  </div><div class="line">SLIB_INSTALL_LINKS=&apos;$(SLIBNAME)&apos;</div></pre></td></tr></table></figure>
+<p>后保存。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;​        又有很久没有写新的文章了，感觉再不写点什么东西博客草都长满了。于是打算折腾下FFmpeg，记录下折腾的过程，以熟悉Android NDK开发的基本操作。过程中有地方有错误欢迎指出，如果你对这个方面有所了解，欢迎讨论指教。&lt;/p&gt;
+&lt;h4 id=&quot;编译环境&quot;
+    
+    </summary>
+    
+    
+      <category term="Android" scheme="https://notes.wanghao.work/tags/Android/"/>
+    
+      <category term="FFmpeg" scheme="https://notes.wanghao.work/tags/FFmpeg/"/>
+    
+      <category term="NDK" scheme="https://notes.wanghao.work/tags/NDK/"/>
+    
+  </entry>
   
   <entry>
     <title>Mac自带VNC Client</title>
@@ -1473,187 +1653,6 @@
       <category term="digitalocean" scheme="https://notes.wanghao.work/tags/digitalocean/"/>
     
       <category term="科学上网" scheme="https://notes.wanghao.work/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux学习笔记-Shell变量</title>
-    <link href="https://notes.wanghao.work/2015-06-02-Shell%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html"/>
-    <id>https://notes.wanghao.work/2015-06-02-Shell学习笔记.html</id>
-    <published>2015-06-02T01:14:41.000Z</published>
-    <updated>2016-11-06T01:31:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在Bash中，变量的默认类型都是字符串类型的，Shell编程中，使用变量无需事先声。<br><a id="more"></a></p>
-<p>###变量的命名规范</p>
-<p>变量名的命名须遵循如下规则：</p>
-<ul>
-<li>首个字符必须为字母（a-z，A-Z）</li>
-<li>中间不能有空格，可以使用下划线(_)</li>
-<li>不能使用标点符号</li>
-<li>不能使用bash里的关键字（可用help命令查看保留关键字）</li>
-</ul>
-<p>###变量的分类</p>
-<blockquote>
-<ul>
-<li><p>用户自定义变量：用户可以自己定义。</p>
-</li>
-<li><p>环境变量：这种变量中主要保存的是和系统操作环境相关的数据。变量可以自动一，但是对系统生效的环境变量名和变量作用是固定的。</p>
-</li>
-<li><p>位置参数变量：这种变量主要是用来向脚本当中传递参数或者数据的，变量名不能自定义，变量作用是固定的。</p>
-</li>
-<li><p>位置参数变量：是Bash中已经定义好的变量，变量名不能自定义，变量作用也是固定的。</p>
-</li>
-</ul>
-</blockquote>
-<p>####定义变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">变量名=变量值  (等号 =两边不能带空格)</div></pre></td></tr></table></figure>
-<p>####变量调用</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> $变量名</div></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">如下示例:</div><div class="line"><span class="built_in">echo</span> <span class="variable">$x</span></div><div class="line"><span class="built_in">echo</span> <span class="variable">$name</span></div></pre></td></tr></table></figure>
-<p>####变量叠加</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">x=123</div><div class="line">x=<span class="string">"<span class="variable">$x</span>"</span>456</div><div class="line">x=<span class="variable">$&#123;x&#125;</span>789</div></pre></td></tr></table></figure>
-<p>最终使用<code>echo $x</code>将输出<code>123456789</code></p>
-<p>####变量查看</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">set</span></div><div class="line">    选项:</div><div class="line">        -u 如果设定此选项，调用未声明变量时会报错（默认无任何提示）</div></pre></td></tr></table></figure>
-<p>####变量的删除</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">unset</span> 变量名  （注意，此处不能加$符号）</div></pre></td></tr></table></figure>
-<p>###环境变量</p>
-<p>环境变量和用户自定义变量的区别:</p>
-<blockquote>
-<ul>
-<li><p>用户自定义变量只在当前的shell中生效，环境变量在当前shell和这个shell的所有子shell中生效。</p>
-</li>
-<li><p>环境变量是全局变量，用户自定义变量是局部变量。</p>
-</li>
-<li><p>对系统生效的环境变量名和变量作用是固定的。</p>
-</li>
-</ul>
-</blockquote>
-<p>####设置环境变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> 变量名=变量值</div><div class="line"></div><div class="line">变量名=变量值</div><div class="line"><span class="built_in">export</span> 变量名</div></pre></td></tr></table></figure>
-<p>####查看环境变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">set</span> <span class="comment">#查看所有变量</span></div><div class="line">env <span class="comment">#查看环境变量</span></div></pre></td></tr></table></figure>
-<p>####常用环境变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">HOSTNAME：主机名</div><div class="line">SHELL：当前的shell</div><div class="line">TREM：终端环境</div><div class="line">HISTSIZE：历史命令条数</div><div class="line">SSH_CLIENT：当前操作环境是用ssh链接的，这里记录客户端的ip</div><div class="line">SSH_TTY：ssh连接的终端是pts/1</div><div class="line">USER:当前登录的用户</div></pre></td></tr></table></figure>
-<p>####PATH变量</p>
-<blockquote>
-<p><code>PATH</code>变量：系统查找命令的路径。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span>    <span class="comment">#查看PATH变量的值</span></div><div class="line">PATH=<span class="string">"<span class="variable">$PATH</span>"</span>:/root/sh    <span class="comment">#增加PATH变量的值</span></div></pre></td></tr></table></figure>
-<p>####PS1变量</p>
-<blockquote>
-<p><code>PS1</code>变量：命令提示符设置</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- \d 显示日期，格式为”星期 月 日“</div><div class="line">- \H 显示完整的主机名<span class="string">"localhost.localdomain"</span></div><div class="line">- \t 显示24小时制时间，格式为<span class="string">"HH:MM:SS"</span></div><div class="line">- \A 显示24小时制时间，格式为<span class="string">"HH:MM"</span></div><div class="line">- \u 显示当前用户名</div><div class="line">- \w 显示当前所在目录的完整名称</div><div class="line">- \W 显示当前所在目录的最后一个目录</div><div class="line">- \$ 提示符、如果是root用户会显示提示符为<span class="string">"#"</span>,如果是普通用户会显示提示符为<span class="string">"$"</span></div></pre></td></tr></table></figure>
-<p>####当前语系查询</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># locale    #查询当前语系</span></div><div class="line">    -LANG    定义系统主要语系（当前生效语系）</div><div class="line">    -LC:ALL    定义整体语系的变量（下次启动可能会生效）</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="variable">$LANG</span>    <span class="comment">#查看系统当前语系</span></div><div class="line"></div><div class="line">locale <span class="_">-a</span> | more    <span class="comment">#查看linux支持的所有语系</span></div><div class="line"></div><div class="line">cat /et/sysconfig/i18n    <span class="comment">#查询系统的默认语系（开机生效读取的语系环境）</span></div></pre></td></tr></table></figure>
-<p>####Linux中文支持</p>
-<blockquote>
-<p>前提条件：正确安装中文字体和中文语系。</p>
-<ul>
-<li>如果有图形界面，可以正确支持中文显示。</li>
-<li>如果使用第三方远程工具，只要语系设定正确，可以支持中文显示。</li>
-<li>如果使用纯字符界面，必须使用第三方插件（zhcon等）</li>
-</ul>
-</blockquote>
-<p>###位置参数变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$n</span>    n为数字，<span class="variable">$0</span>代表命令本身，<span class="variable">$1</span>~<span class="variable">$9</span>代表第一到第九个参数，十以上的参数需要用到大括号包含，如<span class="variable">$&#123;10&#125;</span>。</div><div class="line">$*    这个变量代表命令行中所有的参数，$*把所有的参数看作是一个整体。</div><div class="line"><span class="variable">$@</span>    这个变量也代表命令行中所有的参数，不过<span class="variable">$@</span>把每个参数区分呢对待。</div><div class="line"><span class="variable">$#</span>    这个变量代表命令行中所有参数的个数</div></pre></td></tr></table></figure>
-<blockquote>
-<p>$n 使用示例<code>sum.sh</code></p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line">num=<span class="variable">$1</span></div><div class="line">num2=<span class="variable">$2</span></div><div class="line">sum=$((<span class="variable">$num1</span>+num2))</div></pre></td></tr></table></figure>
-<p>执行上述<code>sum.sh</code>脚本:</p>
-<pre><code>./sum.sh 100 200
-</code></pre><p>输出为300</p>
-<blockquote>
-<p>$* $@ $# 使用示例 <code>sum1.sh</code></p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"\$* 参数是: $*"</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"\@* 参数是: <span class="variable">$@</span>"</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"\#* 参数个数是: <span class="variable">$#</span>"</span></div></pre></td></tr></table></figure>
-<blockquote>
-<p>$* $@ 使用示例 <code>sum2.sh</code></p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">"$*"</span></div><div class="line"></div><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">"$*"</span></div><div class="line">    $*中的所有参数看成是一个整体，所以这个<span class="keyword">for</span>循环只会循环一次。</div><div class="line">	<span class="keyword">do</span></div><div class="line">		<span class="built_in">echo</span> <span class="string">" The parameter is : <span class="variable">$i</span>"</span></div><div class="line">	<span class="keyword">done</span></div><div class="line"><span class="keyword">for</span> y <span class="keyword">in</span> <span class="string">"<span class="variable">$@</span>"</span></div><div class="line">    <span class="variable">$@</span>中的每个参数都看很是独立的，所有<span class="string">"<span class="variable">$@</span>"</span>中有几个参数，就会循环几次</div><div class="line">	<span class="keyword">do</span></div><div class="line">		<span class="built_in">echo</span> <span class="string">"Parameter : <span class="variable">$y</span> "</span></div><div class="line">	<span class="keyword">done</span></div></pre></td></tr></table></figure>
-<p>###预定义变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$? 最后一次执行的命令的返回状态。如果这个变量的值为0，证明上一个命令正确执行；如果这个变量的值非0（具体是哪个数，由命令自己决定），则证明上一个命令执行不正确了。</div><div class="line">$$ 当前进程的进程号（PID）</div><div class="line">$! 后台运行的最后一个进程的进程号（PID）</div></pre></td></tr></table></figure>
-<p>使用示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ls</div><div class="line"><span class="built_in">echo</span> $? <span class="comment">#将在终端打印结果为0</span></div><div class="line"></div><div class="line">ls QERTYUTIYKNB</div><div class="line"><span class="built_in">echo</span> $? <span class="comment">#将在终端打印结果为2（非0）</span></div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>其实，逻辑运算符<code>&amp;&amp;</code>(逻辑与运算）和<code>||</code>（逻辑或运算）就是通过判断前一个命令的返回值来判断命令是否正确执行。</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ls &amp;&amp; <span class="built_in">echo</span> yes</div><div class="line">ls || <span class="built_in">echo</span> no</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在Bash中，变量的默认类型都是字符串类型的，Shell编程中，使用变量无需事先声。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="学习笔记" scheme="https://notes.wanghao.work/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="Linux" scheme="https://notes.wanghao.work/tags/Linux/"/>
-    
-      <category term="SHELL" scheme="https://notes.wanghao.work/tags/SHELL/"/>
-    
-      <category term="笔记" scheme="https://notes.wanghao.work/tags/%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>欢迎</title>
-    <link href="https://notes.wanghao.work/2015-04-29-%E6%AC%A2%E8%BF%8E%E5%85%89%E4%B8%B4%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2.html"/>
-    <id>https://notes.wanghao.work/2015-04-29-欢迎光临我的博客.html</id>
-    <published>2015-04-29T02:02:10.000Z</published>
-    <updated>2016-11-06T01:31:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<a id="more"></a>
-<center><br><br><br><input type="text" id="intext" value="请输入你的英文名" onfocus="this.value=(this.value=='请输入你的英文名')?'':this.value;"><br><br><br><input type="submit" value="显示效果" onclick="xiamo(intext.value)"><br><br></center>
-
-
-
-<script type="text/javascript" src="http://s3.amazonaws.com/codecademy-content/courses/hour-of-code/js/alphabet.js"></script>
-
-<p><div><canvas id="myCanvas" style="width=60%"></canvas></div></p>
-<script type="text/javascript" src="http://s3.amazonaws.com/codecademy-content/courses/hour-of-code/js/bubbles.js"></script>
-<script type="text/javascript">
-
-function xiamo(text_in){
-
-var myName = text_in;
-
-var red = [0, 100, 63];
-var orange = [40, 100, 60];
-var green = [75, 100, 40];
-var blue = [196, 77, 55];
-var purple = [280, 50, 60];
-var letterColors = [red, orange, green, blue, purple];
-
-drawName(myName, letterColors);
-
-if(10 < 3)
-{
-    bubbleShape = 'square';
-}
-else
-{
-    bubbleShape = 'circle';
-}
-
-bounceBubbles();
-}
-xiamo("xiamo's note");
-</script>]]></content>
-    
-    <summary type="html">
-    
-      &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;center&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;input type=&quot;text&quot; id=&quot;intext&quot; value=&quot;请输入你的英文名&quot; onfocus=&quot;this.value=(this.value==&#39;请输入你的英文名&#39;)?&#39;&#39;:this.v
-    
-    </summary>
-    
-      <category term="折腾" scheme="https://notes.wanghao.work/categories/%E6%8A%98%E8%85%BE/"/>
-    
-    
-      <category term="欢迎" scheme="https://notes.wanghao.work/tags/%E6%AC%A2%E8%BF%8E/"/>
     
   </entry>
   

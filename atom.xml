@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://notes.wanghao.work/"/>
-  <updated>2017-03-29T15:53:25.000Z</updated>
+  <updated>2017-05-20T15:29:36.000Z</updated>
   <id>https://notes.wanghao.work/</id>
   
   <author>
@@ -14,6 +14,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MySQL API Drivers安装小记</title>
+    <link href="https://notes.wanghao.work/2017-05-20-%E8%A7%A3%E5%86%B3Mysql%E7%9A%84Python%E9%A9%B1%E5%8A%A8%E5%AE%89%E8%A3%85%E5%A4%B1%E8%B4%A5.html"/>
+    <id>https://notes.wanghao.work/2017-05-20-解决Mysql的Python驱动安装失败.html</id>
+    <published>2017-05-19T18:12:46.000Z</published>
+    <updated>2017-05-20T15:29:36.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>最近需要使用Django写点东西，由于自己的macbook上没有也不打算安装MySQL而是以Docker的MySQL镜像替代，Django文档提供了三种MySQL驱动供选择，官方推荐的是<a href="https://pypi.python.org/pypi/mysqlclient" target="_blank" rel="external"><code>mysqlclient</code></a>,由于我本地没有安装MySQL，所以是没有Native Driver的以至于在安装MySQL驱动的时候遇到了点小问题，在此记录下。</p>
+<hr>
+<a id="more"></a>
+<h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><p>安装<code>mysqlclient</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install mysqlclient</div></pre></td></tr></table></figure>
+<p>然而得到错误信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Collecting mysqlclient</div><div class="line">  Using cached mysqlclient-1.3.10.tar.gz</div><div class="line">    Complete output from command python setup.py egg_info:</div><div class="line">    /bin/sh: mysql_config: command not found</div><div class="line">    Traceback (most recent call last):</div><div class="line">      File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;</div><div class="line">      File &quot;/private/var/folders/ll/d2yyxp555ss1gm613y33hfy80000gn/T/pip-build-mcd2q8ly/mysqlclient/setup.py&quot;, line 17, in &lt;module&gt;</div><div class="line">        metadata, options = get_config()</div><div class="line">      File &quot;/private/var/folders/ll/d2yyxp555ss1gm613y33hfy80000gn/T/pip-build-mcd2q8ly/mysqlclient/setup_posix.py&quot;, line 44, in get_config</div><div class="line">        libs = mysql_config(&quot;libs_r&quot;)</div><div class="line">      File &quot;/private/var/folders/ll/d2yyxp555ss1gm613y33hfy80000gn/T/pip-build-mcd2q8ly/mysqlclient/setup_posix.py&quot;, line 26, in mysql_config</div><div class="line">        raise EnvironmentError(&quot;%s not found&quot; % (mysql_config.path,))</div><div class="line">    OSError: mysql_config not found</div><div class="line"></div><div class="line">    ----------------------------------------</div><div class="line">Command &quot;python setup.py egg_info&quot; failed with error code 1 in /private/var/folders/ll/d2yyxp555ss1gm613y33hfy80000gn/T/pip-build-mcd2q8ly/mysqlclient/</div></pre></td></tr></table></figure>
+<p>因为没有安装MySQL，所以在安装<code>mysqlclient</code>之前还需要安装Connector，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install mysql-connector-c</div></pre></td></tr></table></figure>
+<p>之后安装再安装<code>mysqlclient</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install mysqlclient</div></pre></td></tr></table></figure>
+<p>然后又就报错了，错误信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Collecting mysqlclient</div><div class="line">  Using cached mysqlclient-1.3.10.tar.gz</div><div class="line">    Complete output from command python setup.py egg_info:</div><div class="line">    Traceback (most recent call last):</div><div class="line">      File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;</div><div class="line">      File &quot;/private/var/folders/ll/d2yyxp555ss1gm613y33hfy80000gn/T/pip-build-smwmu1qn/mysqlclient/setup.py&quot;, line 17, in &lt;module&gt;</div><div class="line">        metadata, options = get_config()</div><div class="line">      File &quot;/private/var/folders/ll/d2yyxp555ss1gm613y33hfy80000gn/T/pip-build-smwmu1qn/mysqlclient/setup_posix.py&quot;, line 54, in get_config</div><div class="line">        libraries = [dequote(i[2:]) for i in libs if i.startswith(&apos;-l&apos;)]</div><div class="line">      File &quot;/private/var/folders/ll/d2yyxp555ss1gm613y33hfy80000gn/T/pip-build-smwmu1qn/mysqlclient/setup_posix.py&quot;, line 54, in &lt;listcomp&gt;</div><div class="line">        libraries = [dequote(i[2:]) for i in libs if i.startswith(&apos;-l&apos;)]</div><div class="line">      File &quot;/private/var/folders/ll/d2yyxp555ss1gm613y33hfy80000gn/T/pip-build-smwmu1qn/mysqlclient/setup_posix.py&quot;, line 12, in dequote</div><div class="line">        if s[0] in &quot;\&quot;&apos;&quot; and s[0] == s[-1]:</div><div class="line">    IndexError: string index out of range</div><div class="line"></div><div class="line">    ----------------------------------------</div><div class="line">Command &quot;python setup.py egg_info&quot; failed with error code 1 in /private/var/folders/ll/d2yyxp555ss1gm613y33hfy80000gn/T/pip-build-smwmu1qn/mysqlclient/</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h4><p>通过查找资料得出可能的结论是通过brew安装的<code>mysql-connector-c</code>配置可能不正确，打开<code>/usr/local/bin/mysql_config</code>脚本修改其中的部分内容:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Create options</span></div><div class="line">libs=<span class="string">"-L<span class="variable">$pkglibdir</span>"</span></div><div class="line">libs=<span class="string">"<span class="variable">$libs</span>  -l"</span></div></pre></td></tr></table></figure>
+<p>修改为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># Create options</div><div class="line">libs=&quot;-L$pkglibdir&quot;</div><div class="line">libs=&quot;$libs  -lmysqlclient -lssl -lcrypto&quot;</div></pre></td></tr></table></figure>
+<p>保存，再次安装<code>mysqlclient</code>应该就会正常安装了。接着就可以使用Django和运行在Docker中的MySQL愉快的Coding了～</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h4&gt;&lt;p&gt;最近需要使用Django写点东西，由于自己的macbook上没有也不打算安装MySQL而是以Docker的MySQL镜像替代，Django文档提供了三种MySQL驱动供选择，官方推荐的是&lt;a href=&quot;https://pypi.python.org/pypi/mysqlclient&quot;&gt;&lt;code&gt;mysqlclient&lt;/code&gt;&lt;/a&gt;,由于我本地没有安装MySQL，所以是没有Native Driver的以至于在安装MySQL驱动的时候遇到了点小问题，在此记录下。&lt;/p&gt;
+&lt;hr&gt;
+    
+    </summary>
+    
+    
+      <category term="Python" scheme="https://notes.wanghao.work/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>Android Studio生成Java方法描述符</title>
@@ -1493,180 +1533,6 @@
     
     
       <category term="Hexo" scheme="https://notes.wanghao.work/tags/Hexo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Digitalocean配置shadowsocks服务器、优化笔记</title>
-    <link href="https://notes.wanghao.work/2015-06-17-Digitalocean%E9%85%8D%E7%BD%AEshadowsocks%E6%9C%8D%E5%8A%A1%E5%99%A8-%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0.html"/>
-    <id>https://notes.wanghao.work/2015-06-17-Digitalocean配置shadowsocks服务器-优化笔记.html</id>
-    <published>2015-06-17T15:45:30.000Z</published>
-    <updated>2016-11-06T01:31:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="https://notes.wanghao.work/2015-06-17-Digitalocean%E9%85%8D%E7%BD%AEshadowsocks%E6%9C%8D%E5%8A%A1%E5%99%A8-%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0.html"><img src="http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/digitalocean_logo.jpg" alt="alt text" title="阅读全文"></a></p>
-<a id="more"></a>
-<p><a ahref="#2"></a></p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
-<p>由于博主一段时间更换服务器到<a href="">Digitalocean</a>的伦敦机房，结果发现丢包率以及稳定性都不如原有的旧金山机房，于是又打算更换回来。（想来真是作死啊╮(╯▽╰)╭）</p>
-</blockquote>
-<p>值得一提的是：<a href="https://www.digitalocean.com/?refcode=f07fa4a5aaf1" target="_blank" rel="external">Digitalocean</a>是具有数据、镜像迁移功能的。只不过由于一些这样或者那样的原因，导致博主打算重新安装<code>Shadowsocks</code>。</p>
-<h3 id="Shadowsocks版本"><a href="#Shadowsocks版本" class="headerlink" title="Shadowsocks版本"></a>Shadowsocks版本</h3><p>目前<code>Shadowsocks</code>服务器端拥有四种语言版本，分别是：</p>
-<ul>
-<li><a href="https://github.com/shadowsocks/shadowsocks" target="_blank" rel="external">Shadowsocks-Python</a></li>
-<li><a href="https://github.com/shadowsocks/shadowsocks-libev" target="_blank" rel="external">Shadowsocks-libev</a></li>
-<li><a href="https://github.com/shadowsocks/shadowsocks-go" target="_blank" rel="external">Shadowsocks-Go</a></li>
-<li><a href="https://github.com/shadowsocks/shadowsocks-nodejs" target="_blank" rel="external">Shadowsocks-NodeJS</a></li>
-</ul>
-<p>虽然<a href="https://github.com/shadowsocks/shadowsocks-libev" target="_blank" rel="external">Shadowsocks-libev</a>版本占用内存较低，效率较高，但是考虑到不支持多用户，安装比较麻烦。因此博主采用<a href="https://github.com/shadowsocks/shadowsocks" target="_blank" rel="external">Shadowsocks-Python</a>。好了，废话不多说。下面看准备工作吧。</p>
-<h3 id="Linux发行版本"><a href="#Linux发行版本" class="headerlink" title="Linux发行版本"></a>Linux发行版本</h3><p>Digitalocean 服务器镜像提供了多种选择，博主选择的是<code>Debian 7</code>的32位版本，之所以选择这个版本，基于了以下情况考虑：</p>
-<ul>
-<li>博主还是个新手，由于Shadowsocks作者clowwindy本人也建议除非有必要的理由，否则<a href="https://github.com/shadowsocks/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E" target="_blank" rel="external">不要选择对新手不友好的CentOS</a>。</li>
-<li>虽然Ubuntu对新手更为友好，但是Digitalocean家的Ubuntu系统内核，之后要用到的<a href="http://www.serverspeeder.com/" target="_blank" rel="external">锐速加速</a>不能很好的支持。</li>
-</ul>
-<blockquote>
-<p>锐速仅支持Digitalocean下Ubuntu的<code>ubuntu14.04 x64 3.13.0-24</code>以及、<code>Ubuntu 14.04 x64 vmlinuz-3.13.0-24-generic</code>内核,又由于<code>ubuntu14.04 x64 3.13.0-24</code>内核版本较低，采用这一内核版本，若同时部署anyconnect或者Cisco IPSec VPN，会造成Cisco VPN无法正常使用。并且，开启锐速会影响Anyconnect，暂时没找到解决办法。</p>
-<ul>
-<li>Debian下锐速的支持以及方便的包管理。</li>
-</ul>
-</blockquote>
-<h3 id="安装Shadowsocks"><a href="#安装Shadowsocks" class="headerlink" title="安装Shadowsocks"></a>安装Shadowsocks</h3><blockquote>
-<p>以下操作假定已经取得root权限下操作完成。</p>
-</blockquote>
-<p>执行以下命令，将会安装<code>Shadowsocks-Python</code>版本：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">apt-get update  <span class="comment">#更新软件源</span></div><div class="line"></div><div class="line">apt-get install python-pip  <span class="comment">#安装pip包管理器</span></div><div class="line"></div><div class="line">pip install shadowsocks</div><div class="line"></div><div class="line">apt-get install python-m2crypto     <span class="comment">#安装加密库</span></div></pre></td></tr></table></figure>
-<p>稍等片刻，系统便会自动完成Shadowsocks-Python的安装。此时Shadowsocks-Python便已近安装到系统了，接下编辑Shadowsocks的配置文件。</p>
-<h3 id="配置Shadowsocks"><a href="#配置Shadowsocks" class="headerlink" title="配置Shadowsocks"></a>配置Shadowsocks</h3><p>完成安装之后，我们当然是要配置Shadowsocks服务器的账号咯，Shadowsocks的配置文件是采用JSON格式的，执行以下命令:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/shadowsocks.json <span class="comment">#编辑配置文件</span></div></pre></td></tr></table></figure></p>
-<p>将会在<code>/etc</code>目录下新建一个文本文件，如果没有安装<code>vim</code>，请执行:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install vim     <span class="comment">#安装vim</span></div></pre></td></tr></table></figure></p>
-<p>来完成<code>vim</code>文本编辑器的安装，你也可以只用<code>vi</code>或者<code>nano</code>编辑器来完成文本的配置。</p>
-<h3 id="Shadowsocks-json语法详解"><a href="#Shadowsocks-json语法详解" class="headerlink" title="Shadowsocks.json语法详解"></a>Shadowsocks.json语法详解</h3><ul>
-<li>如果你是当用户只需要一个账号的话，编辑Shadowsocks.json文件的内容为:</li>
-</ul>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"server"</span>:<span class="string">"填写你的服务器ip"</span>, </div><div class="line">    <span class="attr">"server_port"</span>:<span class="number">8388</span>,</div><div class="line">    <span class="attr">"local_address"</span>: <span class="string">"127.0.0.1"</span>,</div><div class="line">    <span class="attr">"local_port"</span>:<span class="number">1080</span>,</div><div class="line">    <span class="attr">"password"</span>:<span class="string">"mypassword"</span>,</div><div class="line">    <span class="attr">"timeout"</span>:<span class="number">300</span>,</div><div class="line">    <span class="attr">"method"</span>:<span class="string">"aes-256-cfb"</span>,</div><div class="line">    <span class="attr">"fast_open"</span>: <span class="literal">false</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>如果要设置多个端口号和密码，则使用下面的配置：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"server"</span>:<span class="string">"填写你的服务器IP"</span>, </div><div class="line">    <span class="attr">"local_address"</span>: <span class="string">"127.0.0.1"</span>,</div><div class="line">    <span class="attr">"local_port"</span>:<span class="number">1080</span>,</div><div class="line">    <span class="attr">"port_password"</span>:&#123;</div><div class="line">         <span class="attr">"端口1"</span>:<span class="string">"密码"</span>,</div><div class="line">         <span class="attr">"端口2"</span>:<span class="string">"密码"</span>,</div><div class="line">         <span class="attr">"端口3"</span>:<span class="string">"密码"</span>,</div><div class="line">         <span class="attr">"端口4"</span>:<span class="string">"密码"</span>,</div><div class="line">         <span class="attr">"端口5"</span>:<span class="string">"密码"</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">"timeout"</span>:<span class="number">300</span>,</div><div class="line">    <span class="attr">"method"</span>:<span class="string">"aes-256-cfb"</span>, </div><div class="line">    <span class="attr">"fast_open"</span>: <span class="literal">false</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>字段对应的含义如下表：</p>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>server</td>
-<td>填写你的服务器ip地址</td>
-</tr>
-<tr>
-<td>server_port</td>
-<td>填写服务器的端口号</td>
-</tr>
-<tr>
-<td>local_port</td>
-<td>填写本地监听地址，一般为127.0.0.1</td>
-</tr>
-<tr>
-<td>local_port</td>
-<td>填写本地端口号（一般为1080）</td>
-</tr>
-<tr>
-<td>password</td>
-<td>填写你的Shadowsocks密码</td>
-</tr>
-<tr>
-<td>timeout</td>
-<td>超时时间，单位为秒</td>
-</tr>
-<tr>
-<td>method</td>
-<td><a href="https://github.com/shadowsocks/shadowsocks/wiki/Encryption" target="_blank" rel="external">加密方式</a>，推荐使用aes-256-cfb加密</td>
-</tr>
-<tr>
-<td>fast_open</td>
-<td>打开或者关闭<a href="https://github.com/shadowsocks/shadowsocks/wiki/TCP-Fast-Open" target="_blank" rel="external">TCP TASTOPEN</a></td>
-</tr>
-</tbody>
-</table>
-<p>编辑完毕，保存退出即可。接来下我们就可以使用以下命令来运行我们的Shadowsocks服务器啦~</p>
-<ul>
-<li>前台运行</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssserver -c /etc/shadowsocks.json</div></pre></td></tr></table></figure>
-<ul>
-<li>后台运行</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ssserver -c /etc/shadowsocks.json <span class="_">-d</span> start  <span class="comment">#开始</span></div><div class="line"></div><div class="line">ssserver -c /etc/shadowsocks.json <span class="_">-d</span> stop   <span class="comment">#停止</span></div></pre></td></tr></table></figure>
-<h3 id="加入开机自启"><a href="#加入开机自启" class="headerlink" title="加入开机自启"></a>加入开机自启</h3><p>虽然这样子就可以运行Shadowsocks了，但是我们肯定不希望每次我们重启服务器之后还要手动启动Shadowsocks吧，因此，我们需要将Shadowsocks设置为开机自启。</p>
-<p>设置过程也非常的简单，只需要编辑<code>/etc/rc.local</code>文件，加入Shadowsocks命令即可。</p>
-<p>执行以下命令:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/rc.local       <span class="comment">#编辑rc.local文件</span></div></pre></td></tr></table></figure></p>
-<p>默认是什么都没有的空文件，如果原本有内容，只需要在<code>exit 0</code>前面加上<code>/usr/local/bin/ssserver -c /etc/shadowsocks.json -d start</code>然后退出保存即可。</p>
-<p>到此，Shadowsocks-Python的安装配置就完成啦，通过我们本地的客户端连上服务器，连接<a href="https://www.youtube.com/watch?v=-YGDyPAwQz0" target="_blank" rel="external">YouTube</a>测试下速度，是这个样子的：<br><img src="http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/1134591194eba9a1aao.jpg" alt=""></p>
-<p>嗯，600左右的速度，远远达不到我们心目中想要的那个速度~接下来就是我们的优化时间啦~</p>
-<h3 id="内核部分的优化"><a href="#内核部分的优化" class="headerlink" title="内核部分的优化"></a>内核部分的优化</h3><p><strong>十分感谢@Way在本博文的留言所反馈的问题，针对这个问题，我重写编写了内核优化部分的配置，来解决通过Shadowsocks下载文件可能导致Shadowsocks-Python服务器端内存占用”过高”而被系统Kill的问题，该问题是因为内核参数调的太高而引起的内存异常占用。因此下面的<code>启用hybla算法</code>部分配置作废，已经配置过的朋友们请在<code>/etc/rc.local</code>文件中删除以下两句命令并重启系统再按照本部分重新配置，对此造成的不便深表歉意！</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#请删除以下两句并重启系统来使异常的配置不生效</span></div><div class="line">/sbin/sysctl -p /etc/sysctl.d/local.conf</div><div class="line"></div><div class="line"><span class="built_in">ulimit</span> -n 51200</div></pre></td></tr></table></figure>
-<p><strong><em>接下来就是我们重新配置的时间啦~</em></strong></p>
-<p>编辑<code>/etc/sysctl.conf</code>文件，将文件原内容全部使用<code>#</code>号注释，如果你不在意的话，也可以清空这个文件的内容，然后再添加以下内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">fs.file-max = 51200</div><div class="line">net.core.rmem_max = 67108864</div><div class="line">net.core.wmem_max = 67108864</div><div class="line">net.core.netdev_max_backlog = 250000</div><div class="line">net.core.somaxconn = 4096</div><div class="line">net.ipv4.tcp_syncookies = 1</div><div class="line">net.ipv4.tcp_tw_reuse = 1</div><div class="line">net.ipv4.tcp_tw_recycle = 0</div><div class="line">net.ipv4.tcp_fin_timeout = 30</div><div class="line">net.ipv4.tcp_keepalive_time = 1200</div><div class="line">net.ipv4.ip_local_port_range = 10000 65000</div><div class="line">net.ipv4.tcp_max_syn_backlog = 8192</div><div class="line">net.ipv4.tcp_max_tw_buckets = 5000</div><div class="line">net.ipv4.tcp_rmem = 4096 87380 67108864</div><div class="line">net.ipv4.tcp_wmem = 4096 65536 67108864</div><div class="line">net.ipv4.tcp_mtu_probing = 1</div><div class="line">net.ipv4.tcp_congestion_control = hybla</div></pre></td></tr></table></figure>
-<p>这样我们内核的参数就重新调整完成了，</p>
-<p>编辑<code>/etc/security/limits.conf</code>文件，在文件末尾加入以下内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">* soft nofile 51200</div><div class="line">* hard nofile 51200</div></pre></td></tr></table></figure>
-<p>编辑<code>/etc/pam.d/common-session</code>文件，在文件末尾加入以下内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">session required pam_limits.so</div></pre></td></tr></table></figure>
-<p>编辑<code>/etc/profile</code>文件，在文件末尾加入以下内容：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">ulimit</span> -SHn 51200</div></pre></td></tr></table></figure></p>
-<p>配置完成之后，重启下系统，重启完成之后，执行以下命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">ulimit</span> -n</div></pre></td></tr></table></figure></p>
-<p>如果没有什么特殊情况，应该会得到<code>51200</code>这个结果，这就是我们想要的结果咯~这样子配置之后，就不用将<code>ulimit -n 51200</code>这句命令添加到<code>`/etc/rc.local</code>中了。这样子Shadowsocks优化就完成了，如果你使用了这部分的配置，那么下面的<code>启用hybla算法</code>部分的配置请直接跳过，因为可能会造成Shadowsocks下载文件内存异常占用而被kill的问题。</p>
-<h3 id="启用hybla算法（已弃用）"><a href="#启用hybla算法（已弃用）" class="headerlink" title="启用hybla算法（已弃用）"></a><del>启用hybla算法（已弃用）</del></h3><p><strong><del>按照此方法配置可能会造成Shadowsocks下载文件而导致Shadowsocks服务器端内存异常占用而被kill，请参考上面<code>内核部分的优化</code>的配置来替换，本部分配置已经弃用！</del></strong></p>
-<p><del>在<code>/etc/sysctl.d</code>目录下创建<code>local.conf</code>文件：</del></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">vim /etc/sysctl.d/local.conf</div><div class="line">```language</div></pre></td></tr></table></figure>
-<p><del>添加以下内容:</del></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># max open files</span></div><div class="line">fs.file-max = 51200</div><div class="line"><span class="comment"># max read buffer</span></div><div class="line">net.core.rmem_max = 67108864</div><div class="line"><span class="comment"># max write buffer</span></div><div class="line">net.core.wmem_max = 67108864</div><div class="line"><span class="comment"># default read buffer</span></div><div class="line">net.core.rmem_default = 65536</div><div class="line"><span class="comment"># default write buffer</span></div><div class="line">net.core.wmem_default = 65536</div><div class="line"><span class="comment"># max processor input queue</span></div><div class="line">net.core.netdev_max_backlog = 4096</div><div class="line"><span class="comment"># max backlog</span></div><div class="line">net.core.somaxconn = 4096</div><div class="line"></div><div class="line"><span class="comment"># resist SYN flood attacks</span></div><div class="line">net.ipv4.tcp_syncookies = 1</div><div class="line"><span class="comment"># reuse timewait sockets when safe</span></div><div class="line">net.ipv4.tcp_tw_reuse = 1</div><div class="line"><span class="comment"># turn off fast timewait sockets recycling</span></div><div class="line">net.ipv4.tcp_tw_recycle = 0</div><div class="line"><span class="comment"># short FIN timeout</span></div><div class="line">net.ipv4.tcp_fin_timeout = 30</div><div class="line"><span class="comment"># short keepalive time</span></div><div class="line">net.ipv4.tcp_keepalive_time = 1200</div><div class="line"><span class="comment"># outbound port range</span></div><div class="line">net.ipv4.ip_local_port_range = 10000 65000</div><div class="line"><span class="comment"># max SYN backlog</span></div><div class="line">net.ipv4.tcp_max_syn_backlog = 4096</div><div class="line"><span class="comment"># max timewait sockets held by system simultaneously</span></div><div class="line">net.ipv4.tcp_max_tw_buckets = 5000</div><div class="line"><span class="comment"># turn on TCP Fast Open on both client and server side</span></div><div class="line">net.ipv4.tcp_fastopen = 3</div><div class="line"><span class="comment"># TCP receive buffer</span></div><div class="line">net.ipv4.tcp_rmem = 4096 87380 67108864</div><div class="line"><span class="comment"># TCP write buffer</span></div><div class="line">net.ipv4.tcp_wmem = 4096 65536 67108864</div><div class="line"><span class="comment"># turn on path MTU discovery</span></div><div class="line">net.ipv4.tcp_mtu_probing = 1</div><div class="line"></div><div class="line"><span class="comment"># for high-latency network</span></div><div class="line">net.ipv4.tcp_congestion_control = hybla</div><div class="line"></div><div class="line"><span class="comment"># for low-latency network, use cubic instead</span></div><div class="line"><span class="comment"># net.ipv4.tcp_congestion_control = cubic</span></div></pre></td></tr></table></figure>
-<p><del>然后保存退出，执行以下命令:</del><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sysctl --system</div></pre></td></tr></table></figure></p>
-<p><del>或者执行以下命令：</del><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sysctl -p /etc/sysctl.d/local.conf</div></pre></td></tr></table></figure></p>
-<p><del>待命令执行完毕，请<strong>务必执行以下命令</strong>:</del><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">ulimit</span> -n 51200</div></pre></td></tr></table></figure></p>
-<p><del>&gt;为了在重启系统的时候 ，这些优化也生效，所以我们需要在<code>/etc/rc.local</code>中的<code>exit 0</code>前面加入这两句:</del><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/sbin/sysctl -p /etc/sysctl.d/local.conf</div><div class="line"></div><div class="line">ulimit -n 51200</div></pre></td></tr></table></figure></p>
-<p>至此，Shadowsocks的优化也就结束了。但是现在的速度并没有提升太多，所以接下来需要安装<a href="http://www.serverspeeder.com/" target="_blank" rel="external">锐速</a>加速器了，它提供了20M的免费版本，个人使用时足够了。</p>
-<h3 id="安装锐速"><a href="#安装锐速" class="headerlink" title="安装锐速"></a>安装锐速</h3><ul>
-<li>首先，要去锐速官网注册一个账户，<a href="http://www.serverspeeder.com/" target="_blank" rel="external">传送门</a></li>
-<li>然后，<a href="http://my.serverspeeder.com/w.do?m=lsl" target="_blank" rel="external">在此页面得到锐速的下载地址</a>。</li>
-<li>在服务器上执行以下命令来完成锐速的安装:</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wget http://my.serverspeeder.com/d/ls/serverSpeederInstaller.tar.gz     <span class="comment">#获取锐速安装文件</span></div><div class="line"></div><div class="line">tar zxvf serverSpeederInstaller.tar.gz      <span class="comment">#解压</span></div><div class="line"></div><div class="line">bash serverSpeederInstaller.sh      <span class="comment">#执行安装脚本</span></div></pre></td></tr></table></figure>
-<p>接下来便会验证你的邮箱和密码，输入即可。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">************************************************************</div><div class="line">*                                                          *</div><div class="line">*               ServerSpeeder Installer (1.2)              *</div><div class="line">*                                                          *</div><div class="line">************************************************************</div><div class="line"></div><div class="line">Email address: <span class="comment">#注册邮箱</span></div><div class="line">Password: <span class="comment">#密码</span></div></pre></td></tr></table></figure></p>
-<p>接下来是配置部分，按照如下进行~:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Enter your accelerated interface(s) [eth0]: <span class="comment">#回车默认</span></div><div class="line"></div><div class="line">Enter your outbound bandwidth [1000000 kbps]: <span class="comment">#回车默认</span></div><div class="line"></div><div class="line">Enter your inbound bandwidth [1000000 kbps]: <span class="comment">#回车默认</span></div><div class="line"></div><div class="line">Configure shortRtt-bypass [0 ms]: <span class="comment">#回车默认</span></div><div class="line"></div><div class="line">Auto load ServerSpeeder on linux start-up? [n]:y <span class="comment">#是否开机自启</span></div><div class="line"></div><div class="line">Run ServerSpeeder now? [y]:y <span class="comment">#是否现在启动</span></div></pre></td></tr></table></figure>
-<p>待安装完成，使用以下命令即可启动锐速加速:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/serverspeeder/bin/serverSpeeder.sh start</div></pre></td></tr></table></figure>
-<p>启动之后，是不是感觉速度不升反降啦？这就对啦~所以接下来我们还需要对锐速进行一些优化配置：</p>
-<p>编辑<code>/serverspeeder/etc/config</code>文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim  /serverspeeder/etc/config</div></pre></td></tr></table></figure></p>
-<p>改动以下参数:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">advinacc=<span class="string">"1"</span></div><div class="line"></div><div class="line">maxmode=<span class="string">"1"</span></div><div class="line"></div><div class="line">rsc=<span class="string">"1"</span></div><div class="line"></div><div class="line">gso=<span class="string">"1"</span> <span class="comment">#主要是针对Digitalocean，其他的VPS小伙伴就请自测啦</span></div><div class="line"></div><div class="line">accppp=<span class="string">"1"</span> <span class="comment">#开启VPN加速~</span></div></pre></td></tr></table></figure>
-<p>修改完毕之后，保存退出，执行以下命令重启锐速然修改生效~<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/serverspeeder/bin/serverSpeeder.sh restart</div></pre></td></tr></table></figure></p>
-<p>不知道为何，博主虽然在安装锐速的时候配置的开机自启，但是重启系统之后，锐速并没有自启，因此，在<code>/etc/rc.local</code>中<code>exit 0</code>前加上一句：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/serverspeeder/bin/serverSpeeder.sh start</div></pre></td></tr></table></figure></p>
-<p>退出保存，现在再连上<a href="https://www.youtube.com/watch?v=-YGDyPAwQz0" target="_blank" rel="external">YouTube</a>看看速度~如下图所示：</p>
-<p><img src="http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/113459120364b2ec84o.jpg" alt=""></p>
-<p>是不是相对之前就快多了呢~~博主调的是4K分辨率，虽然有些卡顿，不过1080P是完全木有问题的~<br>至此<code>Shadowsocks-Python</code>在<a href="https://www.digitalocean.com/?refcode=f07fa4a5aaf1" target="_blank" rel="external">Digitalocean</a>上的搭建、优化就完成啦~</p>
-<h3 id="Digitalocean优惠"><a href="#Digitalocean优惠" class="headerlink" title="Digitalocean优惠"></a><a href="https://www.digitalocean.com/?refcode=f07fa4a5aaf1" target="_blank" rel="external">Digitalocean优惠</a></h3><blockquote>
-<p>如果你还没有Digitalocean账户，想注册一个来试试的话，可以试试博主的推荐链接哦~这样我们都会得到$10美元的账户充值，购买最低配置的服务器5美元一个月足够使用两个月咯~</p>
-</blockquote>
-<ul>
-<li><a href="https://www.digitalocean.com/?refcode=f07fa4a5aaf1" target="_blank" rel="external"><strong>点我注册Digitalocean账户</strong></a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;https://notes.wanghao.work/2015-06-17-Digitalocean%E9%85%8D%E7%BD%AEshadowsocks%E6%9C%8D%E5%8A%A1%E5%99%A8-%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0.html&quot;&gt;&lt;img src=&quot;http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/digitalocean_logo.jpg&quot; alt=&quot;alt text&quot; title=&quot;阅读全文&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="https://notes.wanghao.work/categories/Linux/"/>
-    
-    
-      <category term="shadowsocks" scheme="https://notes.wanghao.work/tags/shadowsocks/"/>
-    
-      <category term="digitalocean" scheme="https://notes.wanghao.work/tags/digitalocean/"/>
-    
-      <category term="科学上网" scheme="https://notes.wanghao.work/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/"/>
     
   </entry>
   

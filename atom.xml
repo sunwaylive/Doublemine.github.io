@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://notes.wanghao.work/"/>
-  <updated>2017-05-20T15:29:36.000Z</updated>
+  <updated>2017-06-14T15:12:00.000Z</updated>
   <id>https://notes.wanghao.work/</id>
   
   <author>
@@ -14,6 +14,72 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Docker Compose：链接外部容器的几种方式</title>
+    <link href="https://notes.wanghao.work/2017-06-12-Docker-Compose-%E9%93%BE%E6%8E%A5%E5%A4%96%E9%83%A8%E5%AE%B9%E5%99%A8%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F.html"/>
+    <id>https://notes.wanghao.work/2017-06-12-Docker-Compose-链接外部容器的几种方式.html</id>
+    <published>2017-06-12T15:04:41.000Z</published>
+    <updated>2017-06-14T15:12:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note info"><p>在Docker中，容器之间的链接是一种很常见的操作：它提供了访问其中的某个容器的网络服务而不需要将所需的端口暴露给Docker Host主机的功能。Docker Compose中对该特性的支持同样是很方便的。然而，如果需要链接的容器没有定义在同一个<code>docker-compose.yml</code>中的时候，这个时候就稍微麻烦复杂了点。</p>
+</div>
+<a id="more"></a>
+<p>在不使用Docker Compose的时候，将两个容器链接起来使用<code>—link</code>参数，相对来说比较简单，以<code>nginx</code>镜像为例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">docker run --rm --name test1 -d nginx  #开启一个实例test1</div><div class="line">docker run --rm --name test2 --link test1 -d nginx #开启一个实例test2并与test1建立链接</div></pre></td></tr></table></figure>
+<p>这样，<code>test2</code>与<code>test1</code>便建立了链接，就可以在<code>test2</code>中使用访问<code>test1</code>中的服务了。</p>
+<p>如果使用Docker Compose，那么这个事情就更简单了，还是以上面的<code>nginx</code>镜像为例子，编辑<code>docker-compose.yml</code>文件为：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="attr">version:</span> <span class="string">"3"</span></div><div class="line"><span class="attr">services:</span></div><div class="line"><span class="attr">  test2:</span></div><div class="line"><span class="attr">    image:</span> nginx</div><div class="line"><span class="attr">    depends_on:</span></div><div class="line"><span class="bullet">      -</span> test1</div><div class="line"><span class="attr">    links:</span></div><div class="line"><span class="bullet">      -</span> test1</div><div class="line"><span class="attr">  test1:</span></div><div class="line"><span class="attr">    image:</span> nginx</div></pre></td></tr></table></figure>
+<p>最终效果与使用普通的Docker命令<code>docker run xxxx</code>建立的链接并无区别。这只是一种最为理想的情况。</p>
+<hr>
+<ol>
+<li>如果容器没有定义在同一个<code>docker-compose.yml</code>文件中，应该如何链接它们呢？</li>
+<li>又如果定义在<code>docker-compose.yml</code>文件中的容器需要与<code>docker run xxx</code>启动的容器链接，需要如何处理？</li>
+</ol>
+<p>针对这两种典型的情况，下面给出我个人测试可行的办法：</p>
+<hr>
+<h3 id="方式一：让需要链接的容器同属一个外部网络"><a href="#方式一：让需要链接的容器同属一个外部网络" class="headerlink" title="方式一：让需要链接的容器同属一个外部网络"></a>方式一：让需要链接的容器同属一个外部网络</h3><p>我们还是使用nginx镜像来模拟这样的一个情景：假设我们需要将两个使用Docker Compose管理的nignx容器（<code>test1</code>和<code>test2</code>）链接起来，使得<code>test2</code>能够访问<code>test1</code>中提供的服务，这里我们以能ping通为准。</p>
+<p>首先，我们定义容器<code>test1</code>的<code>docker-compose.yml</code>文件内容为：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="attr">version:</span> <span class="string">"3"</span></div><div class="line"><span class="attr">services:</span></div><div class="line"><span class="attr">  test2:</span></div><div class="line"><span class="attr">    image:</span> nginx</div><div class="line"><span class="attr">    container_name:</span> test1</div><div class="line"><span class="attr">    networks:</span></div><div class="line"><span class="bullet">      -</span> default</div><div class="line"><span class="bullet">      -</span> app_net</div><div class="line"><span class="attr">networks:</span></div><div class="line"><span class="attr">  app_net:</span></div><div class="line"><span class="attr">    external:</span> <span class="literal">true</span></div></pre></td></tr></table></figure>
+<p>容器<code>test2</code>内容与<code>test1</code>基本一样，只是多了一个<code>external_links</code>,需要特别说明的是：<strong>最近发布的Docker版本已经不需要使用external_links来链接容器，容器的DNS服务可以正确的作出判断</strong>，因此如果你你需要兼容较老版本的Docker的话，那么容器<code>test2</code>的<code>docker-compose.yml</code>文件内容为：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="attr">version:</span> <span class="string">"3"</span></div><div class="line"><span class="attr">services:</span></div><div class="line"><span class="attr">  test2:</span></div><div class="line"><span class="attr">    image:</span> nginx</div><div class="line"><span class="attr">    networks:</span></div><div class="line"><span class="bullet">      -</span> default</div><div class="line"><span class="bullet">      -</span> app_net</div><div class="line"><span class="attr">    external_links:</span></div><div class="line"><span class="bullet">      -</span> test1</div><div class="line"><span class="attr">    container_name:</span> test2</div><div class="line"><span class="attr">networks:</span></div><div class="line"><span class="attr">  app_net:</span></div><div class="line"><span class="attr">    external:</span> <span class="literal">true</span></div></pre></td></tr></table></figure>
+<p>否则的话，<code>test2</code>的<code>docker-compose.yml</code>和<code>test1</code>的定义完全一致，不需要额外多指定一个<code>external_links</code>。相关的问题请参见stackoverflow上的相关问题：<a href="https://stackoverflow.com/questions/39067295/docker-compose-external-container" target="_blank" rel="external">docker-compose + external container</a></p>
+<p>正如你看到的那样，这里两个容器的定义里都使用了同一个外部网络<code>app_net</code>,因此，我们需要在启动这两个容器之前通过以下命令再创建外部网络：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker network create app_net</div></pre></td></tr></table></figure>
+<p>之后，通过<code>docker-compose up -d</code>命令启动这两个容器，然后执行<code>docker exec -it test2 ping test1</code>,你将会看到如下的输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">docker exec -it test2 ping test1</div><div class="line">PING test1 (172.18.0.2): 56 data bytes</div><div class="line">64 bytes from 172.18.0.2: icmp_seq=0 ttl=64 time=0.091 ms</div><div class="line">64 bytes from 172.18.0.2: icmp_seq=1 ttl=64 time=0.146 ms</div><div class="line">64 bytes from 172.18.0.2: icmp_seq=2 ttl=64 time=0.150 ms</div><div class="line">64 bytes from 172.18.0.2: icmp_seq=3 ttl=64 time=0.145 ms</div><div class="line">64 bytes from 172.18.0.2: icmp_seq=4 ttl=64 time=0.126 ms</div><div class="line">64 bytes from 172.18.0.2: icmp_seq=5 ttl=64 time=0.147 ms</div></pre></td></tr></table></figure>
+<p>证明这两个容器是成功链接了，反过来在<code>test1</code>中ping<code>test2</code>也是能够正常ping通的。</p>
+<p>如果我们通过<code>docker run --rm --name test3 -d nginx</code>这种方式来先启动了一个容器(<code>test3</code>)并且没有指定它所属的外部网络，而需要将其与<code>test1</code>或者<code>test2</code>链接的话，这个时候手动链接外部网络即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker network connect app_net test3</div></pre></td></tr></table></figure>
+<p>这样，三个容器都可以相互访问了。</p>
+<hr>
+<h3 id="方式二：更改需要链接的容器的网络模式"><a href="#方式二：更改需要链接的容器的网络模式" class="headerlink" title="方式二：更改需要链接的容器的网络模式"></a>方式二：更改需要链接的容器的网络模式</h3><p>通过更改你想要相互链接的容器的网络模式为<code>bridge</code>,并指定需要链接的外部容器（<code>external_links</code>)即可。与同属外部网络的容器可以相互访问的链接方式一不同，这种方式的访问是单向的。</p>
+<p>还是以nginx容器镜像为例子，如果容器实例<code>nginx1</code>需要访问容器实例<code>nginx2</code>，那么<code>nginx2</code>的<code>doker-compose.yml</code>定义为：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="attr">version:</span> <span class="string">"3"</span></div><div class="line"><span class="attr">services:</span></div><div class="line"><span class="attr">  nginx2:</span></div><div class="line"><span class="attr">    image:</span> nginx</div><div class="line"><span class="attr">    container_name:</span> nginx2</div><div class="line"><span class="attr">    network_mode:</span> bridge</div></pre></td></tr></table></figure>
+<p>与其对应的，<code>nginx1</code>的<code>docker-compose.yml</code>定义为：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="attr">version:</span> <span class="string">"3"</span></div><div class="line"><span class="attr">services:</span></div><div class="line"><span class="attr">  nginx1:</span></div><div class="line"><span class="attr">    image:</span> nginx</div><div class="line"><span class="attr">    external_links:</span></div><div class="line"><span class="bullet">      -</span> nginx2</div><div class="line"><span class="attr">    container_name:</span> nginx1</div><div class="line"><span class="attr">    network_mode:</span> bridge</div></pre></td></tr></table></figure>
+<blockquote>
+<p>需要特别说明的是，这里的<code>external_links</code>是不能省略的，而且<code>nginx1</code>的启动必须要在<code>nginx2</code>之后，否则可能会报找不到容器<code>nginx2</code>的错误。</p>
+</blockquote>
+<p>接着我们使用ping来测试下连通性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$ docker exec -it nginx1 ping nginx2  # nginx1 to nginx2</div><div class="line">PING nginx2 (172.17.0.4): 56 data bytes</div><div class="line">64 bytes from 172.17.0.4: icmp_seq=0 ttl=64 time=0.141 ms</div><div class="line">64 bytes from 172.17.0.4: icmp_seq=1 ttl=64 time=0.139 ms</div><div class="line">64 bytes from 172.17.0.4: icmp_seq=2 ttl=64 time=0.145 ms</div><div class="line"></div><div class="line">$ docker exec -it nginx2 ping nginx1 #nginx2 to nginx1</div><div class="line">ping: unknown host</div></pre></td></tr></table></figure>
+<p>以上也能充分证明这种方式是属于单向联通的。</p>
+<p>在实际应用中根据自己的需要灵活的选择这两种链接方式，如果想偷懒的话，大可选择第二种。不过我更推荐第一种，不难看出无论是联通性还是灵活性，较为更改网络模式的第二种都更为友好。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;div class=&quot;note info&quot;&gt;&lt;p&gt;在Docker中，容器之间的链接是一种很常见的操作：它提供了访问其中的某个容器的网络服务而不需要将所需的端口暴露给Docker Host主机的功能。Docker Compose中对该特性的支持同样是很方便的。然而，如果需要链接的容器没有定义在同一个&lt;code&gt;docker-compose.yml&lt;/code&gt;中的时候，这个时候就稍微麻烦复杂了点。&lt;/p&gt;
+&lt;/div&gt;
+    
+    </summary>
+    
+    
+      <category term="Docker" scheme="https://notes.wanghao.work/tags/Docker/"/>
+    
+      <category term="Docker Compose" scheme="https://notes.wanghao.work/tags/Docker-Compose/"/>
+    
+  </entry>
   
   <entry>
     <title>MySQL API Drivers安装小记</title>
@@ -1484,55 +1550,6 @@
     
     
       <category term="Git" scheme="https://notes.wanghao.work/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo添加文章时自动打开编辑器</title>
-    <link href="https://notes.wanghao.work/2015-06-29-Hexo%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E6%97%B6%E8%87%AA%E5%8A%A8%E6%89%93%E5%BC%80%E7%BC%96%E8%BE%91%E5%99%A8.html"/>
-    <id>https://notes.wanghao.work/2015-06-29-Hexo添加文章时自动打开编辑器.html</id>
-    <published>2015-06-29T09:39:55.000Z</published>
-    <updated>2016-11-06T01:31:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="https://notes.wanghao.work/2015-06-29-Hexo%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E6%97%B6%E8%87%AA%E5%8A%A8%E6%89%93%E5%BC%80%E7%BC%96%E8%BE%91%E5%99%A8.html"><img src="http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/hexo_logo.jpg" alt="" title="阅读全文"></a></p>
-<a id="more"></a>
-<p>在<code>Hexo</code>中新建一篇博文非常简单，只需要在命令行中键入以下命令然后回车即可：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo <span class="keyword">new</span> <span class="string">"The title of your blog"</span></div></pre></td></tr></table></figure>
-<p>此后Hexo便会在Hexo的根目录的<code>source</code>文件夹下的<code>_posts</code>目录下自动帮你创建相应的md文件。然后我们打开该目录，找到刚刚Hexo自动生成的文件打开编辑即可。</p>
-<p>但是当我们的博文比较多，这样我们就需要在成堆的Markdown文件中找到刚才自动生成的文件，这样做显然是一件比较痛苦的事情。</p>
-<hr>
-<p>在访问<a href="https://github.com/hexojs/hexo" target="_blank" rel="external">Hexo的Github项目</a>时，发现有类似的<a href="https://github.com/hexojs/hexo/issues/1007" target="_blank" rel="external">issue</a>，Hexo作者也给出来解决办法，以下为作者原文：</p>
-<blockquote>
-<p>ou can try to listen to the new event. For example:</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> spawn = <span class="built_in">require</span>(<span class="string">'child_process'</span>).exec;</div><div class="line"></div><div class="line"><span class="comment">// Hexo 2.x</span></div><div class="line">hexo.on(<span class="string">'new'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">path</span>)</span>&#123;</div><div class="line">  exec(<span class="string">'vi'</span>, [path]);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// Hexo 3</span></div><div class="line">hexo.on(<span class="string">'new'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</div><div class="line">  exec(<span class="string">'vi'</span>, [data.path]);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>根据作者给出的示例，一番折腾过后博主终于在自己的机器上实验成功了，下面给出操作步骤：</p>
-<ul>
-<li>首先在Hexo目录下的<code>scripts</code>目录中创建一个JavaScript脚本文件。</li>
-<li>如果没有这个<code>scripts</code>目录，则新建一个。</li>
-<li><code>scripts</code>目录新建的JavaScript脚本文件可以任意取名。</li>
-</ul>
-<p>通过这个脚本，我们用其来监听<code>hexo new</code>这个动作，并在检测到<code>hexo new</code>之后，执行编辑器打开的命令。</p>
-<p>如果你是<font color="red">windows平台的Hexo用户</font>，则将下列内容写入你的脚本：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">var</span> spawn = <span class="built_in">require</span>(<span class="string">'child_process'</span>).exec;</div><div class="line"></div><div class="line"><span class="comment">// Hexo 2.x 用户复制这段</span></div><div class="line">hexo.on(<span class="string">'new'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">path</span>)</span>&#123;</div><div class="line">  exec(<span class="string">'start  "markdown编辑器绝对路径.exe" '</span> + path);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// Hexo 3 用户复制这段</span></div><div class="line">hexo.on(<span class="string">'new'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</div><div class="line">  exec(<span class="string">'start  "markdown编辑器绝对路径.exe" '</span> + data.path);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>如果你是<font color="red">Mac平台Hexo用户</font>，则将下列内容写入你的脚本：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> exec = <span class="built_in">require</span>(<span class="string">'child_process'</span>).exec;</div><div class="line"></div><div class="line"><span class="comment">// Hexo 2.x 用户复制这段</span></div><div class="line">hexo.on(<span class="string">'new'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">path</span>)</span>&#123;</div><div class="line">    exec(<span class="string">'open -a "markdown编辑器绝对路径.app" '</span> + path);</div><div class="line">&#125;);</div><div class="line"><span class="comment">// Hexo 3 用户复制这段</span></div><div class="line">hexo.on(<span class="string">'new'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</div><div class="line">    exec(<span class="string">'open -a "markdown编辑器绝对路径.app" '</span> + data.path);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>保存并退出脚本之后，在命令行中键入：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo <span class="keyword">new</span> <span class="string">"auto open editor test"</span></div></pre></td></tr></table></figure>
-<p>是不是就顺利的自动打开了自动生成的md文件啦~</p>
-<p>Enjoy it！</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;https://notes.wanghao.work/2015-06-29-Hexo%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E6%97%B6%E8%87%AA%E5%8A%A8%E6%89%93%E5%BC%80%E7%BC%96%E8%BE%91%E5%99%A8.html&quot;&gt;&lt;img src=&quot;http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/hexo_logo.jpg&quot; alt=&quot;&quot; title=&quot;阅读全文&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Hexo" scheme="https://notes.wanghao.work/categories/Hexo/"/>
-    
-    
-      <category term="Hexo" scheme="https://notes.wanghao.work/tags/Hexo/"/>
     
   </entry>
   

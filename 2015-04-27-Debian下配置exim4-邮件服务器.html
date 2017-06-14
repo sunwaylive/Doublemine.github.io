@@ -101,15 +101,13 @@
 
 
 
-<meta name="description" content="###前言
-
+<meta name="description" content="前言
 由于博主在DigitalOcean上购入了一台VPS,并在上面搭建托管了一些服务，不定时的需要登录到服务器上进行管理查看错误日志，比较麻烦。于是打算编写一个shell脚本，来监控服务器的一些问题，并在发现问题的时候自动邮件通知到我。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Debian下配置exim4 邮件服务器">
 <meta property="og:url" content="https://notes.wanghao.work/2015-04-27-Debian下配置exim4-邮件服务器.html">
 <meta property="og:site_name" content="Doublemine">
-<meta property="og:description" content="###前言
-
+<meta property="og:description" content="前言
 由于博主在DigitalOcean上购入了一台VPS,并在上面搭建托管了一些服务，不定时的需要登录到服务器上进行管理查看错误日志，比较麻烦。于是打算编写一个shell脚本，来监控服务器的一些问题，并在发现问题的时候自动邮件通知到我。">
 <meta property="og:image" content="http://i3.piimg.com/5468f666400f4765.jpg">
 <meta property="og:image" content="http://i3.piimg.com/6b56408a64016c4f.jpg">
@@ -119,11 +117,10 @@
 <meta property="og:image" content="http://i3.piimg.com/fb1bc44dba574379.jpg">
 <meta property="og:image" content="http://i3.piimg.com/869d4e0d3ef4c9bc.jpg">
 <meta property="og:image" content="http://i3.piimg.com/142101ddb8358d8f.jpg">
-<meta property="og:updated_time" content="2016-11-06T01:31:11.000Z">
+<meta property="og:updated_time" content="2017-06-14T15:22:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Debian下配置exim4 邮件服务器">
-<meta name="twitter:description" content="###前言
-
+<meta name="twitter:description" content="前言
 由于博主在DigitalOcean上购入了一台VPS,并在上面搭建托管了一些服务，不定时的需要登录到服务器上进行管理查看错误日志，比较麻烦。于是打算编写一个shell脚本，来监控服务器的一些问题，并在发现问题的时候自动邮件通知到我。">
 <meta name="twitter:image" content="http://i3.piimg.com/5468f666400f4765.jpg">
 
@@ -423,21 +420,18 @@
       
 
       
-        <p>###前言</p>
-<blockquote>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
 <p>由于博主在<a href="https://www.digitalocean.com/?refcode=f07fa4a5aaf1" target="_blank" rel="external">DigitalOcean</a>上购入了一台VPS,并在上面搭建托管了一些服务，不定时的需要登录到服务器上进行管理查看错误日志，比较麻烦。于是打算编写一个<code>shell</code>脚本，来监控服务器的一些问题，并在发现问题的时候自动邮件通知到我。</p>
 </blockquote>
 <a id="more"></a>
 <blockquote>
 <p>因此，第一步当然得是有一个可用的MTA服务器了。还好Debian默认安装了<code>Exim4</code>,可以直接使用。</p>
 </blockquote>
-<p>###安装exim4</p>
-<ul>
+<h3 id="安装exim4"><a href="#安装exim4" class="headerlink" title="安装exim4"></a>安装exim4</h3><ul>
 <li>如果你的服务器或者Linux上没有安装<code>exim4</code>，请执行以下命令进行安装：</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># apt-get install exim4-daemon-light mailutils</span></div></pre></td></tr></table></figure>
-<p>###配置exim4</p>
-<blockquote>
+<h3 id="配置exim4"><a href="#配置exim4" class="headerlink" title="配置exim4"></a>配置exim4</h3><blockquote>
 <p>配置<code>exim4</code>有两种方式:</p>
 </blockquote>
 <ol>
@@ -445,11 +439,9 @@
 <li>编辑配置文件进行配置</li>
 </ol>
 <p>在这里我们还是选择比较亲民的图形化界面配置吧。。（博主懒~~）</p>
-<p>####图形化界面配置exim4</p>
-<p>在终端中运行以下命令:</p>
+<h4 id="图形化界面配置exim4"><a href="#图形化界面配置exim4" class="headerlink" title="图形化界面配置exim4"></a>图形化界面配置exim4</h4><p>在终端中运行以下命令:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># dpkg-reconfigure exim4-config</span></div></pre></td></tr></table></figure>
-<p>#####配置邮件系统类型</p>
-<blockquote>
+<h5 id="配置邮件系统类型"><a href="#配置邮件系统类型" class="headerlink" title="配置邮件系统类型"></a>配置邮件系统类型</h5><blockquote>
 <p>将会出现一个图形化的配置界面。如下图所示:</p>
 </blockquote>
 <center><img src="http://i3.piimg.com/5468f666400f4765.jpg" alt=""></center>
@@ -459,45 +451,38 @@
 <li>这里博主考虑到只需要能够发送邮件即可，加上安全性考虑，选择<code>mail sent by smarthost;no local mail</code>。</li>
 <li>如果你是要搭建邮件服务器，进行接收和发送邮件。请选择<code>internet site;mail is sent and received directly using SMTP</code>。</li>
 </ul>
-<p>#####系统邮件名称</p>
-<blockquote>
+<h5 id="系统邮件名称"><a href="#系统邮件名称" class="headerlink" title="系统邮件名称"></a>系统邮件名称</h5><blockquote>
 <p>回车过后，将会来到配置系统邮件名称的界面，如图:</p>
 </blockquote>
 <center><img src="http://i3.piimg.com/6b56408a64016c4f.jpg" alt=""></center>
 
 <p>此处填写你用来发送邮件的邮件域名。例如:你的邮件地址为:<font color="red"><code>xiamo@gmail.com</code></font>,则此处填写为<font color="red"><code>gmail.com</code></font></p>
-<p>#####监听入站STMP连接IP地址</p>
-<blockquote>
+<h5 id="监听入站STMP连接IP地址"><a href="#监听入站STMP连接IP地址" class="headerlink" title="监听入站STMP连接IP地址"></a>监听入站STMP连接IP地址</h5><blockquote>
 <p>回车过后，将会配置exim4要监听的入站STMP连接的ip地址，如图:</p>
 </blockquote>
 <p><img src="http://i3.piimg.com/60bfc1ae6462025a.jpg" alt=""></p>
 <p>博主填写的为<code>127.0.0.1</code>，这表示只监听本地端口，也就是只有本机才能够发邮件，外部不能访问。</p>
-<p>#####其它可接收邮件的目的地址</p>
-<blockquote>
+<h5 id="其它可接收邮件的目的地址"><a href="#其它可接收邮件的目的地址" class="headerlink" title="其它可接收邮件的目的地址"></a>其它可接收邮件的目的地址</h5><blockquote>
 <p>回车过后，将会配置其它可以接收邮件的目的地址，如图：</p>
 </blockquote>
 <p><img src="http://i3.piimg.com/8c8a5fd6997e07f8.jpg" alt=""></p>
 <p>此处直接留空即可。</p>
-<p>#####配置本地可见域名</p>
-<blockquote>
+<h5 id="配置本地可见域名"><a href="#配置本地可见域名" class="headerlink" title="配置本地可见域名"></a>配置本地可见域名</h5><blockquote>
 <p>回车确认之后，将会配置本地用户可见的域名，如图:</p>
 </blockquote>
 <p><img src="http://i3.piimg.com/0361c3bae4e09b4b.jpg" alt=""></p>
 <p>此处和配置<code>系统邮件名称</code>一样，填写发邮件的邮箱域名。例如:<code>gmail.com</code>。</p>
-<p>#####配置发邮件的主机名。</p>
-<blockquote>
+<h5 id="配置发邮件的主机名。"><a href="#配置发邮件的主机名。" class="headerlink" title="配置发邮件的主机名。"></a>配置发邮件的主机名。</h5><blockquote>
 <p>回车确认之后，将会配置发邮件使用的smarthost的ip地址或主机名，如图:</p>
 </blockquote>
 <p><img src="http://i3.piimg.com/fb1bc44dba574379.jpg" alt=""></p>
 <p>此处填写外部的STMP地址，因为博主使用的gmail，所以填写的是Gmail的STMP地址:<code>smtp.gmail.com</code>。</p>
-<p>#####配置DNS查询量</p>
-<blockquote>
+<h5 id="配置DNS查询量"><a href="#配置DNS查询量" class="headerlink" title="配置DNS查询量"></a>配置DNS查询量</h5><blockquote>
 <p>回车确认之后，将会配置DNS查询量，如图:</p>
 </blockquote>
 <p><img src="http://i3.piimg.com/869d4e0d3ef4c9bc.jpg" alt=""></p>
 <p>此处选择<code>NO</code>，来提高响应速度。如果您的服务器资源宝贵可以使用<code>Yes</code>。不过可能会出现一些延迟问题。</p>
-<p>#####配置文件拆分</p>
-<blockquote>
+<h5 id="配置文件拆分"><a href="#配置文件拆分" class="headerlink" title="配置文件拆分"></a>配置文件拆分</h5><blockquote>
 <p>回车过后，将会询问你是否要将配置文件拆分为小文件，如图:</p>
 </blockquote>
 <p><img src="http://i3.piimg.com/142101ddb8358d8f.jpg" alt=""></p>
@@ -505,33 +490,27 @@
 <blockquote>
 <p>至此，图形化界面就完成配置了。不过呢，现在还不能发送邮件，还需要一些其他的配置。</p>
 </blockquote>
-<p>####修改配置文件</p>
-<p>#####配置发送邮箱的账号和密码</p>
-<p>现在需要配置发送邮件的邮箱账号和密码，需要编辑<code>/etc/exim4/passwd.client</code>这个文件。使用命令:</p>
+<h4 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h4><h5 id="配置发送邮箱的账号和密码"><a href="#配置发送邮箱的账号和密码" class="headerlink" title="配置发送邮箱的账号和密码"></a>配置发送邮箱的账号和密码</h5><p>现在需要配置发送邮件的邮箱账号和密码，需要编辑<code>/etc/exim4/passwd.client</code>这个文件。使用命令:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># vim /etc/exim4/passwwd.client</span></div></pre></td></tr></table></figure>
 <p>在文件末尾加入以下内容:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">*:xiamo@gmail.com:password</div></pre></td></tr></table></figure></p>
 <p>格式为: <font color="red"><code>发件邮箱STMP服务器:发件邮箱账号:发件邮箱密码</code></font>,因为我们在图形化界面中已经配置过STMP服务器地址了，所以这里可以使用通配符<code>*</code>代替。当然，你也可以填写SMTP地址:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">stmp.gmail.com:xiamo@gmail.com:password</div></pre></td></tr></table></figure>
-<p>#####配置系统邮箱</p>
-<p>现在，我们需要配置系统<code>mail</code>命令的默认邮箱，需要编辑<code>/etc/email-addresses</code>这个文件。使用命令:</p>
+<h5 id="配置系统邮箱"><a href="#配置系统邮箱" class="headerlink" title="配置系统邮箱"></a>配置系统邮箱</h5><p>现在，我们需要配置系统<code>mail</code>命令的默认邮箱，需要编辑<code>/etc/email-addresses</code>这个文件。使用命令:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># vim /etc/email-addresses</span></div></pre></td></tr></table></figure>
 <p>在文件末尾加入以下内容:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root: xiamo@gmail.com</div></pre></td></tr></table></figure>
 <p>格式为:<font color-red=""><code>系统用户名: 发件邮箱地址</code></font>。注意：冒号<code>:</code>后有一个空格。</p>
-<p>#####配置exim4，使其支持明文密码</p>
-<p>现在，我们需要对<code>/etc/exim4/exim4.conf.template</code>这个文件进行编辑，使用命令:</p>
+<h5 id="配置exim4，使其支持明文密码"><a href="#配置exim4，使其支持明文密码" class="headerlink" title="配置exim4，使其支持明文密码"></a>配置exim4，使其支持明文密码</h5><p>现在，我们需要对<code>/etc/exim4/exim4.conf.template</code>这个文件进行编辑，使用命令:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># vim /etc/exim4/exim4.conf.template</span></div></pre></td></tr></table></figure>
 <p>在<code>1996</code>行上一行，也就是<code>cram_md5:</code>上方（博主的文件是1996行）加入以下内容:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AUTH_CLIENT_ALLOW_NOTLS_PASSWORDS=1</div></pre></td></tr></table></figure>
 <p>然后保存退出。</p>
 <p>键入以下命令重启<code>exim4</code>：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># service exim4 restart</span></div></pre></td></tr></table></figure></p>
 <p>至此，exim4邮件配置就完成了。是不是很简单呢~~</p>
-<p>###发送测试邮件</p>
-<p>配置完成需要发送一封测试邮件看看服务可用不呢~，键入命令:</p>
+<h3 id="发送测试邮件"><a href="#发送测试邮件" class="headerlink" title="发送测试邮件"></a>发送测试邮件</h3><p>配置完成需要发送一封测试邮件看看服务可用不呢~，键入命令:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># mail wanghaokoko1994@gmail.com</span></div></pre></td></tr></table></figure>
 <p>其中，<code>wanghaokoko1994@gmail.com</code>为你想要发送到的邮箱地址，接着按提示输入主题、邮件内容。然后再使用<code>Ctrl</code> + <code>D</code>组合键完成输入，即可完成发送:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mail wanghaokoko1994@gmail.com</div><div class="line">Subject: <span class="built_in">test</span> email</div><div class="line">hello,this is a <span class="built_in">test</span> email!</div><div class="line">EOT</div></pre></td></tr></table></figure></p>
-<p>###可能出现的错误</p>
-<p>有的时候可能会遇到exim4抛出的错误，如下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">debian ALERT: exim paniclog /var/<span class="built_in">log</span>/exim4/paniclog has non-zero size, mail system possibly broken</div></pre></td></tr></table></figure></p>
+<h3 id="可能出现的错误"><a href="#可能出现的错误" class="headerlink" title="可能出现的错误"></a>可能出现的错误</h3><p>有的时候可能会遇到exim4抛出的错误，如下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">debian ALERT: exim paniclog /var/<span class="built_in">log</span>/exim4/paniclog has non-zero size, mail system possibly broken</div></pre></td></tr></table></figure></p>
 <p>针对这个情况，可以使用以下方法解决:</p>
 <ul>
 <li>停止<code>exim4</code></li>
@@ -670,8 +649,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -802,6 +790,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装exim4"><span class="nav-number">2.</span> <span class="nav-text">安装exim4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置exim4"><span class="nav-number">3.</span> <span class="nav-text">配置exim4</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#图形化界面配置exim4"><span class="nav-number">3.1.</span> <span class="nav-text">图形化界面配置exim4</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#配置邮件系统类型"><span class="nav-number">3.1.1.</span> <span class="nav-text">配置邮件系统类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#系统邮件名称"><span class="nav-number">3.1.2.</span> <span class="nav-text">系统邮件名称</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#监听入站STMP连接IP地址"><span class="nav-number">3.1.3.</span> <span class="nav-text">监听入站STMP连接IP地址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#其它可接收邮件的目的地址"><span class="nav-number">3.1.4.</span> <span class="nav-text">其它可接收邮件的目的地址</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置本地可见域名"><span class="nav-number">3.1.5.</span> <span class="nav-text">配置本地可见域名</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置发邮件的主机名。"><span class="nav-number">3.1.6.</span> <span class="nav-text">配置发邮件的主机名。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置DNS查询量"><span class="nav-number">3.1.7.</span> <span class="nav-text">配置DNS查询量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置文件拆分"><span class="nav-number">3.1.8.</span> <span class="nav-text">配置文件拆分</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改配置文件"><span class="nav-number">3.2.</span> <span class="nav-text">修改配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#配置发送邮箱的账号和密码"><span class="nav-number">3.2.1.</span> <span class="nav-text">配置发送邮箱的账号和密码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置系统邮箱"><span class="nav-number">3.2.2.</span> <span class="nav-text">配置系统邮箱</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置exim4，使其支持明文密码"><span class="nav-number">3.2.3.</span> <span class="nav-text">配置exim4，使其支持明文密码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送测试邮件"><span class="nav-number">4.</span> <span class="nav-text">发送测试邮件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可能出现的错误"><span class="nav-number">5.</span> <span class="nav-text">可能出现的错误</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

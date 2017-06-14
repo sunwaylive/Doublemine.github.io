@@ -103,20 +103,20 @@
 
 <meta name="description" content="由于几天之前@clowwindy被某部门请喝茶，导致现Github上Shadowsocks项目源码被迫全部清除。非常感谢clowwindy所做的一切，希望他一切安好。
 虽然目前Shadowsocks还能正常使用，但是由于项目不在更新维护，还是要准备Shadowsocks的替代工具，以备不时之需，毕竟经常要上Google以及stackoverflow以及时不时看看YouTube。
-##PPTP Se">
+PPTP Serv">
 <meta property="og:type" content="article">
 <meta property="og:title" content="部署PPTP and OpenConnect VPN">
 <meta property="og:url" content="https://notes.wanghao.work/2015-08-28-同时部署PPTP-Server-and-OpenConnect-Server.html">
 <meta property="og:site_name" content="Doublemine">
 <meta property="og:description" content="由于几天之前@clowwindy被某部门请喝茶，导致现Github上Shadowsocks项目源码被迫全部清除。非常感谢clowwindy所做的一切，希望他一切安好。
 虽然目前Shadowsocks还能正常使用，但是由于项目不在更新维护，还是要准备Shadowsocks的替代工具，以备不时之需，毕竟经常要上Google以及stackoverflow以及时不时看看YouTube。
-##PPTP Se">
-<meta property="og:updated_time" content="2016-11-06T01:31:11.000Z">
+PPTP Serv">
+<meta property="og:updated_time" content="2017-06-14T15:29:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="部署PPTP and OpenConnect VPN">
 <meta name="twitter:description" content="由于几天之前@clowwindy被某部门请喝茶，导致现Github上Shadowsocks项目源码被迫全部清除。非常感谢clowwindy所做的一切，希望他一切安好。
 虽然目前Shadowsocks还能正常使用，但是由于项目不在更新维护，还是要准备Shadowsocks的替代工具，以备不时之需，毕竟经常要上Google以及stackoverflow以及时不时看看YouTube。
-##PPTP Se">
+PPTP Serv">
 
 
 
@@ -416,18 +416,14 @@
       
         <p>由于几天之前<a href="https://github.com/clowwindy" target="_blank" rel="external">@clowwindy</a>被某部门请喝茶，导致现Github上Shadowsocks项目源码被迫全部清除。非常感谢clowwindy所做的一切，希望他一切安好。</p>
 <p>虽然目前Shadowsocks还能正常使用，但是由于项目不在更新维护，还是要准备Shadowsocks的替代工具，以备不时之需，毕竟经常要上Google以及stackoverflow以及时不时看看YouTube。</p>
-<p>##PPTP Server</p>
-<p>如果对速度要求较高，又不那么在乎连接的安全性的话，PPTP VPN 是一个不错的选择，有着兼容性较好,速度快配置简单的优点。当然也有着加密强度不够，连接强度、抗干扰能力弱等缺点，但是基本上够用咯~</p>
+<h2 id="PPTP-Server"><a href="#PPTP-Server" class="headerlink" title="PPTP Server"></a>PPTP Server</h2><p>如果对速度要求较高，又不那么在乎连接的安全性的话，PPTP VPN 是一个不错的选择，有着兼容性较好,速度快配置简单的优点。当然也有着加密强度不够，连接强度、抗干扰能力弱等缺点，但是基本上够用咯~</p>
 <a id="more"></a>
-<p>###配置方法</p>
-<p>如何配置PPTP VPN服务器，博主写了一个简单的脚本来自动一键配置PPTP，脚本地址：<a href="https://github.com/smilexiamo/AutoProxyScript" target="_blank" rel="external">https://github.com/smilexiamo/AutoProxyScript</a></p>
+<h3 id="配置方法"><a href="#配置方法" class="headerlink" title="配置方法"></a>配置方法</h3><p>如何配置PPTP VPN服务器，博主写了一个简单的脚本来自动一键配置PPTP，脚本地址：<a href="https://github.com/smilexiamo/AutoProxyScript" target="_blank" rel="external">https://github.com/smilexiamo/AutoProxyScript</a></p>
 <p>具体用法此处就不再赘述，运行脚本等着配置完成即可使用。</p>
 <p><strong>需要注意的是该脚本运行环境为Debian或者Ubuntu。不适用于CentOS之类的Red Hat系Linux。</strong></p>
-<p>###添加PPTP用户</p>
-<p>编辑<code>/etc/ppp/chap-secrets</code>文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/ppp/chap-secrets</div></pre></td></tr></table></figure></p>
+<h3 id="添加PPTP用户"><a href="#添加PPTP用户" class="headerlink" title="添加PPTP用户"></a>添加PPTP用户</h3><p>编辑<code>/etc/ppp/chap-secrets</code>文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/ppp/chap-secrets</div></pre></td></tr></table></figure></p>
 <p>按照如下格式添加用户，每行一个即可：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Secrets for authentication using CHAP</span></div><div class="line"><span class="comment"># client    server       secret       IP addresses</span></div><div class="line">  vpn_user01  pptpd    vpn_password01     *</div><div class="line">  vpn_user02  pptpd    vpn_password02     *</div></pre></td></tr></table></figure></p>
-<p>##OpenConnect Server</p>
-<p>对于某一些安全性要求比较高的场合，PPTP可能就不那么适合了，这个时候就可以使用OpenConnect VPN了。它通过实现Cisco的AnyConnect协议，用DTLS作为主要的加密传输协议。其主要的有点有：</p>
+<h2 id="OpenConnect-Server"><a href="#OpenConnect-Server" class="headerlink" title="OpenConnect Server"></a>OpenConnect Server</h2><p>对于某一些安全性要求比较高的场合，PPTP可能就不那么适合了，这个时候就可以使用OpenConnect VPN了。它通过实现Cisco的AnyConnect协议，用DTLS作为主要的加密传输协议。其主要的有点有：</p>
 <ul>
 <li>AnyConnect的VPN协议默认使用UDP DTLS作为数据传输，但如果有什么网络问题导致UDP传输出现问题，它会利用最初建立的TCP TLS通道作为备份通道，降低VPN断开的概率。</li>
 <li>AnyConnect作为Cisco新一代的VPN解决方案，被用于许多大型企业，这些企业依赖它提供正常的商业运作。</li>
@@ -435,10 +431,9 @@
 <li>支持自定义路由表，因此是Shadowsocks比较好的替代方案。</li>
 </ul>
 <p>当然啦，有这么多有点，那么缺点也比较明显了：配置麻烦复杂。</p>
-<p>###配置方法</p>
-<p>有关如何配置的问题，这里有一个博主测试可用的还算比较干净的脚本，大大简化了配置的流程：<a href="https://github.com/fanyueciyuan/eazy-for-ss/tree/master/ocservauto" target="_blank" rel="external">https://github.com/fanyueciyuan/eazy-for-ss/tree/master/ocservauto</a></p>
+<h3 id="配置方法-1"><a href="#配置方法-1" class="headerlink" title="配置方法"></a>配置方法</h3><p>有关如何配置的问题，这里有一个博主测试可用的还算比较干净的脚本，大大简化了配置的流程：<a href="https://github.com/fanyueciyuan/eazy-for-ss/tree/master/ocservauto" target="_blank" rel="external">https://github.com/fanyueciyuan/eazy-for-ss/tree/master/ocservauto</a></p>
 <p>先运行博主的脚本，配置好PPTP，在运行此脚本配置好OpenConnect Server。博主测试这两种服务器是可以同时运行的。</p>
-<p>###连接方法<br>虽然OpenConnect Server兼容Cisco的Anyconnect，但是博主在<a href="https://software.cisco.com/download/navigator.html?mdfid=278875403&amp;flowid=17001" target="_blank" rel="external">windows</a>以及<a href="https://play.google.com/store/apps/details?id=com.cisco.anyconnect.vpn.android.avf" target="_blank" rel="external">Android平台</a>使用Cisco官方的客户端均出现可以连接但是无法访问网络的问题。改用OpenConnect Server官方推荐的客户端就正常了。以下给出OpenConnect Server官方客户端链接：</p>
+<h3 id="连接方法"><a href="#连接方法" class="headerlink" title="连接方法"></a>连接方法</h3><p>虽然OpenConnect Server兼容Cisco的Anyconnect，但是博主在<a href="https://software.cisco.com/download/navigator.html?mdfid=278875403&amp;flowid=17001" target="_blank" rel="external">windows</a>以及<a href="https://play.google.com/store/apps/details?id=com.cisco.anyconnect.vpn.android.avf" target="_blank" rel="external">Android平台</a>使用Cisco官方的客户端均出现可以连接但是无法访问网络的问题。改用OpenConnect Server官方推荐的客户端就正常了。以下给出OpenConnect Server官方客户端链接：</p>
 <ul>
 <li><a href="https://github.com/openconnect/openconnect-gui/releases" target="_blank" rel="external">Windows OpenConnect-GUI</a></li>
 <li><a href="https://github.com/openconnect/openconnect-gui/wiki/MacOSX" target="_blank" rel="external">MacOSX OpenConnect-GUI</a></li>
@@ -562,8 +557,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -694,6 +698,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PPTP-Server"><span class="nav-number">1.</span> <span class="nav-text">PPTP Server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置方法"><span class="nav-number">1.1.</span> <span class="nav-text">配置方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加PPTP用户"><span class="nav-number">1.2.</span> <span class="nav-text">添加PPTP用户</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenConnect-Server"><span class="nav-number">2.</span> <span class="nav-text">OpenConnect Server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置方法-1"><span class="nav-number">2.1.</span> <span class="nav-text">配置方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接方法"><span class="nav-number">2.2.</span> <span class="nav-text">连接方法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

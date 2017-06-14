@@ -415,16 +415,13 @@
         
           <p>&ensp;&ensp;&ensp;&ensp;因为一些众所周知的原因，某些项目不适合开源（代码写的烂我会乱说？(╯﹏╰)b ）。又因为博主不是壕，买不起Github的私有空间，所以只能利用手头上的Debian服务器搭建Git服务器咯~</p>
 <hr>
-<p>###安装Git</p>
-<p>&ensp;&ensp;&ensp;&ensp;要搭建Git服务器，第一步当然是要安装Git了，键入以下命令来完成Git的安装：</p>
+<h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><p>    要搭建Git服务器，第一步当然是要安装Git了，键入以下命令来完成Git的安装：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install git</div></pre></td></tr></table></figure>
-<p>###新建Git用户</p>
-<p>&ensp;&ensp;&ensp;&ensp;出于安全的原因考虑，我们肯定是不会使用<code>root</code>或者其它具有完整的shell执行权限的用户来运行Git的。因此，我们需要创建一个<code>git</code>用户来运行<code>git</code>服务。</p>
+<h3 id="新建Git用户"><a href="#新建Git用户" class="headerlink" title="新建Git用户"></a>新建Git用户</h3><p>&ensp;&ensp;&ensp;&ensp;出于安全的原因考虑，我们肯定是不会使用<code>root</code>或者其它具有完整的shell执行权限的用户来运行Git的。因此，我们需要创建一个<code>git</code>用户来运行<code>git</code>服务。</p>
 <p>键入以下命令来完成<code>git</code>用户的创建：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo adduser git</div></pre></td></tr></table></figure>
 <p>创建用户的途中会要求输入用户密码，这个密码请务必记住，这个密码的作用我们后面再说。<code>git</code>用户的其它配置使用默认值直接回车就行。</p>
-<p>###禁用shell登录</p>
-<p><code>git</code>用户创建完成之后，系统默认是为其分配的<code>bash</code>的，我们不希望<code>git</code>用户拥有shell执行权限，因此我们需要更改<code>git</code>用户的默认shell，使其不允许登录shell。</p>
+<h3 id="禁用shell登录"><a href="#禁用shell登录" class="headerlink" title="禁用shell登录"></a>禁用shell登录</h3><p><code>git</code>用户创建完成之后，系统默认是为其分配的<code>bash</code>的，我们不希望<code>git</code>用户拥有shell执行权限，因此我们需要更改<code>git</code>用户的默认shell，使其不允许登录shell。</p>
 <p>我们可以通过编辑<font color=red><code>/etc/passwd</code></font>文件来完成对<code>git</code>用户shell的更改。</p>
 <p>键入以下命令编辑<font color=red><code>/etc/passwd</code></font>文件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/passwd</div></pre></td></tr></table></figure>
@@ -586,8 +583,7 @@
       
         
           <p>&ensp;&ensp;用Hexo写博客是一件比较享受的事情，无奈如果换电脑的话，备份博客就是一件比较闹心的事情。</p>
-<p>###前言</p>
-<p>&ensp;&ensp;我曾经给出过通过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于博主这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。</p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>&ensp;&ensp;我曾经给出过通过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于博主这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2015-07-06-自动备份Hexo博客源文件.html#more" rel="contents">
@@ -746,8 +742,7 @@
       
         
           <p>EditPlus是一款博主非常喜欢的文本编辑器，相比notepad++以及EverEdit有着轻便小巧迅速的优点。</p>
-<p>##简介</p>
-<p>以下是来自维基百科简介：</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>以下是来自维基百科简介：</p>
 <blockquote>
 <p>EditPlus是Windows下的一个文本编辑器。支持语法高亮，自动完成等功能。对HTML文件编辑特别方便。可通过FTP远程编辑。EditPlus由韩国人Kim Sang-il（김상일）开发。</p>
 </blockquote>

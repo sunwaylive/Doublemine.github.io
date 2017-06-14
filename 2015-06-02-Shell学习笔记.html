@@ -107,7 +107,7 @@
 <meta property="og:url" content="https://notes.wanghao.work/2015-06-02-Shell学习笔记.html">
 <meta property="og:site_name" content="Doublemine">
 <meta property="og:description" content="在Bash中，变量的默认类型都是字符串类型的，Shell编程中，使用变量无需事先声。">
-<meta property="og:updated_time" content="2016-11-06T01:31:11.000Z">
+<meta property="og:updated_time" content="2017-06-14T15:28:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux学习笔记-Shell变量">
 <meta name="twitter:description" content="在Bash中，变量的默认类型都是字符串类型的，Shell编程中，使用变量无需事先声。">
@@ -409,16 +409,14 @@
 
       
         <p>在Bash中，变量的默认类型都是字符串类型的，Shell编程中，使用变量无需事先声。<br><a id="more"></a></p>
-<p>###变量的命名规范</p>
-<p>变量名的命名须遵循如下规则：</p>
+<h3 id="变量的命名规范"><a href="#变量的命名规范" class="headerlink" title="变量的命名规范"></a>变量的命名规范</h3><p>变量名的命名须遵循如下规则：</p>
 <ul>
 <li>首个字符必须为字母（a-z，A-Z）</li>
 <li>中间不能有空格，可以使用下划线(_)</li>
 <li>不能使用标点符号</li>
 <li>不能使用bash里的关键字（可用help命令查看保留关键字）</li>
 </ul>
-<p>###变量的分类</p>
-<blockquote>
+<h3 id="变量的分类"><a href="#变量的分类" class="headerlink" title="变量的分类"></a>变量的分类</h3><blockquote>
 <ul>
 <li><p>用户自定义变量：用户可以自己定义。</p>
 </li>
@@ -430,20 +428,14 @@
 </li>
 </ul>
 </blockquote>
-<p>####定义变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">变量名=变量值  (等号 =两边不能带空格)</div></pre></td></tr></table></figure>
-<p>####变量调用</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> $变量名</div></pre></td></tr></table></figure>
+<h4 id="定义变量"><a href="#定义变量" class="headerlink" title="定义变量"></a>定义变量</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">变量名=变量值  (等号 =两边不能带空格)</div></pre></td></tr></table></figure>
+<h4 id="变量调用"><a href="#变量调用" class="headerlink" title="变量调用"></a>变量调用</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> $变量名</div></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">如下示例:</div><div class="line"><span class="built_in">echo</span> <span class="variable">$x</span></div><div class="line"><span class="built_in">echo</span> <span class="variable">$name</span></div></pre></td></tr></table></figure>
-<p>####变量叠加</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">x=123</div><div class="line">x=<span class="string">"<span class="variable">$x</span>"</span>456</div><div class="line">x=<span class="variable">$&#123;x&#125;</span>789</div></pre></td></tr></table></figure>
+<h4 id="变量叠加"><a href="#变量叠加" class="headerlink" title="变量叠加"></a>变量叠加</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">x=123</div><div class="line">x=<span class="string">"<span class="variable">$x</span>"</span>456</div><div class="line">x=<span class="variable">$&#123;x&#125;</span>789</div></pre></td></tr></table></figure>
 <p>最终使用<code>echo $x</code>将输出<code>123456789</code></p>
-<p>####变量查看</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">set</span></div><div class="line">    选项:</div><div class="line">        -u 如果设定此选项，调用未声明变量时会报错（默认无任何提示）</div></pre></td></tr></table></figure>
-<p>####变量的删除</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">unset</span> 变量名  （注意，此处不能加$符号）</div></pre></td></tr></table></figure>
-<p>###环境变量</p>
-<p>环境变量和用户自定义变量的区别:</p>
+<h4 id="变量查看"><a href="#变量查看" class="headerlink" title="变量查看"></a>变量查看</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">set</span></div><div class="line">    选项:</div><div class="line">        -u 如果设定此选项，调用未声明变量时会报错（默认无任何提示）</div></pre></td></tr></table></figure>
+<h4 id="变量的删除"><a href="#变量的删除" class="headerlink" title="变量的删除"></a>变量的删除</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">unset</span> 变量名  （注意，此处不能加$符号）</div></pre></td></tr></table></figure>
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><p>环境变量和用户自定义变量的区别:</p>
 <blockquote>
 <ul>
 <li><p>用户自定义变量只在当前的shell中生效，环境变量在当前shell和这个shell的所有子shell中生效。</p>
@@ -454,26 +446,19 @@
 </li>
 </ul>
 </blockquote>
-<p>####设置环境变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> 变量名=变量值</div><div class="line"></div><div class="line">变量名=变量值</div><div class="line"><span class="built_in">export</span> 变量名</div></pre></td></tr></table></figure>
-<p>####查看环境变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">set</span> <span class="comment">#查看所有变量</span></div><div class="line">env <span class="comment">#查看环境变量</span></div></pre></td></tr></table></figure>
-<p>####常用环境变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">HOSTNAME：主机名</div><div class="line">SHELL：当前的shell</div><div class="line">TREM：终端环境</div><div class="line">HISTSIZE：历史命令条数</div><div class="line">SSH_CLIENT：当前操作环境是用ssh链接的，这里记录客户端的ip</div><div class="line">SSH_TTY：ssh连接的终端是pts/1</div><div class="line">USER:当前登录的用户</div></pre></td></tr></table></figure>
-<p>####PATH变量</p>
-<blockquote>
+<h4 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> 变量名=变量值</div><div class="line"></div><div class="line">变量名=变量值</div><div class="line"><span class="built_in">export</span> 变量名</div></pre></td></tr></table></figure>
+<h4 id="查看环境变量"><a href="#查看环境变量" class="headerlink" title="查看环境变量"></a>查看环境变量</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">set</span> <span class="comment">#查看所有变量</span></div><div class="line">env <span class="comment">#查看环境变量</span></div></pre></td></tr></table></figure>
+<h4 id="常用环境变量"><a href="#常用环境变量" class="headerlink" title="常用环境变量"></a>常用环境变量</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">HOSTNAME：主机名</div><div class="line">SHELL：当前的shell</div><div class="line">TREM：终端环境</div><div class="line">HISTSIZE：历史命令条数</div><div class="line">SSH_CLIENT：当前操作环境是用ssh链接的，这里记录客户端的ip</div><div class="line">SSH_TTY：ssh连接的终端是pts/1</div><div class="line">USER:当前登录的用户</div></pre></td></tr></table></figure>
+<h4 id="PATH变量"><a href="#PATH变量" class="headerlink" title="PATH变量"></a>PATH变量</h4><blockquote>
 <p><code>PATH</code>变量：系统查找命令的路径。</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span>    <span class="comment">#查看PATH变量的值</span></div><div class="line">PATH=<span class="string">"<span class="variable">$PATH</span>"</span>:/root/sh    <span class="comment">#增加PATH变量的值</span></div></pre></td></tr></table></figure>
-<p>####PS1变量</p>
-<blockquote>
+<h4 id="PS1变量"><a href="#PS1变量" class="headerlink" title="PS1变量"></a>PS1变量</h4><blockquote>
 <p><code>PS1</code>变量：命令提示符设置</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- \d 显示日期，格式为”星期 月 日“</div><div class="line">- \H 显示完整的主机名<span class="string">"localhost.localdomain"</span></div><div class="line">- \t 显示24小时制时间，格式为<span class="string">"HH:MM:SS"</span></div><div class="line">- \A 显示24小时制时间，格式为<span class="string">"HH:MM"</span></div><div class="line">- \u 显示当前用户名</div><div class="line">- \w 显示当前所在目录的完整名称</div><div class="line">- \W 显示当前所在目录的最后一个目录</div><div class="line">- \$ 提示符、如果是root用户会显示提示符为<span class="string">"#"</span>,如果是普通用户会显示提示符为<span class="string">"$"</span></div></pre></td></tr></table></figure>
-<p>####当前语系查询</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># locale    #查询当前语系</span></div><div class="line">    -LANG    定义系统主要语系（当前生效语系）</div><div class="line">    -LC:ALL    定义整体语系的变量（下次启动可能会生效）</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="variable">$LANG</span>    <span class="comment">#查看系统当前语系</span></div><div class="line"></div><div class="line">locale <span class="_">-a</span> | more    <span class="comment">#查看linux支持的所有语系</span></div><div class="line"></div><div class="line">cat /et/sysconfig/i18n    <span class="comment">#查询系统的默认语系（开机生效读取的语系环境）</span></div></pre></td></tr></table></figure>
-<p>####Linux中文支持</p>
-<blockquote>
+<h4 id="当前语系查询"><a href="#当前语系查询" class="headerlink" title="当前语系查询"></a>当前语系查询</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># locale    #查询当前语系</span></div><div class="line">    -LANG    定义系统主要语系（当前生效语系）</div><div class="line">    -LC:ALL    定义整体语系的变量（下次启动可能会生效）</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="variable">$LANG</span>    <span class="comment">#查看系统当前语系</span></div><div class="line"></div><div class="line">locale <span class="_">-a</span> | more    <span class="comment">#查看linux支持的所有语系</span></div><div class="line"></div><div class="line">cat /et/sysconfig/i18n    <span class="comment">#查询系统的默认语系（开机生效读取的语系环境）</span></div></pre></td></tr></table></figure>
+<h4 id="Linux中文支持"><a href="#Linux中文支持" class="headerlink" title="Linux中文支持"></a>Linux中文支持</h4><blockquote>
 <p>前提条件：正确安装中文字体和中文语系。</p>
 <ul>
 <li>如果有图形界面，可以正确支持中文显示。</li>
@@ -481,8 +466,7 @@
 <li>如果使用纯字符界面，必须使用第三方插件（zhcon等）</li>
 </ul>
 </blockquote>
-<p>###位置参数变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$n</span>    n为数字，<span class="variable">$0</span>代表命令本身，<span class="variable">$1</span>~<span class="variable">$9</span>代表第一到第九个参数，十以上的参数需要用到大括号包含，如<span class="variable">$&#123;10&#125;</span>。</div><div class="line">$*    这个变量代表命令行中所有的参数，$*把所有的参数看作是一个整体。</div><div class="line"><span class="variable">$@</span>    这个变量也代表命令行中所有的参数，不过<span class="variable">$@</span>把每个参数区分呢对待。</div><div class="line"><span class="variable">$#</span>    这个变量代表命令行中所有参数的个数</div></pre></td></tr></table></figure>
+<h3 id="位置参数变量"><a href="#位置参数变量" class="headerlink" title="位置参数变量"></a>位置参数变量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$n</span>    n为数字，<span class="variable">$0</span>代表命令本身，<span class="variable">$1</span>~<span class="variable">$9</span>代表第一到第九个参数，十以上的参数需要用到大括号包含，如<span class="variable">$&#123;10&#125;</span>。</div><div class="line">$*    这个变量代表命令行中所有的参数，$*把所有的参数看作是一个整体。</div><div class="line"><span class="variable">$@</span>    这个变量也代表命令行中所有的参数，不过<span class="variable">$@</span>把每个参数区分呢对待。</div><div class="line"><span class="variable">$#</span>    这个变量代表命令行中所有参数的个数</div></pre></td></tr></table></figure>
 <blockquote>
 <p>$n 使用示例<code>sum.sh</code></p>
 </blockquote>
@@ -498,8 +482,7 @@
 <p>$* $@ 使用示例 <code>sum2.sh</code></p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">"$*"</span></div><div class="line"></div><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">"$*"</span></div><div class="line">    $*中的所有参数看成是一个整体，所以这个<span class="keyword">for</span>循环只会循环一次。</div><div class="line">	<span class="keyword">do</span></div><div class="line">		<span class="built_in">echo</span> <span class="string">" The parameter is : <span class="variable">$i</span>"</span></div><div class="line">	<span class="keyword">done</span></div><div class="line"><span class="keyword">for</span> y <span class="keyword">in</span> <span class="string">"<span class="variable">$@</span>"</span></div><div class="line">    <span class="variable">$@</span>中的每个参数都看很是独立的，所有<span class="string">"<span class="variable">$@</span>"</span>中有几个参数，就会循环几次</div><div class="line">	<span class="keyword">do</span></div><div class="line">		<span class="built_in">echo</span> <span class="string">"Parameter : <span class="variable">$y</span> "</span></div><div class="line">	<span class="keyword">done</span></div></pre></td></tr></table></figure>
-<p>###预定义变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$? 最后一次执行的命令的返回状态。如果这个变量的值为0，证明上一个命令正确执行；如果这个变量的值非0（具体是哪个数，由命令自己决定），则证明上一个命令执行不正确了。</div><div class="line">$$ 当前进程的进程号（PID）</div><div class="line">$! 后台运行的最后一个进程的进程号（PID）</div></pre></td></tr></table></figure>
+<h3 id="预定义变量"><a href="#预定义变量" class="headerlink" title="预定义变量"></a>预定义变量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$? 最后一次执行的命令的返回状态。如果这个变量的值为0，证明上一个命令正确执行；如果这个变量的值非0（具体是哪个数，由命令自己决定），则证明上一个命令执行不正确了。</div><div class="line">$$ 当前进程的进程号（PID）</div><div class="line">$! 后台运行的最后一个进程的进程号（PID）</div></pre></td></tr></table></figure>
 <p>使用示例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ls</div><div class="line"><span class="built_in">echo</span> $? <span class="comment">#将在终端打印结果为0</span></div><div class="line"></div><div class="line">ls QERTYUTIYKNB</div><div class="line"><span class="built_in">echo</span> $? <span class="comment">#将在终端打印结果为2（非0）</span></div></pre></td></tr></table></figure></p>
 <blockquote>
 <p>其实，逻辑运算符<code>&amp;&amp;</code>(逻辑与运算）和<code>||</code>（逻辑或运算）就是通过判断前一个命令的返回值来判断命令是否正确执行。</p>
@@ -626,8 +609,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -758,6 +750,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量的命名规范"><span class="nav-number">1.</span> <span class="nav-text">变量的命名规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量的分类"><span class="nav-number">2.</span> <span class="nav-text">变量的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义变量"><span class="nav-number">2.1.</span> <span class="nav-text">定义变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量调用"><span class="nav-number">2.2.</span> <span class="nav-text">变量调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量叠加"><span class="nav-number">2.3.</span> <span class="nav-text">变量叠加</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量查看"><span class="nav-number">2.4.</span> <span class="nav-text">变量查看</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量的删除"><span class="nav-number">2.5.</span> <span class="nav-text">变量的删除</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境变量"><span class="nav-number">3.</span> <span class="nav-text">环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置环境变量"><span class="nav-number">3.1.</span> <span class="nav-text">设置环境变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看环境变量"><span class="nav-number">3.2.</span> <span class="nav-text">查看环境变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用环境变量"><span class="nav-number">3.3.</span> <span class="nav-text">常用环境变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PATH变量"><span class="nav-number">3.4.</span> <span class="nav-text">PATH变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PS1变量"><span class="nav-number">3.5.</span> <span class="nav-text">PS1变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#当前语系查询"><span class="nav-number">3.6.</span> <span class="nav-text">当前语系查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux中文支持"><span class="nav-number">3.7.</span> <span class="nav-text">Linux中文支持</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#位置参数变量"><span class="nav-number">4.</span> <span class="nav-text">位置参数变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预定义变量"><span class="nav-number">5.</span> <span class="nav-text">预定义变量</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

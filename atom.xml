@@ -284,7 +284,7 @@
     <link href="https://notes.wanghao.work/2017-01-13-FFmpeg%E6%8A%98%E8%85%BE%E7%AC%94%E8%AE%B0%E4%B9%8B%E7%BC%96%E8%AF%91FFmpeg.html"/>
     <id>https://notes.wanghao.work/2017-01-13-FFmpeg折腾笔记之编译FFmpeg.html</id>
     <published>2017-01-13T13:58:04.000Z</published>
-    <updated>2017-03-13T16:36:05.000Z</updated>
+    <updated>2017-06-14T15:23:12.000Z</updated>
     
     <content type="html"><![CDATA[<p>​        又有很久没有写新的文章了，感觉再不写点什么东西博客草都长满了。于是打算折腾下FFmpeg，记录下折腾的过程，以熟悉Android NDK开发的基本操作。过程中有地方有错误欢迎指出，如果你对这个方面有所了解，欢迎讨论指教。</p>
 <h4 id="编译环境"><a href="#编译环境" class="headerlink" title="编译环境"></a>编译环境</h4><ul>
@@ -406,7 +406,7 @@
     <link href="https://notes.wanghao.work/2016-09-10-AndroidProcessbeKilledweShoudIDo.html"/>
     <id>https://notes.wanghao.work/2016-09-10-AndroidProcessbeKilledweShoudIDo.html</id>
     <published>2016-09-10T11:00:20.000Z</published>
-    <updated>2016-11-06T01:31:11.000Z</updated>
+    <updated>2017-06-14T15:19:39.000Z</updated>
     
     <content type="html"><![CDATA[<p>Android应用在后台运行的时候很容易被强杀，尤其是在国内XX助手、XX管家、XX大师之类的应用大行其道之下。如果我们开发的应用没有被用户加入白名单，很大程度上会被系统因为内存不足或者用户主动给应用在后台运行的时候杀掉。这个时候问题就来了：</p>
 <ul>
@@ -440,8 +440,7 @@
 <p>ActivityB –&gt; 主页</p>
 <p>ActivityC –&gt; 详情页</p>
 <p>其中将ActivityB的<code>launchMode</code>设置为<code>singleTask</code>，并且在BaseActivity中使用静态变量FLAG进行判断当前应用是否被强杀，如果被强杀则利用ActivityB的<code>launchMode</code>特性清空栈并重新初始化即可。</p>
-<p>######有关Activity的启动模式相关文章，可参阅<a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0520/2897.html" target="_blank" rel="external">Activity启动模式图文详解</a></p>
-]]></content>
+<h6 id="有关Activity的启动模式相关文章，可参阅Activity启动模式图文详解"><a href="#有关Activity的启动模式相关文章，可参阅Activity启动模式图文详解" class="headerlink" title="有关Activity的启动模式相关文章，可参阅Activity启动模式图文详解"></a>有关Activity的启动模式相关文章，可参阅<a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0520/2897.html" target="_blank" rel="external">Activity启动模式图文详解</a></h6>]]></content>
     
     <summary type="html">
     
@@ -616,7 +615,7 @@
     <link href="https://notes.wanghao.work/2015-10-21-%E4%B8%BANexT%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB%E9%87%8F%E7%BB%9F%E8%AE%A1%E5%8A%9F%E8%83%BD.html"/>
     <id>https://notes.wanghao.work/2015-10-21-为NexT主题添加文章阅读量统计功能.html</id>
     <published>2015-10-21T13:57:00.000Z</published>
-    <updated>2016-11-14T13:34:22.000Z</updated>
+    <updated>2017-06-14T15:28:50.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><hr>
 <p>由于最近在折腾Android项目，需要用到一些与服务器交互、以及数据存储的相关功能，然后发现了<a href="https://leancloud.cn" target="_blank" rel="external">LeanCloud</a>这家服务提供商,使用下来还感觉还挺靠谱的(请给我广告费)。正好发现他们服务提供了<a href="https://leancloud.cn/docs/js_guide.html" target="_blank" rel="external">JavaScript SDK</a>，于是就想着尝试着实现Hexo博客文章的浏览数统计功能，之前虽然在使用不蒜子，但是不蒜子不能够在主页展示文章阅读量啊！对于博主这种有强迫症又想装X的人来说果断不能忍啊！</p>
@@ -669,8 +668,7 @@
 <p>复制<code>AppID</code>以及<code>AppKey</code>并在NexT主题的<code>_config.yml</code>文件中我们相应的位置填入即可，正确配置之后文件内容像这个样子:</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">leancloud_visitors:</div><div class="line">  enable: true</div><div class="line">  app_id: joaeuuc4hsqudUUwx4gIvGF6-gzGzoHsz</div><div class="line">  app_key: E9UJsJpw1omCHuS22PdSpKoh</div></pre></td></tr></table></figure>
 <p>这个时候重新生成部署Hexo博客，应该就可以正常使用文章阅读量统计的功能了。需要特别说明的是：记录文章访问量的唯一标识符是文章的<code>发布日期</code>以及<code>文章的标题</code>，因此请确保这两个数值组合的唯一性，如果你更改了这两个数值，会造成文章阅读数值的清零重计。</p>
-<p>###后台管理</p>
-<p>当你配置部分完成之后，初始的文章统计量显示为0，但是这个时候我们LeanCloud对应的应用的<code>Counter</code>表中并没有相应的记录，只是单纯的显示为0而已，当博客文章在配置好阅读量统计服务之后第一次打开时，便会自动向服务器发送数据来创建一条数据，该数据会被记录在对应的应用的<code>Counter</code>表中。</p>
+<h3 id="后台管理"><a href="#后台管理" class="headerlink" title="后台管理"></a>后台管理</h3><p>当你配置部分完成之后，初始的文章统计量显示为0，但是这个时候我们LeanCloud对应的应用的<code>Counter</code>表中并没有相应的记录，只是单纯的显示为0而已，当博客文章在配置好阅读量统计服务之后第一次打开时，便会自动向服务器发送数据来创建一条数据，该数据会被记录在对应的应用的<code>Counter</code>表中。</p>
 <p><img src="http://7xkj6q.com1.z0.glb.clouddn.com/static/images/leancloud-page-anlysis/background.png" alt="" title="后台管理"></p>
 <p>我们可以修改其中的<code>time</code>字段的数值来达到修改某一篇文章的访问量的目的（博客文章访问量快递提升人气的装逼利器）。双击具体的数值，修改之后回车即可保存。</p>
 <ul>
@@ -678,8 +676,7 @@
 <li><code>title</code>字段显示的是博客文章的标题，用于后台管理的时候区分文章之用，没有什么实际作用。</li>
 <li>其他字段皆为自动生成，具体作用请查阅LeanCloud官方文档，如果你不知道有什么作用请不要随意修改。</li>
 </ul>
-<p>###Web安全</p>
-<p>因为AppID以及AppKey是暴露在外的，因此如果一些别用用心之人知道了之后用于其它目的是得不偿失的，为了确保只用于我们自己的博客，建议开启Web安全选项，这样就只能通过我们自己的域名才有权访问后台的数据了，可以进一步提升安全性。</p>
+<h3 id="Web安全"><a href="#Web安全" class="headerlink" title="Web安全"></a>Web安全</h3><p>因为AppID以及AppKey是暴露在外的，因此如果一些别用用心之人知道了之后用于其它目的是得不偿失的，为了确保只用于我们自己的博客，建议开启Web安全选项，这样就只能通过我们自己的域名才有权访问后台的数据了，可以进一步提升安全性。</p>
 <p>选择应用的设置的<code>安全中心</code>选项卡:</p>
 <p><img src="http://7xkj6q.com1.z0.glb.clouddn.com/static/images/leancloud-page-anlysis/open_safe_center.png" alt="" title="进入安全中心"></p>
 <p>在<code>Web 安全域名</code>中填入我们自己的博客域名，来确保数据调用的安全:</p>
@@ -710,23 +707,20 @@
     <link href="https://notes.wanghao.work/2015-09-04-Create-a-Simple-Android-Keyboard.html"/>
     <id>https://notes.wanghao.work/2015-09-04-Create-a-Simple-Android-Keyboard.html</id>
     <published>2015-09-04T07:12:11.000Z</published>
-    <updated>2016-11-06T01:31:11.000Z</updated>
+    <updated>2017-06-14T15:36:14.000Z</updated>
     
-    <content type="html"><![CDATA[<p>##前言</p>
-<p>&emsp;&emsp;由于最近做的一个Android项目需要用到用户的输入一些字符，常规的输入法输入非常的不方便。因此有必要自定义一个输入法来完成这个过程。此处给出一个简单的输入法Demo<br>来帮助理解自定义输入法的一些实现过程。</p>
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;由于最近做的一个Android项目需要用到用户的输入一些字符，常规的输入法输入非常的不方便。因此有必要自定义一个输入法来完成这个过程。此处给出一个简单的输入法Demo<br>来帮助理解自定义输入法的一些实现过程。</p>
 <ul>
 <li><strong>有关输入法的一些说明，请参见:<a href="http://notes.xiamo.tk/2015-04-01-Create-an-Android-IME.html" target="_blank" rel="external">Create a Android IME</a></strong></li>
 </ul>
 <a id="more"></a>
-<p>##准备工作</p>
-<p>&emsp;&emsp;磨刀不误砍柴工，创建一个Android是需要一点点准备工作的,选择一个好的IDE能够提高我们编码的效率：</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>&emsp;&emsp;磨刀不误砍柴工，创建一个Android是需要一点点准备工作的,选择一个好的IDE能够提高我们编码的效率：</p>
 <ul>
 <li>Android Studio（推荐）</li>
 <li>Android SDK</li>
 </ul>
 <p>本博文的编写环境为Android Studio，如果你还在使用Eclipse的话，转到Android Studio上来吧！如果对上述IDE的下载感到茫然的话，推荐一个国内Android开发的好网站：<a href="http://www.androiddevtools.cn/" target="_blank" rel="external">http://www.androiddevtools.cn</a>。</p>
-<p>##创建一个Android项目</p>
-<ul>
+<h2 id="创建一个Android项目"><a href="#创建一个Android项目" class="headerlink" title="创建一个Android项目"></a>创建一个Android项目</h2><ul>
 <li>打开Android Studio，创建一个新的Android项目，命名为<code>SimpleKeyboard</code>，如下图：</li>
 </ul>
 <p><img src="http://i3.piimg.com/37ae2bfdf945c18e.png" alt="" title="创建一个SimpleKeyboard项目"></p>
@@ -741,18 +735,15 @@
 <p>点击Finish，这样就完成了我们Android Keyboard项目的创建了。这个等待Gradle构建完成，因为我们这个项目是没有Activity的，因此我们需要按照如下图稍微配置一下：</p>
 <p><img src="http://i3.piimg.com/4c72f6d152c54dee.png" alt=""></p>
 <p><img src="http://i3.piimg.com/2195d3987d5dddd1.png" alt=""></p>
-<p>##编辑AndroidManifest.xml文件</p>
-<p>&emsp;&emsp;键盘在Android系统中被识别为一个输入法编辑器（IME），IME作为一个Service运行。只有在AndroidManifest.xml文件中通过<code>android.permission.BIND_INPUT_METHOD</code>权限声明的Service并且响应<code>android.view.im</code>这个元数据动作才能够被Android系统正确的识别为IME。因此，我们在<code>AndroidManifest.xml</code>文件中的application标签对中添加如下代码：</p>
+<h2 id="编辑AndroidManifest-xml文件"><a href="#编辑AndroidManifest-xml文件" class="headerlink" title="编辑AndroidManifest.xml文件"></a>编辑AndroidManifest.xml文件</h2><p>&emsp;&emsp;键盘在Android系统中被识别为一个输入法编辑器（IME），IME作为一个Service运行。只有在AndroidManifest.xml文件中通过<code>android.permission.BIND_INPUT_METHOD</code>权限声明的Service并且响应<code>android.view.im</code>这个元数据动作才能够被Android系统正确的识别为IME。因此，我们在<code>AndroidManifest.xml</code>文件中的application标签对中添加如下代码：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">service</span></span></div><div class="line">          <span class="attr">android:name</span>=<span class="string">".SimpleIME"</span></div><div class="line">          <span class="attr">android:label</span>=<span class="string">"@string/custom_ime"</span></div><div class="line">          <span class="attr">android:permission</span>=<span class="string">"android.permission.BIND_INPUT_METHOD"</span>&gt;</div><div class="line">          <span class="tag">&lt;<span class="name">meta-data</span></span></div><div class="line">              <span class="attr">android:name</span>=<span class="string">"android.view.im"</span></div><div class="line">              <span class="attr">android:resource</span>=<span class="string">"@xml/method"</span> /&gt;</div><div class="line">          <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">              <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.view.InputMethod"</span> /&gt;</span></div><div class="line">          <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">service</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>##创建method.xml</p>
-<blockquote>
+<h2 id="创建method-xml"><a href="#创建method-xml" class="headerlink" title="创建method.xml"></a>创建method.xml</h2><blockquote>
 <p>&emsp;&emsp;在上面的Service声明中，meta-data标签声明引用了一个叫做<code>method.xml</code>的文件，如果没有这个文件，那么Android系统将不能够识别我们的Service为一个有效的IME Service。这个文件包含了有关输入法及其子类的详细信息。</p>
 </blockquote>
 <p>在我们的Demo中，我们定义一个<code>subtyoe</code>来声明输入法的显示名称以及其语言环境：（如果没有res/xml目录的话，创建一个并将下面的内容添加到该目录的method.xml文件中）</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">input-method</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">subtype</span></span></div><div class="line">        <span class="attr">android:imeSubtypeLocale</span>=<span class="string">"zh_CN"</span></div><div class="line">        <span class="attr">android:imeSubtypeMode</span>=<span class="string">"keyboard"</span></div><div class="line">        <span class="attr">android:label</span>=<span class="string">"tk_xiamo_notes"</span> /&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">input-method</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>如果你对label中直接写死字符串这种做法比较有强迫症的话，可以将其抽取到Strings.xml文件中。</p>
-<p>##定义键盘布局</p>
-<p>&emsp;&emsp;我们的键盘布局比较简单，仅仅包含了一个KeyboardView，因此在<code>layout</code>目录中创建一个<code>keyboard.xml</code>文件，并添加一下内容：</p>
+<h2 id="定义键盘布局"><a href="#定义键盘布局" class="headerlink" title="定义键盘布局"></a>定义键盘布局</h2><p>&emsp;&emsp;我们的键盘布局比较简单，仅仅包含了一个KeyboardView，因此在<code>layout</code>目录中创建一个<code>keyboard.xml</code>文件，并添加一下内容：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">android.inputmethodservice.KeyboardView</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/keyboard"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:layout_alignParentBottom</span>=<span class="string">"true"</span></div><div class="line">    <span class="attr">android:keyPreviewLayout</span>=<span class="string">"@layout/preview"</span> /&gt;</div></pre></td></tr></table></figure>
 <p>其中需要说明的是：</p>
 <ul>
@@ -761,8 +752,7 @@
 </ul>
 <p>在<code>layout</code>目录下创建一个preview.xml文件，并在其中添加如下内容：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">TextView</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:gravity</span>=<span class="string">"center"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"#A6A6A6"</span></div><div class="line">    <span class="attr">android:textStyle</span>=<span class="string">"bold"</span></div><div class="line">    <span class="attr">android:textSize</span>=<span class="string">"30sp"</span></div><div class="line">    &gt;</div><div class="line"><span class="tag">&lt;/<span class="name">TextView</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>##定义键盘按键</p>
-<blockquote>
+<h2 id="定义键盘按键"><a href="#定义键盘按键" class="headerlink" title="定义键盘按键"></a>定义键盘按键</h2><blockquote>
 <p>键盘按键所代表的键值以及其位置等详细信息都被指定在一个xml文件中，每个独立的键盘按键至少都必须包含一下两个属性：</p>
 </blockquote>
 <table>
@@ -834,8 +824,7 @@
 <p>键盘上的按键通过Row标识为一组按键，比较推荐的做法是限制每组中最多10枚按键，这样的话，每个按键的宽度等于键盘宽度的10%。在本Demo中，按键高度被设置为60dp，这个数值可以任意调整。但是推荐不要低于48dp。</p>
 <p>在<code>res/xml</code>目录中，创建一个<code>qwerty.xml</code>文件，并添加以下内容完成按键的定义：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">Keyboard</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:horizontalGap</span>=<span class="string">"0px"</span></div><div class="line">    <span class="attr">android:keyHeight</span>=<span class="string">"60dp"</span></div><div class="line">    <span class="attr">android:keyWidth</span>=<span class="string">"10%p"</span></div><div class="line">    <span class="attr">android:verticalGap</span>=<span class="string">"0px"</span></div><div class="line">    &gt;</div><div class="line">    <span class="tag">&lt;<span class="name">Row</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"49"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"left"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"1"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"50"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"2"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"51"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"3"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"52"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"4"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"53"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"5"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"54"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"6"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"55"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"7"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"56"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"8"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"57"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"9"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"48"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"right"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"0"</span> /&gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">Row</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"113"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"left"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"q"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"119"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"w"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"101"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"e"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"114"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"r"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"116"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"t"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"121"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"y"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"117"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"u"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"105"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"i"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"111"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"o"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"112"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"right"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"p"</span> /&gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">Row</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"97"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"left"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"a"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"115"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"s"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"100"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"d"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"102"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"f"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"103"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"g"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"104"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"h"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"106"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"j"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"107"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"k"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"108"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"l"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"35,64"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"right"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"\#\@"</span> /&gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">Row</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"-1"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"left"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"↑"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"122"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"z"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"120"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"x"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"99"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"c"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"118"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"v"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"98"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"b"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"110"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"n"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"109"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"m"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"46"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"."</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"63,33,58"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"right"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"\?!:"</span> /&gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">Row</span> <span class="attr">android:rowEdgeFlags</span>=<span class="string">"bottom"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"44"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"left"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">","</span></div><div class="line">            <span class="attr">android:keyWidth</span>=<span class="string">"10%p"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"47"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"/"</span></div><div class="line">            <span class="attr">android:keyWidth</span>=<span class="string">"10%p"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"32"</span></div><div class="line">            <span class="attr">android:isRepeatable</span>=<span class="string">"true"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"SPACE"</span></div><div class="line">            <span class="attr">android:keyWidth</span>=<span class="string">"40%p"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"-5"</span></div><div class="line">            <span class="attr">android:isRepeatable</span>=<span class="string">"true"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"Del"</span></div><div class="line">            <span class="attr">android:keyWidth</span>=<span class="string">"20%p"</span> /&gt;</div><div class="line">        <span class="tag">&lt;<span class="name">Key</span></span></div><div class="line">            <span class="attr">android:codes</span>=<span class="string">"-4"</span></div><div class="line">            <span class="attr">android:keyEdgeFlags</span>=<span class="string">"right"</span></div><div class="line">            <span class="attr">android:keyLabel</span>=<span class="string">"Done"</span></div><div class="line">            <span class="attr">android:keyWidth</span>=<span class="string">"20%p"</span> /&gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">Row</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">Keyboard</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>##创建Service类</p>
-<p>创建一个java类，命名为<code>SimpleIME.java</code>（与AndroidManifest.xml文件中的定义向对应）：</p>
+<h2 id="创建Service类"><a href="#创建Service类" class="headerlink" title="创建Service类"></a>创建Service类</h2><p>创建一个java类，命名为<code>SimpleIME.java</code>（与AndroidManifest.xml文件中的定义向对应）：</p>
 <ul>
 <li><code>SimpleIME</code>类应该继承至<code>InputMethodService</code>类。</li>
 <li><code>SimpleIME</code>类应该实现<code>OnKeyboardActionListener</code>接口，该接口包含了键盘被点击或者被按下时回调的一些函数。</li>
@@ -869,15 +858,13 @@
 </tr>
 </tbody>
 </table>
-<p>##编译运行</p>
-<p>编译运行，在手机上运行的效果如下图：</p>
+<h2 id="编译运行"><a href="#编译运行" class="headerlink" title="编译运行"></a>编译运行</h2><p>编译运行，在手机上运行的效果如下图：</p>
 <p><img src="http://i1.piimg.com/e15673195304af50.jpg" alt="" title="键盘运行效果"></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;##前言&lt;/p&gt;
-&lt;p&gt;&amp;emsp;&amp;emsp;由于最近做的一个Android项目需要用到用户的输入一些字符，常规的输入法输入非常的不方便。因此有必要自定义一个输入法来完成这个过程。此处给出一个简单的输入法Demo&lt;br&gt;来帮助理解自定义输入法的一些实现过程。&lt;/p&gt;
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;由于最近做的一个Android项目需要用到用户的输入一些字符，常规的输入法输入非常的不方便。因此有必要自定义一个输入法来完成这个过程。此处给出一个简单的输入法Demo&lt;br&gt;来帮助理解自定义输入法的一些实现过程。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;有关输入法的一些说明，请参见:&lt;a href=&quot;http://notes.xiamo.tk/2015-04-01-Create-an-Android-IME.html&quot;&gt;Create a Android IME&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -898,22 +885,18 @@
     <link href="https://notes.wanghao.work/2015-08-28-%E5%90%8C%E6%97%B6%E9%83%A8%E7%BD%B2PPTP-Server-and-OpenConnect-Server.html"/>
     <id>https://notes.wanghao.work/2015-08-28-同时部署PPTP-Server-and-OpenConnect-Server.html</id>
     <published>2015-08-28T15:17:55.000Z</published>
-    <updated>2016-11-06T01:31:11.000Z</updated>
+    <updated>2017-06-14T15:29:18.000Z</updated>
     
     <content type="html"><![CDATA[<p>由于几天之前<a href="https://github.com/clowwindy" target="_blank" rel="external">@clowwindy</a>被某部门请喝茶，导致现Github上Shadowsocks项目源码被迫全部清除。非常感谢clowwindy所做的一切，希望他一切安好。</p>
 <p>虽然目前Shadowsocks还能正常使用，但是由于项目不在更新维护，还是要准备Shadowsocks的替代工具，以备不时之需，毕竟经常要上Google以及stackoverflow以及时不时看看YouTube。</p>
-<p>##PPTP Server</p>
-<p>如果对速度要求较高，又不那么在乎连接的安全性的话，PPTP VPN 是一个不错的选择，有着兼容性较好,速度快配置简单的优点。当然也有着加密强度不够，连接强度、抗干扰能力弱等缺点，但是基本上够用咯~</p>
+<h2 id="PPTP-Server"><a href="#PPTP-Server" class="headerlink" title="PPTP Server"></a>PPTP Server</h2><p>如果对速度要求较高，又不那么在乎连接的安全性的话，PPTP VPN 是一个不错的选择，有着兼容性较好,速度快配置简单的优点。当然也有着加密强度不够，连接强度、抗干扰能力弱等缺点，但是基本上够用咯~</p>
 <a id="more"></a>
-<p>###配置方法</p>
-<p>如何配置PPTP VPN服务器，博主写了一个简单的脚本来自动一键配置PPTP，脚本地址：<a href="https://github.com/smilexiamo/AutoProxyScript" target="_blank" rel="external">https://github.com/smilexiamo/AutoProxyScript</a></p>
+<h3 id="配置方法"><a href="#配置方法" class="headerlink" title="配置方法"></a>配置方法</h3><p>如何配置PPTP VPN服务器，博主写了一个简单的脚本来自动一键配置PPTP，脚本地址：<a href="https://github.com/smilexiamo/AutoProxyScript" target="_blank" rel="external">https://github.com/smilexiamo/AutoProxyScript</a></p>
 <p>具体用法此处就不再赘述，运行脚本等着配置完成即可使用。</p>
 <p><strong>需要注意的是该脚本运行环境为Debian或者Ubuntu。不适用于CentOS之类的Red Hat系Linux。</strong></p>
-<p>###添加PPTP用户</p>
-<p>编辑<code>/etc/ppp/chap-secrets</code>文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/ppp/chap-secrets</div></pre></td></tr></table></figure></p>
+<h3 id="添加PPTP用户"><a href="#添加PPTP用户" class="headerlink" title="添加PPTP用户"></a>添加PPTP用户</h3><p>编辑<code>/etc/ppp/chap-secrets</code>文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/ppp/chap-secrets</div></pre></td></tr></table></figure></p>
 <p>按照如下格式添加用户，每行一个即可：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Secrets for authentication using CHAP</span></div><div class="line"><span class="comment"># client    server       secret       IP addresses</span></div><div class="line">  vpn_user01  pptpd    vpn_password01     *</div><div class="line">  vpn_user02  pptpd    vpn_password02     *</div></pre></td></tr></table></figure></p>
-<p>##OpenConnect Server</p>
-<p>对于某一些安全性要求比较高的场合，PPTP可能就不那么适合了，这个时候就可以使用OpenConnect VPN了。它通过实现Cisco的AnyConnect协议，用DTLS作为主要的加密传输协议。其主要的有点有：</p>
+<h2 id="OpenConnect-Server"><a href="#OpenConnect-Server" class="headerlink" title="OpenConnect Server"></a>OpenConnect Server</h2><p>对于某一些安全性要求比较高的场合，PPTP可能就不那么适合了，这个时候就可以使用OpenConnect VPN了。它通过实现Cisco的AnyConnect协议，用DTLS作为主要的加密传输协议。其主要的有点有：</p>
 <ul>
 <li>AnyConnect的VPN协议默认使用UDP DTLS作为数据传输，但如果有什么网络问题导致UDP传输出现问题，它会利用最初建立的TCP TLS通道作为备份通道，降低VPN断开的概率。</li>
 <li>AnyConnect作为Cisco新一代的VPN解决方案，被用于许多大型企业，这些企业依赖它提供正常的商业运作。</li>
@@ -921,10 +904,9 @@
 <li>支持自定义路由表，因此是Shadowsocks比较好的替代方案。</li>
 </ul>
 <p>当然啦，有这么多有点，那么缺点也比较明显了：配置麻烦复杂。</p>
-<p>###配置方法</p>
-<p>有关如何配置的问题，这里有一个博主测试可用的还算比较干净的脚本，大大简化了配置的流程：<a href="https://github.com/fanyueciyuan/eazy-for-ss/tree/master/ocservauto" target="_blank" rel="external">https://github.com/fanyueciyuan/eazy-for-ss/tree/master/ocservauto</a></p>
+<h3 id="配置方法-1"><a href="#配置方法-1" class="headerlink" title="配置方法"></a>配置方法</h3><p>有关如何配置的问题，这里有一个博主测试可用的还算比较干净的脚本，大大简化了配置的流程：<a href="https://github.com/fanyueciyuan/eazy-for-ss/tree/master/ocservauto" target="_blank" rel="external">https://github.com/fanyueciyuan/eazy-for-ss/tree/master/ocservauto</a></p>
 <p>先运行博主的脚本，配置好PPTP，在运行此脚本配置好OpenConnect Server。博主测试这两种服务器是可以同时运行的。</p>
-<p>###连接方法<br>虽然OpenConnect Server兼容Cisco的Anyconnect，但是博主在<a href="https://software.cisco.com/download/navigator.html?mdfid=278875403&amp;flowid=17001" target="_blank" rel="external">windows</a>以及<a href="https://play.google.com/store/apps/details?id=com.cisco.anyconnect.vpn.android.avf" target="_blank" rel="external">Android平台</a>使用Cisco官方的客户端均出现可以连接但是无法访问网络的问题。改用OpenConnect Server官方推荐的客户端就正常了。以下给出OpenConnect Server官方客户端链接：</p>
+<h3 id="连接方法"><a href="#连接方法" class="headerlink" title="连接方法"></a>连接方法</h3><p>虽然OpenConnect Server兼容Cisco的Anyconnect，但是博主在<a href="https://software.cisco.com/download/navigator.html?mdfid=278875403&amp;flowid=17001" target="_blank" rel="external">windows</a>以及<a href="https://play.google.com/store/apps/details?id=com.cisco.anyconnect.vpn.android.avf" target="_blank" rel="external">Android平台</a>使用Cisco官方的客户端均出现可以连接但是无法访问网络的问题。改用OpenConnect Server官方推荐的客户端就正常了。以下给出OpenConnect Server官方客户端链接：</p>
 <ul>
 <li><a href="https://github.com/openconnect/openconnect-gui/releases" target="_blank" rel="external">Windows OpenConnect-GUI</a></li>
 <li><a href="https://github.com/openconnect/openconnect-gui/wiki/MacOSX" target="_blank" rel="external">MacOSX OpenConnect-GUI</a></li>
@@ -936,8 +918,7 @@
     
       &lt;p&gt;由于几天之前&lt;a href=&quot;https://github.com/clowwindy&quot;&gt;@clowwindy&lt;/a&gt;被某部门请喝茶，导致现Github上Shadowsocks项目源码被迫全部清除。非常感谢clowwindy所做的一切，希望他一切安好。&lt;/p&gt;
 &lt;p&gt;虽然目前Shadowsocks还能正常使用，但是由于项目不在更新维护，还是要准备Shadowsocks的替代工具，以备不时之需，毕竟经常要上Google以及stackoverflow以及时不时看看YouTube。&lt;/p&gt;
-&lt;p&gt;##PPTP Server&lt;/p&gt;
-&lt;p&gt;如果对速度要求较高，又不那么在乎连接的安全性的话，PPTP VPN 是一个不错的选择，有着兼容性较好,速度快配置简单的优点。当然也有着加密强度不够，连接强度、抗干扰能力弱等缺点，但是基本上够用咯~&lt;/p&gt;
+&lt;h2 id=&quot;PPTP-Server&quot;&gt;&lt;a href=&quot;#PPTP-Server&quot; class=&quot;headerlink&quot; title=&quot;PPTP Server&quot;&gt;&lt;/a&gt;PPTP Server&lt;/h2&gt;&lt;p&gt;如果对速度要求较高，又不那么在乎连接的安全性的话，PPTP VPN 是一个不错的选择，有着兼容性较好,速度快配置简单的优点。当然也有着加密强度不够，连接强度、抗干扰能力弱等缺点，但是基本上够用咯~&lt;/p&gt;
     
     </summary>
     
@@ -1083,20 +1064,17 @@
     <link href="https://notes.wanghao.work/2015-07-18-%E5%9F%BA%E4%BA%8EDebian-Linux%E6%90%AD%E5%BB%BAGit%E6%9C%8D%E5%8A%A1%E5%99%A8.html"/>
     <id>https://notes.wanghao.work/2015-07-18-基于Debian-Linux搭建Git服务器.html</id>
     <published>2015-07-18T09:47:37.000Z</published>
-    <updated>2016-11-06T01:31:11.000Z</updated>
+    <updated>2017-06-14T15:36:38.000Z</updated>
     
     <content type="html"><![CDATA[<p>&ensp;&ensp;&ensp;&ensp;因为一些众所周知的原因，某些项目不适合开源（代码写的烂我会乱说？(╯﹏╰)b ）。又因为博主不是壕，买不起Github的私有空间，所以只能利用手头上的Debian服务器搭建Git服务器咯~</p>
 <hr>
-<p>###安装Git</p>
-<p>&ensp;&ensp;&ensp;&ensp;要搭建Git服务器，第一步当然是要安装Git了，键入以下命令来完成Git的安装：</p>
+<h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><p>    要搭建Git服务器，第一步当然是要安装Git了，键入以下命令来完成Git的安装：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install git</div></pre></td></tr></table></figure>
-<p>###新建Git用户</p>
-<p>&ensp;&ensp;&ensp;&ensp;出于安全的原因考虑，我们肯定是不会使用<code>root</code>或者其它具有完整的shell执行权限的用户来运行Git的。因此，我们需要创建一个<code>git</code>用户来运行<code>git</code>服务。</p>
+<h3 id="新建Git用户"><a href="#新建Git用户" class="headerlink" title="新建Git用户"></a>新建Git用户</h3><p>&ensp;&ensp;&ensp;&ensp;出于安全的原因考虑，我们肯定是不会使用<code>root</code>或者其它具有完整的shell执行权限的用户来运行Git的。因此，我们需要创建一个<code>git</code>用户来运行<code>git</code>服务。</p>
 <p>键入以下命令来完成<code>git</code>用户的创建：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo adduser git</div></pre></td></tr></table></figure>
 <p>创建用户的途中会要求输入用户密码，这个密码请务必记住，这个密码的作用我们后面再说。<code>git</code>用户的其它配置使用默认值直接回车就行。</p>
-<p>###禁用shell登录</p>
-<p><code>git</code>用户创建完成之后，系统默认是为其分配的<code>bash</code>的，我们不希望<code>git</code>用户拥有shell执行权限，因此我们需要更改<code>git</code>用户的默认shell，使其不允许登录shell。</p>
+<h3 id="禁用shell登录"><a href="#禁用shell登录" class="headerlink" title="禁用shell登录"></a>禁用shell登录</h3><p><code>git</code>用户创建完成之后，系统默认是为其分配的<code>bash</code>的，我们不希望<code>git</code>用户拥有shell执行权限，因此我们需要更改<code>git</code>用户的默认shell，使其不允许登录shell。</p>
 <p>我们可以通过编辑<font color="red"><code>/etc/passwd</code></font>文件来完成对<code>git</code>用户shell的更改。</p>
 <p>键入以下命令编辑<font color="red"><code>/etc/passwd</code></font>文件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/passwd</div></pre></td></tr></table></figure>
@@ -1106,8 +1084,7 @@
 <p>修改为：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git:x:1000:1000:,,,:/home/git:/usr/bin/git-shell</div></pre></td></tr></table></figure></p>
 <p>如果你不确定<font color="red"><code>git-shell</code></font>是不是在<font color="red"><code>/usr/bin/git-shell</code></font>这个位置的话，可以使用以下命令来查看<code>git-shell</code>的路径：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">which</span> git-shell</div></pre></td></tr></table></figure></p>
 <p>这样，<code>git</code>用户可以正常通过<code>ssh</code>使用git，但无法登录shell，因为我们为<code>git用户</code>指定的<code>git-shell</code>每次一登录就自动退出。</p>
-<p>###Git密钥登录</p>
-<p>既然是私有Git服务器，当然必要的<code>push</code>和<code>pull</code>以及<code>clone</code>等操作不能让其他未经允许的人使用了。当然，我们也不想每次进行远程仓库操作的时候都输入<code>git</code>用户的密码。</p>
+<h3 id="Git密钥登录"><a href="#Git密钥登录" class="headerlink" title="Git密钥登录"></a>Git密钥登录</h3><p>既然是私有Git服务器，当然必要的<code>push</code>和<code>pull</code>以及<code>clone</code>等操作不能让其他未经允许的人使用了。当然，我们也不想每次进行远程仓库操作的时候都输入<code>git</code>用户的密码。</p>
 <p>因此，通过ssh密钥证书的方式就很有必要了~</p>
 <ul>
 <li>如同Github导入公钥一样，首先收集授权访问用户的公钥文件，也就是他们的<font color="red"><code>id_rsa.pub</code></font>文件。</li>
@@ -1116,18 +1093,15 @@
 </ul>
 <p>如果没有<font color="red"><code>/home/git/.ssh/authorized_keys</code></font>文件，请执行以下命令自行创建：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /home/git</div><div class="line">mkdir .ssh</div><div class="line"><span class="built_in">cd</span> .ssh</div><div class="line">touch authorized_keys</div></pre></td></tr></table></figure></p>
 <p><strong>这样，凡是添加了公钥到<font color="red"><code>/home/git/.ssh/authorized_keys</code></font>文件的用户都能够正常的使用远程仓库的常用操作了，如果Git公钥没有被添加到<font color="red"><code>/home/git/.ssh/authorized_keys</code></font>文件中又想执行远程仓库的操作的话，那么就需要用到上面<code>git</code>用户的密码了，因为<code>git</code>会要求输入Git服务器的<code>git</code>用户的密码。这就是上面设置<code>git</code>用户密码的作用了~</strong></p>
-<p>###初始化服务器Git仓库</p>
-<p>上面的准备工作做完，就需要在Git服务器上选定一个目录作为Git仓库了。假定我们选择<font color="red"><code>/gitserver/Demo.git</code></font>作为Git仓库，那么我们首先需要执行以下命令创建<font color="red"><code>/gitserver</code></font>目录：</p>
+<h3 id="初始化服务器Git仓库"><a href="#初始化服务器Git仓库" class="headerlink" title="初始化服务器Git仓库"></a>初始化服务器Git仓库</h3><p>上面的准备工作做完，就需要在Git服务器上选定一个目录作为Git仓库了。假定我们选择<font color="red"><code>/gitserver/Demo.git</code></font>作为Git仓库，那么我们首先需要执行以下命令创建<font color="red"><code>/gitserver</code></font>目录：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /</div><div class="line">mkdir gitserver</div><div class="line"><span class="built_in">cd</span> gitserver</div></pre></td></tr></table></figure>
 <p>然后进入<code>gitserver</code>目录，执行以下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo git init --bare demo.git</div></pre></td></tr></table></figure>
 <p>Git就会创建一个裸仓库，裸仓库没有工作区，因为Git服务器上的Git仓库主要是为了共享，所以不让用户直接登录到Git服务器上去修改工作区。</p>
 <p><strong>Git服务器上的Git仓库通常都以<font color="red"><code>.git</code></font>结尾。</strong></p>
-<p>###修改Git仓库owner</p>
-<p>创建好仓库之后，我们需要将仓库的owner设置为<code>git</code>用户，不让我们前面为<code>git</code>用户所做的配置就没啥意义了~</p>
+<h3 id="修改Git仓库owner"><a href="#修改Git仓库owner" class="headerlink" title="修改Git仓库owner"></a>修改Git仓库owner</h3><p>创建好仓库之后，我们需要将仓库的owner设置为<code>git</code>用户，不让我们前面为<code>git</code>用户所做的配置就没啥意义了~</p>
 <p>执行以下命令，修改仓库的owner：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chown -R git:git demo.git</div></pre></td></tr></table></figure></p>
-<p>###克隆远程仓库</p>
-<p>现在就可以通过<code>git clone</code>命令克隆Git服务器上的<code>demo</code>仓库了，在各自的PC上执行以下命令以完成克隆：</p>
+<h3 id="克隆远程仓库"><a href="#克隆远程仓库" class="headerlink" title="克隆远程仓库"></a>克隆远程仓库</h3><p>现在就可以通过<code>git clone</code>命令克隆Git服务器上的<code>demo</code>仓库了，在各自的PC上执行以下命令以完成克隆：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> ssh://git@server:/gitserver/demo.git</div><div class="line">Cloning into <span class="string">'demo'</span>...</div><div class="line">warning: You appear to have cloned an empty repository.</div></pre></td></tr></table></figure>
 <p>其中需要注意的是：</p>
 <ul>
@@ -1144,16 +1118,13 @@
     
       &lt;p&gt;&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;因为一些众所周知的原因，某些项目不适合开源（代码写的烂我会乱说？(╯﹏╰)b ）。又因为博主不是壕，买不起Github的私有空间，所以只能利用手头上的Debian服务器搭建Git服务器咯~&lt;/p&gt;
 &lt;hr&gt;
-&lt;p&gt;###安装Git&lt;/p&gt;
-&lt;p&gt;&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;要搭建Git服务器，第一步当然是要安装Git了，键入以下命令来完成Git的安装：&lt;/p&gt;
+&lt;h3 id=&quot;安装Git&quot;&gt;&lt;a href=&quot;#安装Git&quot; class=&quot;headerlink&quot; title=&quot;安装Git&quot;&gt;&lt;/a&gt;安装Git&lt;/h3&gt;&lt;p&gt;    要搭建Git服务器，第一步当然是要安装Git了，键入以下命令来完成Git的安装：&lt;/p&gt;
 &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;sudo apt-get install git&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;###新建Git用户&lt;/p&gt;
-&lt;p&gt;&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;出于安全的原因考虑，我们肯定是不会使用&lt;code&gt;root&lt;/code&gt;或者其它具有完整的shell执行权限的用户来运行Git的。因此，我们需要创建一个&lt;code&gt;git&lt;/code&gt;用户来运行&lt;code&gt;git&lt;/code&gt;服务。&lt;/p&gt;
+&lt;h3 id=&quot;新建Git用户&quot;&gt;&lt;a href=&quot;#新建Git用户&quot; class=&quot;headerlink&quot; title=&quot;新建Git用户&quot;&gt;&lt;/a&gt;新建Git用户&lt;/h3&gt;&lt;p&gt;&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;出于安全的原因考虑，我们肯定是不会使用&lt;code&gt;root&lt;/code&gt;或者其它具有完整的shell执行权限的用户来运行Git的。因此，我们需要创建一个&lt;code&gt;git&lt;/code&gt;用户来运行&lt;code&gt;git&lt;/code&gt;服务。&lt;/p&gt;
 &lt;p&gt;键入以下命令来完成&lt;code&gt;git&lt;/code&gt;用户的创建：&lt;/p&gt;
 &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;sudo adduser git&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;创建用户的途中会要求输入用户密码，这个密码请务必记住，这个密码的作用我们后面再说。&lt;code&gt;git&lt;/code&gt;用户的其它配置使用默认值直接回车就行。&lt;/p&gt;
-&lt;p&gt;###禁用shell登录&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;git&lt;/code&gt;用户创建完成之后，系统默认是为其分配的&lt;code&gt;bash&lt;/code&gt;的，我们不希望&lt;code&gt;git&lt;/code&gt;用户拥有shell执行权限，因此我们需要更改&lt;code&gt;git&lt;/code&gt;用户的默认shell，使其不允许登录shell。&lt;/p&gt;
+&lt;h3 id=&quot;禁用shell登录&quot;&gt;&lt;a href=&quot;#禁用shell登录&quot; class=&quot;headerlink&quot; title=&quot;禁用shell登录&quot;&gt;&lt;/a&gt;禁用shell登录&lt;/h3&gt;&lt;p&gt;&lt;code&gt;git&lt;/code&gt;用户创建完成之后，系统默认是为其分配的&lt;code&gt;bash&lt;/code&gt;的，我们不希望&lt;code&gt;git&lt;/code&gt;用户拥有shell执行权限，因此我们需要更改&lt;code&gt;git&lt;/code&gt;用户的默认shell，使其不允许登录shell。&lt;/p&gt;
 &lt;p&gt;我们可以通过编辑&lt;font color=red&gt;&lt;code&gt;/etc/passwd&lt;/code&gt;&lt;/font&gt;文件来完成对&lt;code&gt;git&lt;/code&gt;用户shell的更改。&lt;/p&gt;
 &lt;p&gt;键入以下命令编辑&lt;font color=red&gt;&lt;code&gt;/etc/passwd&lt;/code&gt;&lt;/font&gt;文件：&lt;/p&gt;
 &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;vim /etc/passwd&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -1174,14 +1145,12 @@
     <link href="https://notes.wanghao.work/2015-07-06-%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6.html"/>
     <id>https://notes.wanghao.work/2015-07-06-自动备份Hexo博客源文件.html</id>
     <published>2015-07-06T04:49:01.000Z</published>
-    <updated>2016-11-06T01:31:11.000Z</updated>
+    <updated>2017-06-14T15:37:04.000Z</updated>
     
     <content type="html"><![CDATA[<p>&ensp;&ensp;用Hexo写博客是一件比较享受的事情，无奈如果换电脑的话，备份博客就是一件比较闹心的事情。</p>
-<p>###前言</p>
-<p>&ensp;&ensp;我曾经给出过通过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于博主这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。</p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>&ensp;&ensp;我曾经给出过通过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于博主这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。</p>
 <a id="more"></a>
-<p>###原理</p>
-<p>前两天博主刚刚编写过关于<strong><a href="https://notes.wanghao.work/2015-06-29-Hexo%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E6%97%B6%E8%87%AA%E5%8A%A8%E6%89%93%E5%BC%80%E7%BC%96%E8%BE%91%E5%99%A8.html">Hexo添加文章时自动打开编辑器</a></strong>的相关文章，其原理就是利用<code>NodeJS</code>的事件监听机制实现监听Hexo的<code>new</code>事件来启动编辑器，完成自动启动编辑器的操作。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>前两天博主刚刚编写过关于<strong><a href="https://notes.wanghao.work/2015-06-29-Hexo%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E6%97%B6%E8%87%AA%E5%8A%A8%E6%89%93%E5%BC%80%E7%BC%96%E8%BE%91%E5%99%A8.html">Hexo添加文章时自动打开编辑器</a></strong>的相关文章，其原理就是利用<code>NodeJS</code>的事件监听机制实现监听Hexo的<code>new</code>事件来启动编辑器，完成自动启动编辑器的操作。</p>
 <p>那么可不可以通过通过监听Hexo的其它事件来完成自动执行Git命令完成自动备份呢？通过查阅<a href="https://hexo.io/zh-cn/api/events.html" target="_blank" rel="external">Hexo文档</a>，找到了Hexo的主要事件，见下表：</p>
 <table>
 <thead>
@@ -1218,18 +1187,14 @@
 </tbody>
 </table>
 <p>于是我们就可以通过监听Hexo的<code>deployAfter</code>事件，待上传完成之后自动运行Git备份命令，从而达到自动备份的目的。</p>
-<p>###实现</p>
-<p>####将Hexo目录加入Git仓库</p>
-<p>本脚本需要<font color="red"><code>提前</code></font>将Hexo加入Git仓库并与Github或者Gitcafe远程仓库绑定之后，才能正常工作。如果你不知道怎么操作，请参考这篇博文：</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h4 id="将Hexo目录加入Git仓库"><a href="#将Hexo目录加入Git仓库" class="headerlink" title="将Hexo目录加入Git仓库"></a>将Hexo目录加入Git仓库</h4><p>本脚本需要<font color="red"><code>提前</code></font>将Hexo加入Git仓库并与Github或者Gitcafe远程仓库绑定之后，才能正常工作。如果你不知道怎么操作，请参考这篇博文：</p>
 <ul>
 <li><strong><a href="https://notes.wanghao.work/2015-04-06-%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6.html">备份Hexo博客源文件</a></strong></li>
 </ul>
-<p>####安装<code>shelljs</code>模块</p>
-<p>要实现这个自动备份功能，需要依赖NodeJs的一个<code>shelljs</code>模块,该模块重新包装了<code>child_process</code>,调用系统命令更加的方便。（其实就是因为博主懒( ╯▽╰)）该模块需要安装后使用。</p>
+<h4 id="安装shelljs模块"><a href="#安装shelljs模块" class="headerlink" title="安装shelljs模块"></a>安装<code>shelljs</code>模块</h4><p>要实现这个自动备份功能，需要依赖NodeJs的一个<code>shelljs</code>模块,该模块重新包装了<code>child_process</code>,调用系统命令更加的方便。（其实就是因为博主懒( ╯▽╰)）该模块需要安装后使用。</p>
 <p>在命令中键入以下命令，完成<code>shelljs</code>模块的安装：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install --save shelljs</div></pre></td></tr></table></figure>
-<p>####编写自动备份脚本</p>
-<p>待到模块安装完成，在<code>Hexo</code>根目录的<code>scripts</code>文件夹下新建一个js文件，文件名随意取。</p>
+<h4 id="编写自动备份脚本"><a href="#编写自动备份脚本" class="headerlink" title="编写自动备份脚本"></a>编写自动备份脚本</h4><p>待到模块安装完成，在<code>Hexo</code>根目录的<code>scripts</code>文件夹下新建一个js文件，文件名随意取。</p>
 <p><strong>如果没有<code>scripts</code>目录，请新建一个。</strong></p>
 <p>然后在脚本中，写入以下内容：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>(<span class="string">'shelljs/global'</span>);</div><div class="line"></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">	hexo.on(<span class="string">'deployAfter'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;<span class="comment">//当deploy完成后执行备份</span></div><div class="line">		run();</div><div class="line">	&#125;);</div><div class="line">&#125; <span class="keyword">catch</span> (e) &#123;</div><div class="line">	<span class="built_in">console</span>.log(<span class="string">"产生了一个错误&lt;(￣3￣)&gt; !，错误详情为："</span> + e.toString());</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">run</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">if</span> (!which(<span class="string">'git'</span>)) &#123;</div><div class="line">		echo(<span class="string">'Sorry, this script requires git'</span>);</div><div class="line">		exit(<span class="number">1</span>);</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		echo(<span class="string">"======================Auto Backup Begin==========================="</span>);</div><div class="line">		cd(<span class="string">'D:/hexo'</span>);    <span class="comment">//此处修改为Hexo根目录路径</span></div><div class="line">		<span class="keyword">if</span> (exec(<span class="string">'git add --all'</span>).code !== <span class="number">0</span>) &#123;</div><div class="line">			echo(<span class="string">'Error: Git add failed'</span>);</div><div class="line">			exit(<span class="number">1</span>);</div><div class="line"></div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (exec(<span class="string">'git commit -am "Form auto backup script\'s commit"'</span>).code !== <span class="number">0</span>) &#123;</div><div class="line">			echo(<span class="string">'Error: Git commit failed'</span>);</div><div class="line">			exit(<span class="number">1</span>);</div><div class="line"></div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (exec(<span class="string">'git push origin master'</span>).code !== <span class="number">0</span>) &#123;</div><div class="line">			echo(<span class="string">'Error: Git push failed'</span>);</div><div class="line">			exit(<span class="number">1</span>);</div><div class="line"></div><div class="line">		&#125;</div><div class="line">		echo(<span class="string">"==================Auto Backup Complete============================"</span>)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -1248,8 +1213,7 @@
     <summary type="html">
     
       &lt;p&gt;&amp;ensp;&amp;ensp;用Hexo写博客是一件比较享受的事情，无奈如果换电脑的话，备份博客就是一件比较闹心的事情。&lt;/p&gt;
-&lt;p&gt;###前言&lt;/p&gt;
-&lt;p&gt;&amp;ensp;&amp;ensp;我曾经给出过通过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于博主这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。&lt;/p&gt;
+&lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;&amp;ensp;&amp;ensp;我曾经给出过通过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于博主这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。&lt;/p&gt;
     
     </summary>
     
@@ -1265,17 +1229,15 @@
     <link href="https://notes.wanghao.work/2015-07-02-EditPlus-Licenses%E5%9C%A8%E7%BA%BF%E7%94%9F%E6%88%90%E5%99%A8.html"/>
     <id>https://notes.wanghao.work/2015-07-02-EditPlus-Licenses在线生成器.html</id>
     <published>2015-07-02T11:22:03.000Z</published>
-    <updated>2016-11-06T01:31:11.000Z</updated>
+    <updated>2017-06-14T15:22:58.000Z</updated>
     
     <content type="html"><![CDATA[<p>EditPlus是一款博主非常喜欢的文本编辑器，相比notepad++以及EverEdit有着轻便小巧迅速的优点。</p>
-<p>##简介</p>
-<p>以下是来自维基百科简介：</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>以下是来自维基百科简介：</p>
 <blockquote>
 <p>EditPlus是Windows下的一个文本编辑器。支持语法高亮，自动完成等功能。对HTML文件编辑特别方便。可通过FTP远程编辑。EditPlus由韩国人Kim Sang-il（김상일）开发。</p>
 </blockquote>
 <a id="more"></a>
-<p>##下载</p>
-<p>下面博主为懒人给出EditPuls下载链接吧：</p>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>下面博主为懒人给出EditPuls下载链接吧：</p>
 <ul>
 <li><a href="https://www.editplus.com/" target="_blank" rel="external">EditPlus官网</a></li>
 <li><a href="http://www.cnblogs.com/hanzisearcher/" target="_blank" rel="external">EditPlus官方认可的汉化补丁</a></li>
@@ -1290,8 +1252,7 @@
     <summary type="html">
     
       &lt;p&gt;EditPlus是一款博主非常喜欢的文本编辑器，相比notepad++以及EverEdit有着轻便小巧迅速的优点。&lt;/p&gt;
-&lt;p&gt;##简介&lt;/p&gt;
-&lt;p&gt;以下是来自维基百科简介：&lt;/p&gt;
+&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;以下是来自维基百科简介：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;EditPlus是Windows下的一个文本编辑器。支持语法高亮，自动完成等功能。对HTML文件编辑特别方便。可通过FTP远程编辑。EditPlus由韩国人Kim Sang-il（김상일）开发。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -1310,7 +1271,7 @@
     <link href="https://notes.wanghao.work/2015-06-30-%E5%B8%B8%E8%A7%81%E7%9A%84%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF%E8%AF%81%E5%8C%BA%E5%88%AB.html"/>
     <id>https://notes.wanghao.work/2015-06-30-常见的开源许可证区别.html</id>
     <published>2015-06-30T07:18:41.000Z</published>
-    <updated>2016-11-06T01:31:11.000Z</updated>
+    <updated>2017-06-14T15:31:42.000Z</updated>
     
     <content type="html"><![CDATA[<p>如何为代码选择开源许可证，这是一个问题。</p>
 <p>世界上的开源许可证，大概有上百种。很少有人搞得清楚它们的区别。千言万语，比不上一张图：</p>
@@ -1318,14 +1279,14 @@
 <a id="more"></a>
 <p>以下是常见的六种开源协议：</p>
 <ul>
-<li>##<a href="http://www.gnu.org/licenses/gpl.html" target="_blank" rel="external">GPL License</a></li>
+<li><h2 id="GPL-License"><a href="#GPL-License" class="headerlink" title="GPL License"></a><a href="http://www.gnu.org/licenses/gpl.html" target="_blank" rel="external">GPL License</a></h2></li>
 </ul>
 <blockquote>
 <p>GPL协议的主要内容是只要在一个软件中使用(“使用”指类库引用，修改后的代码或者衍生代码)GPL 协议的产品，则该软件产品必须也采用GPL协议，既必须也是开源和免费。这就是所谓的”传染性”。GPL协议的产品作为一个单独的产品使用没有任何问题，还可以享受免费的优势。</p>
 <p><strong>由于GPL严格要求使用了GPL类库的软件产品必须使用GPL协议，对于使用GPL协议的开源代码，商业软件或者对代码有保密要求的部门就不适合集成/采用作为类库和二次开发的基础。</strong></p>
 </blockquote>
 <ul>
-<li>##<a href="https://en.wikipedia.org/wiki/BSD_licenses" target="_blank" rel="external">BSD License</a></li>
+<li><h2 id="BSD-License"><a href="#BSD-License" class="headerlink" title="BSD License"></a><a href="https://en.wikipedia.org/wiki/BSD_licenses" target="_blank" rel="external">BSD License</a></h2></li>
 </ul>
 <blockquote>
 <p>BSD开源协议是一个给于使用者很大自由的协议。基本上使用者可以”为所欲为”,可以自由的使用，修改源代码，也可以将修改后的代码作为开源或者专有软件再发布。</p>
@@ -1338,7 +1299,7 @@
 <p><strong>BSD 代码鼓励代码共享，但需要尊重代码作者的著作权。BSD由于允许使用者修改和重新发布代码，也允许使用或在BSD代码上开发商业软件发布和销售，因此是对商业集成很友好的协议。而很多的公司企业在选用开源产品的时候都首选BSD协议，因为可以完全控制这些第三方的代码，在必要的时候可以修改或者二次开发。</strong></p>
 </blockquote>
 <ul>
-<li>##<a href="https://en.wikipedia.org/wiki/MIT_License" target="_blank" rel="external">MIT License</a></li>
+<li><h2 id="MIT-License"><a href="#MIT-License" class="headerlink" title="MIT License"></a><a href="https://en.wikipedia.org/wiki/MIT_License" target="_blank" rel="external">MIT License</a></h2></li>
 </ul>
 <blockquote>
 <p>在所有常用的开源许可证中，MIT许可证最为简短，可能也最为广泛。它的条款非常松散，比起大部分其它许可证来说更加宽松。它的基本前提如下：</p>
@@ -1354,7 +1315,7 @@
 <p>MIT许可证是限制最少的许可证，它基本上是说，只要附带许可证，任何人都可以利用该许可证授权的软件做任何想做的事。</p>
 </blockquote>
 <ul>
-<li>##<a href="http://creativecommons.org/" target="_blank" rel="external">Creative Commons</a></li>
+<li><h2 id="Creative-Commons"><a href="#Creative-Commons" class="headerlink" title="Creative Commons"></a><a href="http://creativecommons.org/" target="_blank" rel="external">Creative Commons</a></h2></li>
 </ul>
 <blockquote>
 <p>知识共享（Creative Commons，简称CC）许可证并非完全的开源许可证，但设计类项目也常常使用。有各种不同的CC许可证可供使用，每种授予特定的权利。一个CC许可证包含四个基本部分，每部分即可单独生效，又可联合使用。简述如下：</p>
@@ -1379,7 +1340,7 @@
 <p><strong>如前所述，CC许可证的各个部分可以联合使用。最为严格的许可证为“署名-非商业-禁止衍生”许可证，即你可以自由分享作品，但不得修改或收费，同时你必须按照作者指定的方式为作品署名。这对那些一方面希望发布作品，另一方面又希望多多少少保留对作品使用方式的控制权的作者来说，颇为不错。限制最少的CC许可证是“署名”许可证，即只要按照作者指定的方式为作品署名，就可以用作品做任何事。</strong></p>
 </blockquote>
 <ul>
-<li>##<a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="external">Apache License</a></li>
+<li><h2 id="Apache-License"><a href="#Apache-License" class="headerlink" title="Apache License"></a><a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="external">Apache License</a></h2></li>
 </ul>
 <blockquote>
 <p>Apache许可证（2.0版）授予用户大量权利，这些权利适用于版权和专利权。由于有的许可证只适用于版权、不适用于专利权，Apache许可证的这一灵活性使其成为专利开发者的首选。</p>
@@ -1407,7 +1368,7 @@
 <p><strong>Apache许可证对分发代码也有特殊要求，主要是有关给予代码作者以适当荣誉，以及保持许可证的一致性。</strong></p>
 </blockquote>
 <ul>
-<li>##<a href="http://www.gnu.org/copyleft/lesser.html" target="_blank" rel="external">LGPL License</a></li>
+<li><h2 id="LGPL-License"><a href="#LGPL-License" class="headerlink" title="LGPL License"></a><a href="http://www.gnu.org/copyleft/lesser.html" target="_blank" rel="external">LGPL License</a></h2></li>
 </ul>
 <blockquote>
 <p>LGPL允许商业软件通过类库引用(link)方式使用LGPL类库而不需要开源商业软件的代码。这使得采用LGPL协议的开源代码可以被商业软件作为类库引用并发布和销售。</p>
@@ -1440,52 +1401,38 @@
     <link href="https://notes.wanghao.work/2015-06-29-Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.html"/>
     <id>https://notes.wanghao.work/2015-06-29-Git常用命令.html</id>
     <published>2015-06-29T12:36:13.000Z</published>
-    <updated>2016-11-06T01:31:11.000Z</updated>
+    <updated>2017-06-14T15:24:26.000Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://notes.wanghao.work/2015-06-29-Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.html"><img src="http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/git_logo.jpg" alt=""></a><br><a id="more"></a></p>
-<p>##基本配置命令</p>
-<p>###Git常用命令速查表</p>
-<p><img src="http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/11355916837b25b3cfo.jpg" alt="" title="速查表"></p>
-<p>###使用Git生成ssh密钥:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C <span class="string">"email@example.com"</span></div></pre></td></tr></table></figure>
-<p>###设置全局用户名和邮箱:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --global user.name <span class="string">"YourName"</span></div><div class="line">git config --global user.email <span class="string">"email@example.com"</span></div></pre></td></tr></table></figure>
-<p>###初始化仓库</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git init</div></pre></td></tr></table></figure>
-<p>###添加文件到暂存区</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git add &lt;filename&gt;	<span class="comment">#添加指定文件到暂存区</span></div><div class="line">git add .	<span class="comment">#添加工作区所有文件到暂存区</span></div><div class="line">git add -i	<span class="comment">#交互方式添加文件到暂存区</span></div><div class="line">git add -u	<span class="comment">#将工作区中已经变动的文件添加到暂存区，当新增加的文件不会被添加</span></div></pre></td></tr></table></figure>
-<p>###提交文件到仓库</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git commit -m <span class="string">"描述信息"</span>		<span class="comment">#提交更新</span></div><div class="line">git commit -am <span class="string">"描述信息"</span>	<span class="comment">#如果工作目录中仅是已跟踪的文件被修改或被删除，使用此提交命令</span></div></pre></td></tr></table></figure>
-<p>###分支的创建、删除、和平、切换、查看</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">git branch	<span class="comment">#查看Git仓库中已有的分支</span></div><div class="line">git branch 新分支名 [分支起点]	<span class="comment">#创建分支，如果没有分支起点的话，则默认在当前分支的最新提交上创建分支</span></div><div class="line">git checkout 分支名	<span class="comment">#切换分支</span></div><div class="line">git checkout -b 新分支名		<span class="comment">#创建同时切换到新分支</span></div><div class="line">git merge 要被合并的分支名	<span class="comment">#合并分支</span></div><div class="line">git branch <span class="_">-d</span> 要删除的分支名	<span class="comment">#删除指定分支（如果分支没有被合并过，该命令会执行失败）</span></div><div class="line">git branch -D 要删除的分支名	<span class="comment">#删除指定分支，不管有没有被合并过</span></div><div class="line">gitk				<span class="comment">#用图形界面查看分支提交历史</span></div></pre></td></tr></table></figure>
+<h2 id="基本配置命令"><a href="#基本配置命令" class="headerlink" title="基本配置命令"></a>基本配置命令</h2><h3 id="Git常用命令速查表"><a href="#Git常用命令速查表" class="headerlink" title="Git常用命令速查表"></a>Git常用命令速查表</h3><p><img src="http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/11355916837b25b3cfo.jpg" alt="" title="速查表"></p>
+<h3 id="使用Git生成ssh密钥"><a href="#使用Git生成ssh密钥" class="headerlink" title="使用Git生成ssh密钥:"></a>使用Git生成ssh密钥:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C <span class="string">"email@example.com"</span></div></pre></td></tr></table></figure>
+<h3 id="设置全局用户名和邮箱"><a href="#设置全局用户名和邮箱" class="headerlink" title="设置全局用户名和邮箱:"></a>设置全局用户名和邮箱:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --global user.name <span class="string">"YourName"</span></div><div class="line">git config --global user.email <span class="string">"email@example.com"</span></div></pre></td></tr></table></figure>
+<h3 id="初始化仓库"><a href="#初始化仓库" class="headerlink" title="初始化仓库"></a>初始化仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git init</div></pre></td></tr></table></figure>
+<h3 id="添加文件到暂存区"><a href="#添加文件到暂存区" class="headerlink" title="添加文件到暂存区"></a>添加文件到暂存区</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git add &lt;filename&gt;	<span class="comment">#添加指定文件到暂存区</span></div><div class="line">git add .	<span class="comment">#添加工作区所有文件到暂存区</span></div><div class="line">git add -i	<span class="comment">#交互方式添加文件到暂存区</span></div><div class="line">git add -u	<span class="comment">#将工作区中已经变动的文件添加到暂存区，当新增加的文件不会被添加</span></div></pre></td></tr></table></figure>
+<h3 id="提交文件到仓库"><a href="#提交文件到仓库" class="headerlink" title="提交文件到仓库"></a>提交文件到仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git commit -m <span class="string">"描述信息"</span>		<span class="comment">#提交更新</span></div><div class="line">git commit -am <span class="string">"描述信息"</span>	<span class="comment">#如果工作目录中仅是已跟踪的文件被修改或被删除，使用此提交命令</span></div></pre></td></tr></table></figure>
+<h3 id="分支的创建、删除、和平、切换、查看"><a href="#分支的创建、删除、和平、切换、查看" class="headerlink" title="分支的创建、删除、和平、切换、查看"></a>分支的创建、删除、和平、切换、查看</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">git branch	<span class="comment">#查看Git仓库中已有的分支</span></div><div class="line">git branch 新分支名 [分支起点]	<span class="comment">#创建分支，如果没有分支起点的话，则默认在当前分支的最新提交上创建分支</span></div><div class="line">git checkout 分支名	<span class="comment">#切换分支</span></div><div class="line">git checkout -b 新分支名		<span class="comment">#创建同时切换到新分支</span></div><div class="line">git merge 要被合并的分支名	<span class="comment">#合并分支</span></div><div class="line">git branch <span class="_">-d</span> 要删除的分支名	<span class="comment">#删除指定分支（如果分支没有被合并过，该命令会执行失败）</span></div><div class="line">git branch -D 要删除的分支名	<span class="comment">#删除指定分支，不管有没有被合并过</span></div><div class="line">gitk				<span class="comment">#用图形界面查看分支提交历史</span></div></pre></td></tr></table></figure>
 <blockquote>
 <p>合并分支过程中如果发生冲突则需要自己手动解决冲突，然后再提交。有冲突时，Git会显示哪个文件有冲突，并在冲突的文件中加上特殊的标识符号，解决完冲突后，要手动去掉这些被添加的标识符号。如果冲突比较复杂的话，最好使用其他工具来协助，通过git mergetool来启动。冲突一般是在不同的分支上对同一文件的同一位置内容进行了改动，并已提交到仓库中，这样在合并的时候就会发生冲突。</p>
 </blockquote>
-<p>###标签的添加、删除、查看</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git tag		<span class="comment">#查看标签</span></div><div class="line">git tag 标签名	<span class="comment">#创建简单的标签</span></div><div class="line">git tag <span class="_">-a</span> 标签名 -m <span class="string">'附加信息'</span>	<span class="comment">#创建附加信息的标签</span></div><div class="line">git show 标签名	<span class="comment">#通过标签查看信息</span></div><div class="line">git tag <span class="_">-d</span> 标签名	<span class="comment">#删除标签</span></div></pre></td></tr></table></figure>
+<h3 id="标签的添加、删除、查看"><a href="#标签的添加、删除、查看" class="headerlink" title="标签的添加、删除、查看"></a>标签的添加、删除、查看</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git tag		<span class="comment">#查看标签</span></div><div class="line">git tag 标签名	<span class="comment">#创建简单的标签</span></div><div class="line">git tag <span class="_">-a</span> 标签名 -m <span class="string">'附加信息'</span>	<span class="comment">#创建附加信息的标签</span></div><div class="line">git show 标签名	<span class="comment">#通过标签查看信息</span></div><div class="line">git tag <span class="_">-d</span> 标签名	<span class="comment">#删除标签</span></div></pre></td></tr></table></figure>
 <blockquote>
 <p>标签可以在需要的地方，为某个提交对象创建别名，这样以后我们就可以通过标签来查看一些信息，创建分支等。</p>
 </blockquote>
-<p>###查看工作目录状态</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git status</div></pre></td></tr></table></figure>
+<h3 id="查看工作目录状态"><a href="#查看工作目录状态" class="headerlink" title="查看工作目录状态"></a>查看工作目录状态</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git status</div></pre></td></tr></table></figure>
 <blockquote>
 <p>在git命令执行后，要养成通过git status查看git状态的习惯，以便及时了解文件变化的情况。通过git status可以知道文件的状态（已修改未暂存、已删除、已修改并已暂存等待提交、未跟踪）。</p>
 </blockquote>
-<p>###查看提交历史 </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">log</span></div><div class="line">git <span class="built_in">log</span> -p	<span class="comment">#显示每次提交文件变化</span></div></pre></td></tr></table></figure>
+<h3 id="查看提交历史"><a href="#查看提交历史" class="headerlink" title="查看提交历史"></a>查看提交历史</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">log</span></div><div class="line">git <span class="built_in">log</span> -p	<span class="comment">#显示每次提交文件变化</span></div></pre></td></tr></table></figure>
 <blockquote>
 <p>通过git log可以查看当前分支的所有提交历史，知道每次提交的commit对象的ID以及提交时附加的描述信息等。要显示更多的信息，需要使用其支持的选项，如git log -p可以将每次提交的文件变化也显示出来。</p>
 </blockquote>
-<p>###查看指定的提交对象</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git show commit_id	<span class="comment">#查看指定的某次提交内容</span></div><div class="line">git show --all		<span class="comment">#显示所有的提交历史内容</span></div><div class="line">git shortlog <span class="_">-s</span> -n	<span class="comment">#显示总的提交次数</span></div></pre></td></tr></table></figure>
+<h3 id="查看指定的提交对象"><a href="#查看指定的提交对象" class="headerlink" title="查看指定的提交对象"></a>查看指定的提交对象</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git show commit_id	<span class="comment">#查看指定的某次提交内容</span></div><div class="line">git show --all		<span class="comment">#显示所有的提交历史内容</span></div><div class="line">git shortlog <span class="_">-s</span> -n	<span class="comment">#显示总的提交次数</span></div></pre></td></tr></table></figure>
 <blockquote>
 <p>通过<code>git log</code>可以显示整个提交历史，而通过<code>git show commit-id</code>则可以查看指定的某次提交内容，当然<code>git show -all</code>也可以显示出提交历史，另外还可以格式化显示内容。</p>
 </blockquote>
 <p><strong>Note : commit-id可以是commit对象对应的ID，也可以是HEAD，分支名，tag等。</strong></p>
-<p>###查看工作区、暂存区、仓库之间的差异</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git diff		<span class="comment">#比较工作区与暂存区的差异</span></div><div class="line">git diff HEAD		<span class="comment">#比较工作区与仓库中最近一次的提交间的差异</span></div><div class="line">git diff --cached	<span class="comment">#比较暂存区与仓库中最近一次提交的差异</span></div><div class="line">git blame filename	<span class="comment">#可以列出该文件每次被修改的时间和内容。</span></div></pre></td></tr></table></figure>
-<p>###版本回退、撤销操作</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">git reflog	<span class="comment">#显示提交历史的简介</span></div><div class="line">git checkout -- filename	<span class="comment">#丢弃工作区的修改</span></div><div class="line">git reset --hard HEAD^		<span class="comment">#回退到上一个版本</span></div><div class="line">git reset --hard commit_id	<span class="comment">#回退到指定版本</span></div><div class="line">git checkout -- filename	<span class="comment">#恢复工作区被删除的指定文件（文件之前被提交到仓库中）</span></div><div class="line">git checkout <span class="_">-f</span> 		<span class="comment">#恢复工作区中所有被删除的文件(文件之前被提交到仓库中)</span></div><div class="line">git ls-files <span class="_">-d</span>			<span class="comment">#列出工作区被删除的文件（文件之前被提交到仓库中）</span></div></pre></td></tr></table></figure>
+<h3 id="查看工作区、暂存区、仓库之间的差异"><a href="#查看工作区、暂存区、仓库之间的差异" class="headerlink" title="查看工作区、暂存区、仓库之间的差异"></a>查看工作区、暂存区、仓库之间的差异</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git diff		<span class="comment">#比较工作区与暂存区的差异</span></div><div class="line">git diff HEAD		<span class="comment">#比较工作区与仓库中最近一次的提交间的差异</span></div><div class="line">git diff --cached	<span class="comment">#比较暂存区与仓库中最近一次提交的差异</span></div><div class="line">git blame filename	<span class="comment">#可以列出该文件每次被修改的时间和内容。</span></div></pre></td></tr></table></figure>
+<h3 id="版本回退、撤销操作"><a href="#版本回退、撤销操作" class="headerlink" title="版本回退、撤销操作"></a>版本回退、撤销操作</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">git reflog	<span class="comment">#显示提交历史的简介</span></div><div class="line">git checkout -- filename	<span class="comment">#丢弃工作区的修改</span></div><div class="line">git reset --hard HEAD^		<span class="comment">#回退到上一个版本</span></div><div class="line">git reset --hard commit_id	<span class="comment">#回退到指定版本</span></div><div class="line">git checkout -- filename	<span class="comment">#恢复工作区被删除的指定文件（文件之前被提交到仓库中）</span></div><div class="line">git checkout <span class="_">-f</span> 		<span class="comment">#恢复工作区中所有被删除的文件(文件之前被提交到仓库中)</span></div><div class="line">git ls-files <span class="_">-d</span>			<span class="comment">#列出工作区被删除的文件（文件之前被提交到仓库中）</span></div></pre></td></tr></table></figure>
 <blockquote>
 <p>有时候，由于我们的误操作，产生了一些错误，我们发现后希望能够及时纠正这些因为误操作而产生的结果，将工作目录恢复到某个正常状态。</p>
 </blockquote>
@@ -1494,23 +1441,18 @@
 <li>版本回退：先通过<code>git reflog</code>找到某个版本的<code>commit_id</code>，然后用<code>git reset --hard commit_id</code>将工作目录的文件恢复到指定的版本。</li>
 <li>恢复工作区中被删除的文件（文件之前被提交到仓库中）：<code>git checkout -- filename</code> 或 <code>git checkout -f</code></li>
 </ul>
-<p>###备份工作区</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git stash			<span class="comment">#将工作区文件保存在Git内部栈中</span></div><div class="line">git stash list			<span class="comment">#列出Git内部栈中保存的工作区文件列表</span></div><div class="line">git stash apply stash_id	<span class="comment">#恢复工作区到指定的内部栈状态</span></div><div class="line">git stash pop			<span class="comment">#恢复工作区到上一个内部栈状态</span></div><div class="line">git stash clear			<span class="comment">#清空Git内部栈</span></div></pre></td></tr></table></figure>
+<h3 id="备份工作区"><a href="#备份工作区" class="headerlink" title="备份工作区"></a>备份工作区</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git stash			<span class="comment">#将工作区文件保存在Git内部栈中</span></div><div class="line">git stash list			<span class="comment">#列出Git内部栈中保存的工作区文件列表</span></div><div class="line">git stash apply stash_id	<span class="comment">#恢复工作区到指定的内部栈状态</span></div><div class="line">git stash pop			<span class="comment">#恢复工作区到上一个内部栈状态</span></div><div class="line">git stash clear			<span class="comment">#清空Git内部栈</span></div></pre></td></tr></table></figure>
 <blockquote>
 <p>如果正在一个develop分支上正在开发新功能，但这时master分支(稳定版本)突然发现了bug，并需要及时修复，而develop分支此时的工作还没有完成，且不希望将之前的工作就这样提交到仓库中时，这时就可以用<code>git stash</code>来暂时保存这些状态到Git内部栈中，并用当前分支上一次的提交内容来恢复工作目录，然后切换到master分支进行bug修复工作，等修复完毕并提交到仓库上后，再使用<code>git stash apply [stash@{0}]</code>或者<code>git stash pop</code>将工作目录恢复到之前的状态，继续之前的工作。</p>
 <p>同时也可以多次使用git stash将未提交的代码压入到Git栈中，但当多次使用<code>git stash</code>命令后，Git栈里将充满了未提交的代码，这时候到底要用哪个版本来恢复工作目录呢？<code>git stash list</code>命令可以将当前的Git栈信息打印出来，我们只需要将找到对应的版本号，例如使用<code>git stash apply stash@{1}</code>就可以用版本号为stash@{1}的内容来恢复工作目录。</p>
 <p>当Git栈中所有的内容都被恢复后，可以使用<code>git stash clear</code>来将栈清空。</p>
 </blockquote>
-<p>###将当前工作区目录文件压缩归档</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git archive --format=zip -o arch.zip HEAD</div><div class="line">git arch --format zip head&gt;arch.zip</div></pre></td></tr></table></figure>
-<p>##远程操作</p>
-<blockquote>
+<h3 id="将当前工作区目录文件压缩归档"><a href="#将当前工作区目录文件压缩归档" class="headerlink" title="将当前工作区目录文件压缩归档"></a>将当前工作区目录文件压缩归档</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git archive --format=zip -o arch.zip HEAD</div><div class="line">git arch --format zip head&gt;arch.zip</div></pre></td></tr></table></figure>
+<h2 id="远程操作"><a href="#远程操作" class="headerlink" title="远程操作"></a>远程操作</h2><blockquote>
 <p>Git相比其他版本控制软件的一个优点就是大多数的操作都可以在本地进行，而不用管远程的仓库，因为操作是在本地，且操作的数据也是在本地，加上指针等原因，所以执行的速度就会比较快。 在多人协作的项目中，就需要涉及与远程仓库交互的问题，主要是如何从远程仓库抓取最新数据合并到自己的本地分支上，将自己的最新成果分享给其他人或让别人审查等 。</p>
 </blockquote>
-<p>###远程仓库的克隆、添加、查看</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">git remote	<span class="comment">#显示已添加的远程仓库名</span></div><div class="line">git remote -v 	<span class="comment">#显示已添加的远程仓库名和地址</span></div><div class="line">git remote add 远程仓库名 远程仓库地址	<span class="comment">#在本地添加远程仓库</span></div><div class="line">git remote rm 远程仓库名			<span class="comment">#删除本地添加的远程仓库名</span></div><div class="line">git remote rename 原名 新名		<span class="comment">#重命名远程仓库名</span></div><div class="line">git <span class="built_in">clone</span> 远程仓库地址 [克隆到指定的文件夹]	<span class="comment">#克隆远程仓库到本地</span></div><div class="line">git fetch 远程仓库名		<span class="comment">#从远程仓库抓取最新数据到本地但不与本地分支进行合并 </span></div><div class="line">git pull 远程仓库名	本地要合并的分支名	<span class="comment">#从远程仓库抓取最新数据并自动与本地分支进行合并</span></div><div class="line">git push 远程仓库名 本地分支名	<span class="comment">#将本地仓库推送到远程仓库中</span></div><div class="line">git remote show 远程仓库名	<span class="comment">#查看远程仓库信息</span></div><div class="line">git remote show			<span class="comment">#查看所有远程仓库</span></div><div class="line">git push 远程仓库名 标签名	<span class="comment">#将标签推送到远程仓库（Git默认不推送标签）</span></div></pre></td></tr></table></figure>
-<p>###协同流程</p>
-<ul>
+<h3 id="远程仓库的克隆、添加、查看"><a href="#远程仓库的克隆、添加、查看" class="headerlink" title="远程仓库的克隆、添加、查看"></a>远程仓库的克隆、添加、查看</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">git remote	<span class="comment">#显示已添加的远程仓库名</span></div><div class="line">git remote -v 	<span class="comment">#显示已添加的远程仓库名和地址</span></div><div class="line">git remote add 远程仓库名 远程仓库地址	<span class="comment">#在本地添加远程仓库</span></div><div class="line">git remote rm 远程仓库名			<span class="comment">#删除本地添加的远程仓库名</span></div><div class="line">git remote rename 原名 新名		<span class="comment">#重命名远程仓库名</span></div><div class="line">git <span class="built_in">clone</span> 远程仓库地址 [克隆到指定的文件夹]	<span class="comment">#克隆远程仓库到本地</span></div><div class="line">git fetch 远程仓库名		<span class="comment">#从远程仓库抓取最新数据到本地但不与本地分支进行合并 </span></div><div class="line">git pull 远程仓库名	本地要合并的分支名	<span class="comment">#从远程仓库抓取最新数据并自动与本地分支进行合并</span></div><div class="line">git push 远程仓库名 本地分支名	<span class="comment">#将本地仓库推送到远程仓库中</span></div><div class="line">git remote show 远程仓库名	<span class="comment">#查看远程仓库信息</span></div><div class="line">git remote show			<span class="comment">#查看所有远程仓库</span></div><div class="line">git push 远程仓库名 标签名	<span class="comment">#将标签推送到远程仓库（Git默认不推送标签）</span></div></pre></td></tr></table></figure>
+<h3 id="协同流程"><a href="#协同流程" class="headerlink" title="协同流程"></a>协同流程</h3><ul>
 <li>Fork远程项目</li>
 <li>把Fork的项目clone到本地</li>
 <li>执行以下命令，将别人的库添加为远端库</li>
@@ -1528,16 +1470,13 @@
 <blockquote>
 <p>在本地编辑内容前必须执行pull操作同步别人的远端库（这样避免冲突）</p>
 </blockquote>
-<p>###实用技巧</p>
-<blockquote>
+<h3 id="实用技巧"><a href="#实用技巧" class="headerlink" title="实用技巧"></a>实用技巧</h3><blockquote>
 <p>当手头工作没有完成时，先把工作现场<code>git stash</code>一下，然后去修复bug，修复后，再使用<code>git stash pop</code>，回到工作现场.</p>
 </blockquote>
-<p>###多人协作技巧</p>
-<blockquote>
+<h3 id="多人协作技巧"><a href="#多人协作技巧" class="headerlink" title="多人协作技巧"></a>多人协作技巧</h3><blockquote>
 <p>查看远程库信息，使用git remote -v；<br>本地新建的分支如果不推送到远程，对其他人就是不可见的；<br>从本地推送分支，使用<code>git push 远程仓库名 分支名</code>，如果推送失败，先用<code>git pull</code>抓取远程的新提交；<br>在本地创建和远程分支对应的分支，使用<code>git checkout -b branch-name origin/branch-name</code>，本地和远程分支的名称最好一致；<br>建立本地分支和远程分支的关联，使用<code>git branch --set-upstream branch-name origin/branch-name</code>；<br>从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。</p>
 </blockquote>
-<p>###Git常用命令思维导图</p>
-<p><img class="full-image" src="http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/11355916521d2e8f8fo.jpg"></p>
+<h3 id="Git常用命令思维导图"><a href="#Git常用命令思维导图" class="headerlink" title="Git常用命令思维导图"></a>Git常用命令思维导图</h3><p><img class="full-image" src="http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/11355916521d2e8f8fo.jpg"></p>
 ]]></content>
     
     <summary type="html">

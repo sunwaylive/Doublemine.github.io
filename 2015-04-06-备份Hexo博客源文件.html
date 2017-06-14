@@ -101,16 +101,16 @@
 
 
 
-<meta name="description" content="###前言使用Hexo编写博客还是比较Nice的。但是有一个问题就是:Hexo博客的源文件都是放在本地的，如果更换了电脑需要更新博客或者不小心博客源文件丢失，那将是一件非常糟心的事情了。未雨绸缪，现在给出这个问题的一种解决办法吧。">
+<meta name="description" content="前言使用Hexo编写博客还是比较Nice的。但是有一个问题就是:Hexo博客的源文件都是放在本地的，如果更换了电脑需要更新博客或者不小心博客源文件丢失，那将是一件非常糟心的事情了。未雨绸缪，现在给出这个问题的一种解决办法吧。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="备份Hexo博客源文件">
 <meta property="og:url" content="https://notes.wanghao.work/2015-04-06-备份Hexo博客源文件.html">
 <meta property="og:site_name" content="Doublemine">
-<meta property="og:description" content="###前言使用Hexo编写博客还是比较Nice的。但是有一个问题就是:Hexo博客的源文件都是放在本地的，如果更换了电脑需要更新博客或者不小心博客源文件丢失，那将是一件非常糟心的事情了。未雨绸缪，现在给出这个问题的一种解决办法吧。">
-<meta property="og:updated_time" content="2016-11-06T01:31:11.000Z">
+<meta property="og:description" content="前言使用Hexo编写博客还是比较Nice的。但是有一个问题就是:Hexo博客的源文件都是放在本地的，如果更换了电脑需要更新博客或者不小心博客源文件丢失，那将是一件非常糟心的事情了。未雨绸缪，现在给出这个问题的一种解决办法吧。">
+<meta property="og:updated_time" content="2017-06-14T15:30:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="备份Hexo博客源文件">
-<meta name="twitter:description" content="###前言使用Hexo编写博客还是比较Nice的。但是有一个问题就是:Hexo博客的源文件都是放在本地的，如果更换了电脑需要更新博客或者不小心博客源文件丢失，那将是一件非常糟心的事情了。未雨绸缪，现在给出这个问题的一种解决办法吧。">
+<meta name="twitter:description" content="前言使用Hexo编写博客还是比较Nice的。但是有一个问题就是:Hexo博客的源文件都是放在本地的，如果更换了电脑需要更新博客或者不小心博客源文件丢失，那将是一件非常糟心的事情了。未雨绸缪，现在给出这个问题的一种解决办法吧。">
 
 
 
@@ -408,8 +408,8 @@
       
 
       
-        <p>###前言<br>使用Hexo编写博客还是比较Nice的。但是有一个问题就是:Hexo博客的源文件都是放在本地的，如果更换了电脑需要更新博客或者不小心博客源文件丢失，那将是一件非常糟心的事情了。未雨绸缪，现在给出这个问题的一种解决办法吧。<br><a id="more"></a></p>
-<p>###备份方案<br>想到的解决办法无非是:</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>使用Hexo编写博客还是比较Nice的。但是有一个问题就是:Hexo博客的源文件都是放在本地的，如果更换了电脑需要更新博客或者不小心博客源文件丢失，那将是一件非常糟心的事情了。未雨绸缪，现在给出这个问题的一种解决办法吧。<br><a id="more"></a></p>
+<h3 id="备份方案"><a href="#备份方案" class="headerlink" title="备份方案"></a>备份方案</h3><p>想到的解决办法无非是:</p>
 <ul>
 <li>将博客源文件拷贝到U盘里。</li>
 </ul>
@@ -422,10 +422,11 @@
 <ul>
 <li>将博客文件托管到Github。</li>
 </ul>
-<p>###实现方法:</p>
-<ul>
-<li>在<a href="http://github.com" target="_blank" rel="external">Github</a>下创建一个新的repository，取名为<code>HEXO</code>。(与本地的Hexo源码文件夹同名即可)</li>
+<h3 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法:"></a>实现方法:</h3><ul>
+<li>在<a href="http://github.com" target="_blank" rel="external">Github</a>下创建一个新的repository，取名为<code>HEXO</code>。(与本地的Hexo源码文件夹同名即可)<ul>
 <li>进入本地的<code>Hexo</code>文件夹，执行以下命令创建仓库:</li>
+</ul>
+</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git init</div></pre></td></tr></table></figure>
 <ul>
@@ -433,8 +434,10 @@
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git remote add origin git@github.com:smilexiamo/hexo.git</div><div class="line">git pull origin master</div></pre></td></tr></table></figure>
 <ul>
-<li>修改<code>.gitignore</code>文件（如果没有请手动创建一个），在里面加入<code>*.log</code> 和 <code>public/</code> 以及<code>.deploy*/</code>。因为每次执行<code>hexo generate</code>命令时，上述目录都会被重写更新。因此忽略这两个目录下的文件更新，加快push速度。</li>
+<li>修改<code>.gitignore</code>文件（如果没有请手动创建一个），在里面加入<code>*.log</code> 和 <code>public/</code> 以及<code>.deploy*/</code>。因为每次执行<code>hexo generate</code>命令时，上述目录都会被重写更新。因此忽略这两个目录下的文件更新，加快push速度。<ul>
 <li>执行命令以下命令，完成Hexo源码在本地的提交。</li>
+</ul>
+</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git add .</div><div class="line">git commit -m <span class="string">"添加hexo源码文件作为备份"</span></div></pre></td></tr></table></figure>
 <ul>
@@ -442,9 +445,11 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push origin master</div></pre></td></tr></table></figure>
 <ul>
-<li>现在在任何一台电脑上，只需要<code>git clone git@github.com:smilexiamo/hexo.git</code>,即可完成将Hexo源文件复制到本地。（请将后面的<code>git@github.com:smilexiamo/hexo.git</code>替换为自己相应的仓库地址。否则，克隆的将是博主的博客源码:)）</li>
-<li><p>在本地编写完博客时，顺次执行以下命令，即可完成Hexo博客源文件的更新同步，保持Github上的hexo源码为最新版本。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git add .</div><div class="line">git commit -m <span class="string">"更新hexo源文件"</span></div><div class="line">git push origin master</div></pre></td></tr></table></figure>
+<li><p>现在在任何一台电脑上，只需要<code>git clone git@github.com:smilexiamo/hexo.git</code>,即可完成将Hexo源文件复制到本地。（请将后面的<code>git@github.com:smilexiamo/hexo.git</code>替换为自己相应的仓库地址。否则，克隆的将是博主的博客源码:)）</p>
+<ul>
+<li>在本地编写完博客时，顺次执行以下命令，即可完成Hexo博客源文件的更新同步，保持Github上的hexo源码为最新版本。<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git add .</div><div class="line">git commit -m <span class="string">"更新hexo源文件"</span></div><div class="line">git push origin master</div></pre></td></tr></table></figure>
+</li>
+</ul>
 </li>
 <li><p>当远程仓库有更新时，执行以下命令，即可同步hexo源文件到本地。</p>
 </li>
@@ -571,8 +576,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -703,6 +717,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#备份方案"><span class="nav-number">2.</span> <span class="nav-text">备份方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方法"><span class="nav-number">3.</span> <span class="nav-text">实现方法:</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

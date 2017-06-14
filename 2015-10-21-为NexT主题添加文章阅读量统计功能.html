@@ -122,7 +122,7 @@
 <meta property="og:image" content="http://7xkj6q.com1.z0.glb.clouddn.com/static/images/leancloud-page-anlysis/open_safe_center.png">
 <meta property="og:image" content="http://7xkj6q.com1.z0.glb.clouddn.com/static/images/leancloud-page-anlysis/bind_domain.png">
 <meta property="og:image" content="http://7xkj6q.com1.z0.glb.clouddn.com/static/images/leancloud-page-anlysis/broswer_403.png">
-<meta property="og:updated_time" content="2016-11-14T13:34:22.000Z">
+<meta property="og:updated_time" content="2017-06-14T15:28:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为NexT主题添加文章阅读量统计功能">
 <meta name="twitter:description" content="前言
@@ -477,8 +477,7 @@
 <p>复制<code>AppID</code>以及<code>AppKey</code>并在NexT主题的<code>_config.yml</code>文件中我们相应的位置填入即可，正确配置之后文件内容像这个样子:</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">leancloud_visitors:</div><div class="line">  enable: true</div><div class="line">  app_id: joaeuuc4hsqudUUwx4gIvGF6-gzGzoHsz</div><div class="line">  app_key: E9UJsJpw1omCHuS22PdSpKoh</div></pre></td></tr></table></figure>
 <p>这个时候重新生成部署Hexo博客，应该就可以正常使用文章阅读量统计的功能了。需要特别说明的是：记录文章访问量的唯一标识符是文章的<code>发布日期</code>以及<code>文章的标题</code>，因此请确保这两个数值组合的唯一性，如果你更改了这两个数值，会造成文章阅读数值的清零重计。</p>
-<p>###后台管理</p>
-<p>当你配置部分完成之后，初始的文章统计量显示为0，但是这个时候我们LeanCloud对应的应用的<code>Counter</code>表中并没有相应的记录，只是单纯的显示为0而已，当博客文章在配置好阅读量统计服务之后第一次打开时，便会自动向服务器发送数据来创建一条数据，该数据会被记录在对应的应用的<code>Counter</code>表中。</p>
+<h3 id="后台管理"><a href="#后台管理" class="headerlink" title="后台管理"></a>后台管理</h3><p>当你配置部分完成之后，初始的文章统计量显示为0，但是这个时候我们LeanCloud对应的应用的<code>Counter</code>表中并没有相应的记录，只是单纯的显示为0而已，当博客文章在配置好阅读量统计服务之后第一次打开时，便会自动向服务器发送数据来创建一条数据，该数据会被记录在对应的应用的<code>Counter</code>表中。</p>
 <p><img src="http://7xkj6q.com1.z0.glb.clouddn.com/static/images/leancloud-page-anlysis/background.png" alt="" title="后台管理"></p>
 <p>我们可以修改其中的<code>time</code>字段的数值来达到修改某一篇文章的访问量的目的（博客文章访问量快递提升人气的装逼利器）。双击具体的数值，修改之后回车即可保存。</p>
 <ul>
@@ -486,8 +485,7 @@
 <li><code>title</code>字段显示的是博客文章的标题，用于后台管理的时候区分文章之用，没有什么实际作用。</li>
 <li>其他字段皆为自动生成，具体作用请查阅LeanCloud官方文档，如果你不知道有什么作用请不要随意修改。</li>
 </ul>
-<p>###Web安全</p>
-<p>因为AppID以及AppKey是暴露在外的，因此如果一些别用用心之人知道了之后用于其它目的是得不偿失的，为了确保只用于我们自己的博客，建议开启Web安全选项，这样就只能通过我们自己的域名才有权访问后台的数据了，可以进一步提升安全性。</p>
+<h3 id="Web安全"><a href="#Web安全" class="headerlink" title="Web安全"></a>Web安全</h3><p>因为AppID以及AppKey是暴露在外的，因此如果一些别用用心之人知道了之后用于其它目的是得不偿失的，为了确保只用于我们自己的博客，建议开启Web安全选项，这样就只能通过我们自己的域名才有权访问后台的数据了，可以进一步提升安全性。</p>
 <p>选择应用的设置的<code>安全中心</code>选项卡:</p>
 <p><img src="http://7xkj6q.com1.z0.glb.clouddn.com/static/images/leancloud-page-anlysis/open_safe_center.png" alt="" title="进入安全中心"></p>
 <p>在<code>Web 安全域名</code>中填入我们自己的博客域名，来确保数据调用的安全:</p>
@@ -765,7 +763,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改NexT主题模版"><span class="nav-number">2.</span> <span class="nav-text">修改NexT主题模版</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改-config-yml文件"><span class="nav-number">2.1.</span> <span class="nav-text">修改_config.yml文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加lean-analytics-swig文件"><span class="nav-number">2.2.</span> <span class="nav-text">添加lean-analytics.swig文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改post-swig文件"><span class="nav-number">2.3.</span> <span class="nav-text">修改post.swig文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改layout-swig文件"><span class="nav-number">2.4.</span> <span class="nav-text">修改layout.swig文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改zh-Hans-yml文件"><span class="nav-number">2.5.</span> <span class="nav-text">修改zh-Hans.yml文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置LeanCloud"><span class="nav-number">3.</span> <span class="nav-text">配置LeanCloud</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建应用"><span class="nav-number">3.1.</span> <span class="nav-text">创建应用</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改NexT主题模版"><span class="nav-number">2.</span> <span class="nav-text">修改NexT主题模版</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改-config-yml文件"><span class="nav-number">2.1.</span> <span class="nav-text">修改_config.yml文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加lean-analytics-swig文件"><span class="nav-number">2.2.</span> <span class="nav-text">添加lean-analytics.swig文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改post-swig文件"><span class="nav-number">2.3.</span> <span class="nav-text">修改post.swig文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改layout-swig文件"><span class="nav-number">2.4.</span> <span class="nav-text">修改layout.swig文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改zh-Hans-yml文件"><span class="nav-number">2.5.</span> <span class="nav-text">修改zh-Hans.yml文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置LeanCloud"><span class="nav-number">3.</span> <span class="nav-text">配置LeanCloud</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建应用"><span class="nav-number">3.1.</span> <span class="nav-text">创建应用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后台管理"><span class="nav-number">4.</span> <span class="nav-text">后台管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web安全"><span class="nav-number">5.</span> <span class="nav-text">Web安全</span></a></li></ol></div>
             
 
           </div>

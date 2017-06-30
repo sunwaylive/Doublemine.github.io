@@ -310,6 +310,148 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://notes.wanghao.work/2017-01-13-FFmpeg折腾笔记之编译FFmpeg.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="夏末">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Doublemine">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017-01-13-FFmpeg折腾笔记之编译FFmpeg.html" itemprop="url">
+                  FFmpeg折腾笔记之编译FFmpeg
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-13T21:58:04+08:00">
+                2017-01-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017-01-13-FFmpeg折腾笔记之编译FFmpeg.html" class="leancloud_visitors" data-flag-title="FFmpeg折腾笔记之编译FFmpeg">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>​        又有很久没有写新的文章了，感觉再不写点什么东西博客草都长满了。于是打算折腾下FFmpeg，记录下折腾的过程，以熟悉Android NDK开发的基本操作。过程中有地方有错误欢迎指出，如果你对这个方面有所了解，欢迎讨论指教。</p>
+<h4 id="编译环境"><a href="#编译环境" class="headerlink" title="编译环境"></a>编译环境</h4><ul>
+<li><a href="https://ffmpeg.org/releases/ffmpeg-2.8.11.tar.bz2" target="_blank" rel="external">FFmpeg 2.8.11 “Feynman”</a></li>
+<li>Mac OS X </li>
+<li>NDK  <code>14.0.3770861</code></li>
+</ul>
+<p>下载完成FFmpeg源码之后，先对源码根目录中的<code>configure</code>文件进行修改以适应Android平台。因为默认编译出来的动态库文件版本号在<code>.so</code>之后，例如：<code>libavcodec.so.56.60.100</code>。Android平台对这种格式不能很好的识别（如果你不介意一个一个修改文件名的话）。通过<code>Vim</code>或者其他文本编辑器打开<code>configure</code>文件的第<code>2934</code>行（如果你下载的FFmpeg版本和我的一样的话）将:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SLIBNAME_WITH_MAJOR=&apos;$(SLIBNAME).$(LIBMAJOR)&apos;</div><div class="line">LIB_INSTALL_EXTRA_CMD=&apos;$$(RANLIB) &quot;$(LIBDIR)/$(LIBNAME)&quot;&apos;</div><div class="line">SLIB_INSTALL_NAME=&apos;$(SLIBNAME_WITH_VERSION)&apos;</div><div class="line">SLIB_INSTALL_LINKS=&apos;$(SLIBNAME_WITH_MAJOR) $(SLIBNAME)&apos;</div></pre></td></tr></table></figure>
+<p>修改为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SLIBNAME_WITH_MAJOR=&apos;$(SLIBPREF)$(FULLNAME)-$(LIBMAJOR)$(SLIBSUF)&apos;  </div><div class="line">LIB_INSTALL_EXTRA_CMD=&apos;$$(RANLIB)&quot;$(LIBDIR)/$(LIBNAME)&quot;&apos;  </div><div class="line">SLIB_INSTALL_NAME=&apos;$(SLIBNAME_WITH_MAJOR)&apos;  </div><div class="line">SLIB_INSTALL_LINKS=&apos;$(SLIBNAME)&apos;</div></pre></td></tr></table></figure>
+<p>后保存。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://notes.wanghao.work/2016-11-24-Mac自带VNC-Client.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -899,165 +1041,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://notes.wanghao.work/2016-07-03-Android之Keystore文件签名.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="夏末">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Doublemine">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016-07-03-Android之Keystore文件签名.html" itemprop="url">
-                  Android之Keystore文件签名
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-03T20:58:16+08:00">
-                2016-07-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016-07-03-Android之Keystore文件签名.html" class="leancloud_visitors" data-flag-title="Android之Keystore文件签名">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Android应用开发的时候会经常使用到第三方SDK，例如地图、推送、支付以及分享等。而这些第三方服务SDK为了应用不被滥用都会有签名验证机制。我们通过上传Android应用的签名来在服务端配置以验证应用的合法性。本文将讲述下在Android Stduio中常用的签名操作。</p>
-<h3 id="默认KeyStore"><a href="#默认KeyStore" class="headerlink" title="默认KeyStore"></a>默认KeyStore</h3><h4 id="默认KeyStore存储路径"><a href="#默认KeyStore存储路径" class="headerlink" title="默认KeyStore存储路径"></a>默认KeyStore存储路径</h4><p>在Android Stduio中系统默认内置了一个签名文件<code>debug.keystore</code>，用于我们在debug下的默认App签名。如果没有在Gradle文件中特殊指定，那么Android Studio将自动使用默认的<code>debug.keystore</code>文件为项目App生成Debug版本的签名。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016-07-03-Android之Keystore文件签名.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1107,7 +1090,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1129,7 +1112,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

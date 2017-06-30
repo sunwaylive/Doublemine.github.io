@@ -118,7 +118,9 @@
 
 为了避免同时维护代码和文档来保持两者之间的同步而带来的额外负担，同事推荐">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/694830ebgy1fh3pgsvdgyj208g05omye.jpg">
-<meta property="og:updated_time" content="2017-06-30T17:03:21.000Z">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/694830ebgy1fh3qqzjjr9j21gu0w4td1.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/694830ebgy1fh3qv1abohj21gu0w4jum.jpg">
+<meta property="og:updated_time" content="2017-06-30T17:33:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Boot使用SpringFox自动生成Api Doc">
 <meta name="twitter:description" content="在做Android开发的时候，对于Api接口的对接有着深刻的体会：后端通过Markdown或者Word写好Api文档，然后通过类似Samba或者Dropbox这样的服务与移动端实现文档共享。有的时候因为接口出了问题，中间还得来回修改对接，效率低下不说，要是后端手抖写错参数而没有意识到，移动端埋头一顿调试。。。说多了都是泪。
@@ -407,11 +409,15 @@
 <hr>
 <p>与<code>Apidoc</code>类似，<code>Swagger</code>也是一个用来文档化Resetful Api的项目，不过开源社区的支持应该是所有类似项目中最为完善的，因此除了可以使用<a href="https://github.com/swagger-api/swagger-editor" target="_blank" rel="external">Swagger Editor</a>来编写Api文档之外，你还可以使用其它对应的自动化生成工具，以此来避免同时维护文档和代码的麻烦：</p>
 <ul>
-<li><a href="https://github.com/springfox/springfox" target="_blank" rel="external">Springfox</a> 为Spring而打造</li>
-<li><a href="https://github.com/marcgibbons/django-rest-swagger" target="_blank" rel="external">DJango Reset Swagger</a> 则是为Django而打造咯。</li>
+<li><a href="https://github.com/springfox/springfox" target="_blank" rel="external">Springfox</a> 是为Spring而打造的自动化生成接口文档的其中一个Java实现</li>
+<li><a href="https://github.com/marcgibbons/django-rest-swagger" target="_blank" rel="external">Django Reset Swagger</a> 则是为Django而打造的Python实现。</li>
 </ul>
-<p>首先，我们来从头创建一个Spring Boot项目并使用Springfox来生成对应的接口文档。</p>
-<h4 id="创建Spring-Boot项目"><a href="#创建Spring-Boot项目" class="headerlink" title="创建Spring Boot项目"></a>创建Spring Boot项目</h4><h5 id="Eclipse"><a href="#Eclipse" class="headerlink" title="Eclipse"></a>Eclipse</h5><p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fh3pgsvdgyj208g05omye.jpg" alt=""></p>
+<p>这篇文章将从头创建一个Spring Boot项目并使用Springfox来生成对应的接口文档，来说明使用Springfox是多么的简单。首先创建Spring Boot项目：</p>
+<h3 id="创建Spring-Boot项目"><a href="#创建Spring-Boot项目" class="headerlink" title="创建Spring Boot项目"></a>创建Spring Boot项目</h3><h5 id="Eclipse"><a href="#Eclipse" class="headerlink" title="Eclipse"></a>Eclipse</h5><p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fh3pgsvdgyj208g05omye.jpg" alt=""></p>
+<h5 id="IntelliJ-IDEA"><a href="#IntelliJ-IDEA" class="headerlink" title="IntelliJ IDEA"></a>IntelliJ IDEA</h5><p>我们使用IDEA的<code>Spring initializr</code>向导来初始化创建项目，首先如图所示：</p>
+<p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fh3qqzjjr9j21gu0w4td1.jpg" alt=""></p>
+<p>点击下一步根据个人的喜好来配置开发的JVM语言和构建工具，此处我选择<code>Kotlin</code>和<code>Gradle</code>，一切都是为了爽：</p>
+<p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fh3qv1abohj21gu0w4jum.jpg" alt=""></p>
 
       
     </div>
@@ -683,7 +689,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建Spring-Boot项目"><span class="nav-number">1.</span> <span class="nav-text">创建Spring Boot项目</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Eclipse"><span class="nav-number">1.1.</span> <span class="nav-text">Eclipse</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建Spring-Boot项目"><span class="nav-number">1.</span> <span class="nav-text">创建Spring Boot项目</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Eclipse"><span class="nav-number">1.0.1.</span> <span class="nav-text">Eclipse</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IntelliJ-IDEA"><span class="nav-number">1.0.2.</span> <span class="nav-text">IntelliJ IDEA</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

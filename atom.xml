@@ -447,7 +447,7 @@
     <link href="https://notes.wanghao.work/2016-10-26-%E5%9F%BA%E4%BA%8ELeanCloud%E3%80%81Telegram%E5%AE%9E%E7%8E%B0%E5%A4%9A%E8%AF%B4%E8%AF%84%E8%AE%BA%E6%8E%A8%E9%80%81.html"/>
     <id>https://notes.wanghao.work/2016-10-26-基于LeanCloud、Telegram实现多说评论推送.html</id>
     <published>2016-10-25T16:19:53.000Z</published>
-    <updated>2016-11-06T01:31:11.000Z</updated>
+    <updated>2017-06-30T17:41:21.000Z</updated>
     
     <content type="html"><![CDATA[<p>众所周知多说评论是不支持主动推送的，也就是说如果访客主动留言评论，多说是不会给我们邮件推送提醒的。但是我们总不能每隔一段时间去检查下博客的评论留言吧，这样效率也太低了ヾ(。￣□￣)ﾂ゜゜゜于是趁着最近闲的蛋疼折腾出了这么个东东，能够实现访客主动评论的时候，在5分钟之内响应并通过Telegram推送到手机上方便查看和浏览。</p>
 <hr>
@@ -456,7 +456,7 @@
 <li><a href="https://github.com/Doublemine/TelegramBot" target="_blank" rel="external">Telegram Bot For DuoShuo</a></li>
 </ul>
 <p>目前保证基本的功能能够稳定的运行，后续再添加一些其它的功能吧。嗯，详细的配置说明先挖个坑，改天再写。懒癌犯了，先休息~</p>
-<p><img src="http://7xk0q3.com1.z0.glb.clouddn.com/%E6%97%A0%E5%A5%88%E7%9A%84%E7%8B%97%E7%8B%97.jpg" alt="" title="休息"></p>
+<p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fh3r3jys56g208c08cx6p.jpg" alt="" title="休息"></p>
 ]]></content>
     
     <summary type="html">
@@ -468,9 +468,9 @@
       <category term="Python" scheme="https://notes.wanghao.work/categories/Python/"/>
     
     
-      <category term="LeanCloud" scheme="https://notes.wanghao.work/tags/LeanCloud/"/>
-    
       <category term="Python" scheme="https://notes.wanghao.work/tags/Python/"/>
+    
+      <category term="LeanCloud" scheme="https://notes.wanghao.work/tags/LeanCloud/"/>
     
       <category term="Telegram" scheme="https://notes.wanghao.work/tags/Telegram/"/>
     

@@ -102,11 +102,13 @@
 
 
 <meta name="description" content="在Bash中，变量的默认类型都是字符串类型的，Shell编程中，使用变量无需事先声。">
+<meta name="keywords" content="Linux,SHELL,笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux学习笔记-Shell变量">
 <meta property="og:url" content="https://notes.wanghao.work/2015-06-02-Shell学习笔记.html">
 <meta property="og:site_name" content="Doublemine">
 <meta property="og:description" content="在Bash中，变量的默认类型都是字符串类型的，Shell编程中，使用变量无需事先声。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-06-14T15:28:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux学习笔记-Shell变量">
@@ -457,7 +459,7 @@
 <p><code>PS1</code>变量：命令提示符设置</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- \d 显示日期，格式为”星期 月 日“</div><div class="line">- \H 显示完整的主机名<span class="string">"localhost.localdomain"</span></div><div class="line">- \t 显示24小时制时间，格式为<span class="string">"HH:MM:SS"</span></div><div class="line">- \A 显示24小时制时间，格式为<span class="string">"HH:MM"</span></div><div class="line">- \u 显示当前用户名</div><div class="line">- \w 显示当前所在目录的完整名称</div><div class="line">- \W 显示当前所在目录的最后一个目录</div><div class="line">- \$ 提示符、如果是root用户会显示提示符为<span class="string">"#"</span>,如果是普通用户会显示提示符为<span class="string">"$"</span></div></pre></td></tr></table></figure>
-<h4 id="当前语系查询"><a href="#当前语系查询" class="headerlink" title="当前语系查询"></a>当前语系查询</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># locale    #查询当前语系</span></div><div class="line">    -LANG    定义系统主要语系（当前生效语系）</div><div class="line">    -LC:ALL    定义整体语系的变量（下次启动可能会生效）</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="variable">$LANG</span>    <span class="comment">#查看系统当前语系</span></div><div class="line"></div><div class="line">locale <span class="_">-a</span> | more    <span class="comment">#查看linux支持的所有语系</span></div><div class="line"></div><div class="line">cat /et/sysconfig/i18n    <span class="comment">#查询系统的默认语系（开机生效读取的语系环境）</span></div></pre></td></tr></table></figure>
+<h4 id="当前语系查询"><a href="#当前语系查询" class="headerlink" title="当前语系查询"></a>当前语系查询</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># locale    #查询当前语系</span></div><div class="line">    -LANG    定义系统主要语系（当前生效语系）</div><div class="line">    -LC:ALL    定义整体语系的变量（下次启动可能会生效）</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="variable">$LANG</span>    <span class="comment">#查看系统当前语系</span></div><div class="line"></div><div class="line">locale -a | more    <span class="comment">#查看linux支持的所有语系</span></div><div class="line"></div><div class="line">cat /et/sysconfig/i18n    <span class="comment">#查询系统的默认语系（开机生效读取的语系环境）</span></div></pre></td></tr></table></figure>
 <h4 id="Linux中文支持"><a href="#Linux中文支持" class="headerlink" title="Linux中文支持"></a>Linux中文支持</h4><blockquote>
 <p>前提条件：正确安装中文字体和中文语系。</p>
 <ul>
@@ -634,7 +636,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

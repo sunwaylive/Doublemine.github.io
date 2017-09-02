@@ -101,33 +101,20 @@
 
 
 
-<meta name="description" content="经过一段时间的折腾多说，博主发现原来多说是不支持主动评论提醒的。也就是说如果在一篇博客中有人主动评论留言的话，多说是不会邮件通知的。除非他回复了你，那么多说才会邮件通知。（怪不得博主觉得一会儿有邮件提醒一会儿没有咋个这么奇怪。。）
-
-去多说的官方一番折腾，找到了官方文档，有说到使用data-author-key可以设置主动邮件提醒,以下给出多说官网说明的传送门：
-
-同步用户到多说
-评论框调用代码参">
+<meta name="description" content="经过一段时间的折腾多说，博主发现原来多说是不支持主动评论提醒的。也就是说如果在一篇博客中有人主动评论留言的话，多说是不会邮件通知的。除非他回复了你，那么多说才会邮件通知。（怪不得博主觉得一会儿有邮件提醒一会儿没有咋个这么奇怪。。）  去多说的官方一番折腾，找到了官方文档，有说到使用data-author-key可以设置主动邮件提醒,以下给出多说官网说明的传送门：  同步用户到多说 评论框调用代码参">
+<meta name="keywords" content="Hexo,多说">
 <meta property="og:type" content="article">
 <meta property="og:title" content="开启NexT主题多说主动评论邮件通知">
 <meta property="og:url" content="https://notes.wanghao.work/2015-07-25-多说主动邮件提醒.html">
 <meta property="og:site_name" content="Doublemine">
-<meta property="og:description" content="经过一段时间的折腾多说，博主发现原来多说是不支持主动评论提醒的。也就是说如果在一篇博客中有人主动评论留言的话，多说是不会邮件通知的。除非他回复了你，那么多说才会邮件通知。（怪不得博主觉得一会儿有邮件提醒一会儿没有咋个这么奇怪。。）
-
-去多说的官方一番折腾，找到了官方文档，有说到使用data-author-key可以设置主动邮件提醒,以下给出多说官网说明的传送门：
-
-同步用户到多说
-评论框调用代码参">
+<meta property="og:description" content="经过一段时间的折腾多说，博主发现原来多说是不支持主动评论提醒的。也就是说如果在一篇博客中有人主动评论留言的话，多说是不会邮件通知的。除非他回复了你，那么多说才会邮件通知。（怪不得博主觉得一会儿有邮件提醒一会儿没有咋个这么奇怪。。）  去多说的官方一番折腾，找到了官方文档，有说到使用data-author-key可以设置主动邮件提醒,以下给出多说官网说明的传送门：  同步用户到多说 评论框调用代码参">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/1137805359113768cao.jpg">
 <meta property="og:image" content="http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/1137805358f327217do.jpg">
 <meta property="og:updated_time" content="2016-11-06T01:31:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="开启NexT主题多说主动评论邮件通知">
-<meta name="twitter:description" content="经过一段时间的折腾多说，博主发现原来多说是不支持主动评论提醒的。也就是说如果在一篇博客中有人主动评论留言的话，多说是不会邮件通知的。除非他回复了你，那么多说才会邮件通知。（怪不得博主觉得一会儿有邮件提醒一会儿没有咋个这么奇怪。。）
-
-去多说的官方一番折腾，找到了官方文档，有说到使用data-author-key可以设置主动邮件提醒,以下给出多说官网说明的传送门：
-
-同步用户到多说
-评论框调用代码参">
+<meta name="twitter:description" content="经过一段时间的折腾多说，博主发现原来多说是不支持主动评论提醒的。也就是说如果在一篇博客中有人主动评论留言的话，多说是不会邮件通知的。除非他回复了你，那么多说才会邮件通知。（怪不得博主觉得一会儿有邮件提醒一会儿没有咋个这么奇怪。。）  去多说的官方一番折腾，找到了官方文档，有说到使用data-author-key可以设置主动邮件提醒,以下给出多说官网说明的传送门：  同步用户到多说 评论框调用代码参">
 <meta name="twitter:image" content="http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/1137805359113768cao.jpg">
 
 
@@ -460,10 +447,10 @@
 <li>如果输出为<code>Post data to Duoshuo success</code>,那么就可以登录到多说的后台，在用户那里看到新添加的用户了，类似这样:<br><img src="http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/1137805359113768cao.jpg" alt="" title="多说用户界面"></li>
 </ul>
 <p>如果角色不是作者的话，手动更改为作者。然后我们找到<code>NexT</code>主题的<code>layout/_layout.swig</code>文件，打开并找到这段代码：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;% <span class="keyword">if</span> page.comments %&#125;</div><div class="line">             &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"comments"</span> id=<span class="string">"comments"</span>&gt;</div><div class="line">               &#123;% <span class="keyword">if</span> (config.duoshuo and config.duoshuo.shortname) or config.duoshuo_shortname %&#125;</div><div class="line">                 &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"ds-thread"</span> data-thread-key=<span class="string">"&#123;&#123; page.path &#125;&#125;"</span></div><div class="line">                      data-title=<span class="string">"&#123;&#123; page.title &#125;&#125;"</span> data-url=<span class="string">"&#123;&#123; page.permalink &#125;&#125;"</span>&gt;</div><div class="line">                 <span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></div></pre></td></tr></table></figure>
-<p>将其修改为:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;% <span class="keyword">if</span> page.comments %&#125;</div><div class="line">  &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"comments"</span> id=<span class="string">"comments"</span>&gt;</div><div class="line">    &#123;% <span class="keyword">if</span> (config.duoshuo and config.duoshuo.shortname) or config.duoshuo_shortname %&#125;</div><div class="line">      &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"ds-thread"</span> data-thread-key=<span class="string">"&#123;&#123; page.path &#125;&#125;"</span></div><div class="line">           data-title=<span class="string">"&#123;&#123; page.title &#125;&#125;"</span> data-url=<span class="string">"&#123;&#123; page.permalink &#125;&#125;"</span> data-author-key=<span class="string">"&#123;&#123; theme.duoshuo_info.data_author_key &#125;&#125;"</span>&gt;</div><div class="line">      <span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></div></pre></td></tr></table></figure></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;% <span class="keyword">if</span> page.comments %&#125;</div><div class="line">             &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"comments"</span> id=<span class="string">"comments"</span>&gt;</div><div class="line">               &#123;% <span class="keyword">if</span> (config.duoshuo and config.duoshuo.shortname) or config.duoshuo_shortname %&#125;</div><div class="line">                 &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"ds-thread"</span> data-thread-key=<span class="string">"&#123;&#123; page.path &#125;&#125;"</span></div><div class="line">                      data-title=<span class="string">"&#123;&#123; page.title &#125;&#125;"</span> data-url=<span class="string">"&#123;&#123; page.permalink &#125;&#125;"</span>&gt;</div><div class="line">                 &lt;<span class="regexp">/div&gt;</span></div></pre></td></tr></table></figure>
+<p>将其修改为:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;% <span class="keyword">if</span> page.comments %&#125;</div><div class="line">  &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"comments"</span> id=<span class="string">"comments"</span>&gt;</div><div class="line">    &#123;% <span class="keyword">if</span> (config.duoshuo and config.duoshuo.shortname) or config.duoshuo_shortname %&#125;</div><div class="line">      &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"ds-thread"</span> data-thread-key=<span class="string">"&#123;&#123; page.path &#125;&#125;"</span></div><div class="line">           data-title=<span class="string">"&#123;&#123; page.title &#125;&#125;"</span> data-url=<span class="string">"&#123;&#123; page.permalink &#125;&#125;"</span> data-author-key=<span class="string">"&#123;&#123; theme.duoshuo_info.data_author_key &#125;&#125;"</span>&gt;</div><div class="line">      &lt;<span class="regexp">/div&gt;</span></div></pre></td></tr></table></figure></p>
 <p>然后在主题的配置文件<code>_config.yml</code>文件中增加以下一行配置:<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attr">duoshuo_info:</span></div><div class="line"><span class="attr">  data_author_key:</span> <span class="number">1</span> <span class="comment">#此处填写上面js脚本中的data变量中的users[0][user_key]的值，因为上面为1，这里我就填写为1了。</span></div></pre></td></tr></table></figure></p>
-<p>当然你可以也可直接写死为1，像这个样子:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;% <span class="keyword">if</span> page.comments %&#125;</div><div class="line">  &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"comments"</span> id=<span class="string">"comments"</span>&gt;</div><div class="line">    &#123;% <span class="keyword">if</span> (config.duoshuo and config.duoshuo.shortname) or config.duoshuo_shortname %&#125;</div><div class="line">      &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"ds-thread"</span> data-thread-key=<span class="string">"&#123;&#123; page.path &#125;&#125;"</span></div><div class="line">           data-title=<span class="string">"&#123;&#123; page.title &#125;&#125;"</span> data-url=<span class="string">"&#123;&#123; page.permalink &#125;&#125;"</span> data-author-key=<span class="string">"1"</span>&gt;</div><div class="line">      <span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>当然你可以也可直接写死为1，像这个样子:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;% <span class="keyword">if</span> page.comments %&#125;</div><div class="line">  &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"comments"</span> id=<span class="string">"comments"</span>&gt;</div><div class="line">    &#123;% <span class="keyword">if</span> (config.duoshuo and config.duoshuo.shortname) or config.duoshuo_shortname %&#125;</div><div class="line">      &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"ds-thread"</span> data-thread-key=<span class="string">"&#123;&#123; page.path &#125;&#125;"</span></div><div class="line">           data-title=<span class="string">"&#123;&#123; page.title &#125;&#125;"</span> data-url=<span class="string">"&#123;&#123; page.permalink &#125;&#125;"</span> data-author-key=<span class="string">"1"</span>&gt;</div><div class="line">      &lt;<span class="regexp">/div&gt;</span></div></pre></td></tr></table></figure></p>
 <p>然后重新博客文件并发布，这样在就可以当其他人评论你的博客的时候主动发邮件通知啦~像这个样子的:</p>
 <p><img src="http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/1137805358f327217do.jpg" alt="" title="多说主动提醒示例"></p>
 <p>像这样子，就让我们的<code>NexT</code>支持多说主动评论邮件通知啦，感谢<a href="http://www.arao.me/" target="_blank" rel="external">@arao</a>的友情出镜~</p>
@@ -604,7 +591,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

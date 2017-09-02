@@ -101,28 +101,24 @@
 
 
 
-<meta name="description" content="在做Android开发的时候，对于Api接口的对接有着深刻的体会：后端通过Markdown或者Word写好Api文档，然后通过类似Samba或者Dropbox这样的服务与移动端实现文档共享。有的时候因为接口出了问题，中间还得来回修改对接，效率低下不说，要是后端手抖写错参数而没有意识到，移动端埋头一顿调试。。。说多了都是泪。
-
-为了避免同时维护代码和文档来保持两者之间的同步而带来的额外负担，同事推荐">
+<meta name="description" content="在做Android开发的时候，对于Api接口的对接有着深刻的体会：后端通过Markdown或者Word写好Api文档，然后通过类似Samba或者Dropbox这样的服务与移动端实现文档共享。有的时候因为接口出了问题，中间还得来回修改对接，效率低下不说，要是后端手抖写错参数而没有意识到，移动端埋头一顿调试。。。说多了都是泪。  为了避免同时维护代码和文档来保持两者之间的同步而带来的额外负担，同事推荐">
+<meta name="keywords" content="Swagger,Spring Boot,Gradle,Kotlin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring Boot使用SpringFox自动生成Api Doc">
 <meta property="og:url" content="https://notes.wanghao.work/2017-06-30-Spring-Boot使用Swagger自动生成Api-Doc.html">
 <meta property="og:site_name" content="Doublemine">
-<meta property="og:description" content="在做Android开发的时候，对于Api接口的对接有着深刻的体会：后端通过Markdown或者Word写好Api文档，然后通过类似Samba或者Dropbox这样的服务与移动端实现文档共享。有的时候因为接口出了问题，中间还得来回修改对接，效率低下不说，要是后端手抖写错参数而没有意识到，移动端埋头一顿调试。。。说多了都是泪。
-
-为了避免同时维护代码和文档来保持两者之间的同步而带来的额外负担，同事推荐">
+<meta property="og:description" content="在做Android开发的时候，对于Api接口的对接有着深刻的体会：后端通过Markdown或者Word写好Api文档，然后通过类似Samba或者Dropbox这样的服务与移动端实现文档共享。有的时候因为接口出了问题，中间还得来回修改对接，效率低下不说，要是后端手抖写错参数而没有意识到，移动端埋头一顿调试。。。说多了都是泪。  为了避免同时维护代码和文档来保持两者之间的同步而带来的额外负担，同事推荐">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://camo.githubusercontent.com/8caa3693b4268c095c001089313d687f647d551a/687474703a2f2f696d67322e77696b69612e6e6f636f6f6b69652e6e65742f5f5f636232303133303831393134323932382f6361726466696768742f696d616765732f7468756d622f352f35352f476f2d686f6d652d796f7572652d6472756e6b2e6a70672f35303070782d476f2d686f6d652d796f7572652d6472756e6b2e6a7067">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/694830ebgy1fh3qqzjjr9j21gu0w4td1.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/694830ebgy1fh3qv1abohj21gu0w4jum.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/694830ebgy1fh45g74sdaj21gu0w4agg.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/694830ebgy1fh4gacpr8wj21sk0su0wr.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/694830ebgy1fh4gfu3btij21qo0qi786.jpg">
-<meta property="og:updated_time" content="2017-07-01T15:47:09.000Z">
+<meta property="og:updated_time" content="2017-09-02T16:13:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Boot使用SpringFox自动生成Api Doc">
-<meta name="twitter:description" content="在做Android开发的时候，对于Api接口的对接有着深刻的体会：后端通过Markdown或者Word写好Api文档，然后通过类似Samba或者Dropbox这样的服务与移动端实现文档共享。有的时候因为接口出了问题，中间还得来回修改对接，效率低下不说，要是后端手抖写错参数而没有意识到，移动端埋头一顿调试。。。说多了都是泪。
-
-为了避免同时维护代码和文档来保持两者之间的同步而带来的额外负担，同事推荐">
+<meta name="twitter:description" content="在做Android开发的时候，对于Api接口的对接有着深刻的体会：后端通过Markdown或者Word写好Api文档，然后通过类似Samba或者Dropbox这样的服务与移动端实现文档共享。有的时候因为接口出了问题，中间还得来回修改对接，效率低下不说，要是后端手抖写错参数而没有意识到，移动端埋头一顿调试。。。说多了都是泪。  为了避免同时维护代码和文档来保持两者之间的同步而带来的额外负担，同事推荐">
 <meta name="twitter:image" content="https://camo.githubusercontent.com/8caa3693b4268c095c001089313d687f647d551a/687474703a2f2f696d67322e77696b69612e6e6f636f6f6b69652e6e65742f5f5f636232303133303831393134323932382f6361726466696768742f696d616765732f7468756d622f352f35352f476f2d686f6d652d796f7572652d6472756e6b2e6a70672f35303070782d476f2d686f6d652d796f7572652d6472756e6b2e6a7067">
 
 
@@ -515,6 +511,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017-07-11-Docker非Root用户运行.html" rel="prev" title="Docker非Root运行">
+                Docker非Root运行 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -587,7 +587,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

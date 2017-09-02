@@ -101,16 +101,18 @@
 
 
 
-<meta name="description" content="Keep fucking the world">
+<meta name="description" content="Docker Engine的Deamon进程是以root权限运行的，如果是普通用户要与之交互，需要使用sudo命令来提权与之交互。之前使用Docker官方的安装脚本安装完成之后，会给出一个提示将当前非root用户添加到doker组之中，以避免每次都需要输入sudo的麻烦。  然而随着Docker版本的迭代和官网的安装方式的更改，现在官方给出的安装方式是添加仓库源地址，然后使用默认的apt或者yum">
+<meta name="keywords" content="Docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Centos7升级Docker到最新版本">
-<meta property="og:url" content="https://notes.wanghao.work/2017-07-24-Centos7升级Docker到最新版本.html">
+<meta property="og:title" content="Docker非Root运行">
+<meta property="og:url" content="https://notes.wanghao.work/2017-07-11-Docker非Root用户运行.html">
 <meta property="og:site_name" content="Doublemine">
-<meta property="og:description" content="Keep fucking the world">
-<meta property="og:updated_time" content="2017-07-24T13:22:48.000Z">
+<meta property="og:description" content="Docker Engine的Deamon进程是以root权限运行的，如果是普通用户要与之交互，需要使用sudo命令来提权与之交互。之前使用Docker官方的安装脚本安装完成之后，会给出一个提示将当前非root用户添加到doker组之中，以避免每次都需要输入sudo的麻烦。  然而随着Docker版本的迭代和官网的安装方式的更改，现在官方给出的安装方式是添加仓库源地址，然后使用默认的apt或者yum">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-02T16:13:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Centos7升级Docker到最新版本">
-<meta name="twitter:description" content="Keep fucking the world">
+<meta name="twitter:title" content="Docker非Root运行">
+<meta name="twitter:description" content="Docker Engine的Deamon进程是以root权限运行的，如果是普通用户要与之交互，需要使用sudo命令来提权与之交互。之前使用Docker官方的安装脚本安装完成之后，会给出一个提示将当前非root用户添加到doker组之中，以避免每次都需要输入sudo的麻烦。  然而随着Docker版本的迭代和官网的安装方式的更改，现在官方给出的安装方式是添加仓库源地址，然后使用默认的apt或者yum">
 
 
 
@@ -138,13 +140,13 @@
 
 
 
-  <link rel="canonical" href="https://notes.wanghao.work/2017-07-24-Centos7升级Docker到最新版本.html"/>
+  <link rel="canonical" href="https://notes.wanghao.work/2017-07-11-Docker非Root用户运行.html"/>
 
 
 
 
 
-  <title> Centos7升级Docker到最新版本 | Doublemine </title>
+  <title> Docker非Root运行 | Doublemine </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -303,7 +305,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://notes.wanghao.work/2017-07-24-Centos7升级Docker到最新版本.html">
+    <link itemprop="mainEntityOfPage" href="https://notes.wanghao.work/2017-07-11-Docker非Root用户运行.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="夏末">
@@ -324,7 +326,7 @@
             
             
               
-                Centos7升级Docker到最新版本
+                Docker非Root运行
               
             
           </h2>
@@ -339,8 +341,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-24T21:21:36+08:00">
-                2017-07-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-11T10:56:01+08:00">
+                2017-07-11
               </time>
             
 
@@ -357,7 +359,7 @@
 
           
           
-             <span id="/2017-07-24-Centos7升级Docker到最新版本.html" class="leancloud_visitors" data-flag-title="Centos7升级Docker到最新版本">
+             <span id="/2017-07-11-Docker非Root用户运行.html" class="leancloud_visitors" data-flag-title="Docker非Root运行">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -386,7 +388,12 @@
       
 
       
-        
+        <div class="note info"><p>Docker Engine的Deamon进程是以root权限运行的，如果是普通用户要与之交互，需要使用<code>sudo</code>命令来提权与之交互。之前使用Docker官方的安装脚本安装完成之后，会给出一个提示将当前非root用户添加到doker组之中，以避免每次都需要输入<code>sudo</code>的麻烦。</p>
+</div>
+<p>然而随着Docker版本的迭代和官网的安装方式的更改，现在官方给出的安装方式是添加仓库源地址，然后使用默认的<code>apt</code>或者<code>yum</code>包管理工具来完成后安装。并不再提示用户添加非root用户到组。</p>
+<p>默认情况下，完成Docker Engine的安装之后，Docker将会自动创建一个名为<code>docker</code>的用户组，所以<code>root</code>用户和在<code>docker</code>组中的用户都可以免去<code>sudo</code>来与Docker Engine交互。知道原理之后就简单了：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo usermod -aG docker $&#123;whoami&#125; #添加当前用户到docker组</div></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -414,7 +421,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://notes.wanghao.work/2017-07-24-Centos7升级Docker到最新版本.html" title="Centos7升级Docker到最新版本">https://notes.wanghao.work/2017-07-24-Centos7升级Docker到最新版本.html</a>
+      <a href="https://notes.wanghao.work/2017-07-11-Docker非Root用户运行.html" title="Docker非Root运行">https://notes.wanghao.work/2017-07-11-Docker非Root用户运行.html</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -452,10 +459,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017-08-21-Java中的DO-DTO-VO区别用法.html" rel="prev" title="Java中的DO DTO VO区别用法">
-                Java中的DO DTO VO区别用法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -520,7 +523,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -589,15 +592,6 @@
                 </a>
               </span>
             
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/wanghao19940820" target="_blank" title="Weibo">
-                  
-                    <i class="fa fa-fw fa-weibo"></i>
-                  
-                  Weibo
-                </a>
-              </span>
-            
           
         </div>
 
@@ -620,7 +614,7 @@
             <ul class="links-of-blogroll-list">
               
                 <li class="links-of-blogroll-item">
-                  <a href="https://jiangtaoquite.github.io/" title="Kevin" target="_blank">Kevin</a>
+                  <a href="https://blog.jiangtao.tech/" title="Kevin" target="_blank">Kevin</a>
                 </li>
               
                 <li class="links-of-blogroll-item">

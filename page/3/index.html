@@ -107,6 +107,7 @@
 <meta property="og:url" content="https://notes.wanghao.work/page/3/index.html">
 <meta property="og:site_name" content="Doublemine">
 <meta property="og:description" content="Keep fucking the world">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Doublemine">
 <meta name="twitter:description" content="Keep fucking the world">
@@ -294,6 +295,173 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://notes.wanghao.work/2016-09-10-AndroidProcessbeKilledweShoudIDo.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="夏末">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Doublemine">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016-09-10-AndroidProcessbeKilledweShoudIDo.html" itemprop="url">
+                  当Android应用被强杀之后
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-10T19:00:20+08:00">
+                2016-09-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016-09-10-AndroidProcessbeKilledweShoudIDo.html" class="leancloud_visitors" data-flag-title="当Android应用被强杀之后">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Android应用在后台运行的时候很容易被强杀，尤其是在国内XX助手、XX管家、XX大师之类的应用大行其道之下。如果我们开发的应用没有被用户加入白名单，很大程度上会被系统因为内存不足或者用户主动给应用在后台运行的时候杀掉。这个时候问题就来了：</p>
+<ul>
+<li><strong>如何保证我们的应用在被强杀之后用户再次回到应用来保证应用的稳定性而不Crash？</strong></li>
+</ul>
+<p>为了说明上述问题，我们来简单模拟这样一个过程:</p>
+<blockquote>
+<p>APP –&gt; ActivityA –&gt; ActivityB –&gt;ActivityC –&gt; Pressed Home</p>
+</blockquote>
+<p>假设APP在Activity C页面用户按下<code>Home</code>键应用退到后台运行。这个时候启动DDMS，选中该APP的进程，Kill。然后我们从运行APP历史列表中选中该APP并将其置于前台，这个时候回到该应用的界面还是Activity C。再点击返回按钮回到ActivityB，在某些性能比较差一点的机器上可能会出现短暂的黑屏然后才会显示出ActivityB。这是因为该Activity实例其实在Kill该APP进程的时候已经被销毁了，但是Android系统虽然销毁了Activity实例，却并没有销毁该APP的Activity栈。因此我们点击返回按钮还是会回到ActivityB。但是需要重新构建该ActivityB的实例。</p>
+<p>这样看貌似并没有什么问题，然而事情并不会这么简单（废话，不然我写这篇博客干嘛。。），如果ActivityB中引用了静态变量并尝试获取其值的时候，这个时候是会出现NPE的。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016-09-10-AndroidProcessbeKilledweShoudIDo.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -734,8 +902,8 @@
       
         
           <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><hr>
-<p>由于最近在折腾Android项目，需要用到一些与服务器交互、以及数据存储的相关功能，然后发现了<a href="https://leancloud.cn">LeanCloud</a>这家服务提供商,使用下来还感觉还挺靠谱的(请给我广告费)。正好发现他们服务提供了<a href="https://leancloud.cn/docs/js_guide.html">JavaScript SDK</a>，于是就想着尝试着实现Hexo博客文章的浏览数统计功能，之前虽然在使用不蒜子，但是不蒜子不能够在主页展示文章阅读量啊！对于博主这种有强迫症又想装X的人来说果断不能忍啊！</p>
-<h3 id="修改NexT主题模版"><a href="#修改NexT主题模版" class="headerlink" title="修改NexT主题模版"></a><del>修改NexT主题模版</del></h3><p><del>本方法理论上对Hexo博客通用，由于博主使用的是NexT主题，所以当然针对NexT来说咯。</del><strong><font color=red>NexT主题目前已经合并这个Feature，因此如果你使用的是NexT主题，可以直接使用不用修改主题模版而直接在<code>_config.yml</code>中配置即可，请直接跳转查看<a href="#%E9%85%8D%E7%BD%AELeanCloud">配置LeanCloud</a></font></strong></p>
+<p>由于最近在折腾Android项目，需要用到一些与服务器交互、以及数据存储的相关功能，然后发现了<a href="https://leancloud.cn" target="_blank" rel="external">LeanCloud</a>这家服务提供商,使用下来还感觉还挺靠谱的(请给我广告费)。正好发现他们服务提供了<a href="https://leancloud.cn/docs/js_guide.html" target="_blank" rel="external">JavaScript SDK</a>，于是就想着尝试着实现Hexo博客文章的浏览数统计功能，之前虽然在使用不蒜子，但是不蒜子不能够在主页展示文章阅读量啊！对于博主这种有强迫症又想装X的人来说果断不能忍啊！</p>
+<h3 id="修改NexT主题模版"><a href="#修改NexT主题模版" class="headerlink" title="修改NexT主题模版"></a><del>修改NexT主题模版</del></h3><p><del>本方法理论上对Hexo博客通用，由于博主使用的是NexT主题，所以当然针对NexT来说咯。</del><strong><font color="red">NexT主题目前已经合并这个Feature，因此如果你使用的是NexT主题，可以直接使用不用修改主题模版而直接在<code>_config.yml</code>中配置即可，请直接跳转查看<a href="#%E9%85%8D%E7%BD%AELeanCloud">配置LeanCloud</a></font></strong></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2015-10-21-为NexT主题添加文章阅读量统计功能.html#more" rel="contents">
@@ -895,171 +1063,11 @@
         
           <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;由于最近做的一个Android项目需要用到用户的输入一些字符，常规的输入法输入非常的不方便。因此有必要自定义一个输入法来完成这个过程。此处给出一个简单的输入法Demo<br>来帮助理解自定义输入法的一些实现过程。</p>
 <ul>
-<li><strong>有关输入法的一些说明，请参见:<a href="http://notes.xiamo.tk/2015-04-01-Create-an-Android-IME.html">Create a Android IME</a></strong></li>
+<li><strong>有关输入法的一些说明，请参见:<a href="http://notes.xiamo.tk/2015-04-01-Create-an-Android-IME.html" target="_blank" rel="external">Create a Android IME</a></strong></li>
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2015-09-04-Create-a-Simple-Android-Keyboard.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://notes.wanghao.work/2015-08-28-同时部署PPTP-Server-and-OpenConnect-Server.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="夏末">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Doublemine">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015-08-28-同时部署PPTP-Server-and-OpenConnect-Server.html" itemprop="url">
-                  部署PPTP and OpenConnect VPN
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-08-28T23:17:55+08:00">
-                2015-08-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/折腾/" itemprop="url" rel="index">
-                    <span itemprop="name">折腾</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2015-08-28-同时部署PPTP-Server-and-OpenConnect-Server.html" class="leancloud_visitors" data-flag-title="部署PPTP and OpenConnect VPN">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>由于几天之前<a href="https://github.com/clowwindy">@clowwindy</a>被某部门请喝茶，导致现Github上Shadowsocks项目源码被迫全部清除。非常感谢clowwindy所做的一切，希望他一切安好。</p>
-<p>虽然目前Shadowsocks还能正常使用，但是由于项目不在更新维护，还是要准备Shadowsocks的替代工具，以备不时之需，毕竟经常要上Google以及stackoverflow以及时不时看看YouTube。</p>
-<h2 id="PPTP-Server"><a href="#PPTP-Server" class="headerlink" title="PPTP Server"></a>PPTP Server</h2><p>如果对速度要求较高，又不那么在乎连接的安全性的话，PPTP VPN 是一个不错的选择，有着兼容性较好,速度快配置简单的优点。当然也有着加密强度不够，连接强度、抗干扰能力弱等缺点，但是基本上够用咯~</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015-08-28-同时部署PPTP-Server-and-OpenConnect-Server.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1145,7 +1153,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

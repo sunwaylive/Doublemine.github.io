@@ -101,34 +101,18 @@
 
 
 
-<meta name="description" content="​        又有很久没有写新的文章了，感觉再不写点什么东西博客草都长满了。于是打算折腾下FFmpeg，记录下折腾的过程，以熟悉Android NDK开发的基本操作。过程中有地方有错误欢迎指出，如果你对这个方面有所了解，欢迎讨论指教。
-编译环境
-FFmpeg 2.8.11 “Feynman”
-Mac OS X 
-NDK  14.0.3770861
-
-下载完成FFmpeg源码之后，先对源码根目录">
+<meta name="description" content="​        又有很久没有写新的文章了，感觉再不写点什么东西博客草都长满了。于是打算折腾下FFmpeg，记录下折腾的过程，以熟悉Android NDK开发的基本操作。过程中有地方有错误欢迎指出，如果你对这个方面有所了解，欢迎讨论指教。 编译环境 FFmpeg 2.8.11 “Feynman” Mac OS X  NDK  14.0.3770861  下载完成FFmpeg源码之后，先对源码根目录">
+<meta name="keywords" content="Android,FFmpeg,NDK">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FFmpeg折腾笔记之编译FFmpeg">
 <meta property="og:url" content="https://notes.wanghao.work/2017-01-13-FFmpeg折腾笔记之编译FFmpeg.html">
 <meta property="og:site_name" content="Doublemine">
-<meta property="og:description" content="​        又有很久没有写新的文章了，感觉再不写点什么东西博客草都长满了。于是打算折腾下FFmpeg，记录下折腾的过程，以熟悉Android NDK开发的基本操作。过程中有地方有错误欢迎指出，如果你对这个方面有所了解，欢迎讨论指教。
-编译环境
-FFmpeg 2.8.11 “Feynman”
-Mac OS X 
-NDK  14.0.3770861
-
-下载完成FFmpeg源码之后，先对源码根目录">
+<meta property="og:description" content="​        又有很久没有写新的文章了，感觉再不写点什么东西博客草都长满了。于是打算折腾下FFmpeg，记录下折腾的过程，以熟悉Android NDK开发的基本操作。过程中有地方有错误欢迎指出，如果你对这个方面有所了解，欢迎讨论指教。 编译环境 FFmpeg 2.8.11 “Feynman” Mac OS X  NDK  14.0.3770861  下载完成FFmpeg源码之后，先对源码根目录">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-06-14T15:23:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FFmpeg折腾笔记之编译FFmpeg">
-<meta name="twitter:description" content="​        又有很久没有写新的文章了，感觉再不写点什么东西博客草都长满了。于是打算折腾下FFmpeg，记录下折腾的过程，以熟悉Android NDK开发的基本操作。过程中有地方有错误欢迎指出，如果你对这个方面有所了解，欢迎讨论指教。
-编译环境
-FFmpeg 2.8.11 “Feynman”
-Mac OS X 
-NDK  14.0.3770861
-
-下载完成FFmpeg源码之后，先对源码根目录">
+<meta name="twitter:description" content="​        又有很久没有写新的文章了，感觉再不写点什么东西博客草都长满了。于是打算折腾下FFmpeg，记录下折腾的过程，以熟悉Android NDK开发的基本操作。过程中有地方有错误欢迎指出，如果你对这个方面有所了解，欢迎讨论指教。 编译环境 FFmpeg 2.8.11 “Feynman” Mac OS X  NDK  14.0.3770861  下载完成FFmpeg源码之后，先对源码根目录">
 
 
 
@@ -411,9 +395,9 @@ NDK  14.0.3770861
 <li>NDK  <code>14.0.3770861</code></li>
 </ul>
 <p>下载完成FFmpeg源码之后，先对源码根目录中的<code>configure</code>文件进行修改以适应Android平台。因为默认编译出来的动态库文件版本号在<code>.so</code>之后，例如：<code>libavcodec.so.56.60.100</code>。Android平台对这种格式不能很好的识别（如果你不介意一个一个修改文件名的话）。通过<code>Vim</code>或者其他文本编辑器打开<code>configure</code>文件的第<code>2934</code>行（如果你下载的FFmpeg版本和我的一样的话）将:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SLIBNAME_WITH_MAJOR=&apos;$(SLIBNAME).$(LIBMAJOR)&apos;</div><div class="line">LIB_INSTALL_EXTRA_CMD=&apos;$$(RANLIB) &quot;$(LIBDIR)/$(LIBNAME)&quot;&apos;</div><div class="line">SLIB_INSTALL_NAME=&apos;$(SLIBNAME_WITH_VERSION)&apos;</div><div class="line">SLIB_INSTALL_LINKS=&apos;$(SLIBNAME_WITH_MAJOR) $(SLIBNAME)&apos;</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SLIBNAME_WITH_MAJOR='$(SLIBNAME).$(LIBMAJOR)'</div><div class="line">LIB_INSTALL_EXTRA_CMD='$$(RANLIB) "$(LIBDIR)/$(LIBNAME)"'</div><div class="line">SLIB_INSTALL_NAME='$(SLIBNAME_WITH_VERSION)'</div><div class="line">SLIB_INSTALL_LINKS='$(SLIBNAME_WITH_MAJOR) $(SLIBNAME)'</div></pre></td></tr></table></figure>
 <p>修改为:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SLIBNAME_WITH_MAJOR=&apos;$(SLIBPREF)$(FULLNAME)-$(LIBMAJOR)$(SLIBSUF)&apos;  </div><div class="line">LIB_INSTALL_EXTRA_CMD=&apos;$$(RANLIB)&quot;$(LIBDIR)/$(LIBNAME)&quot;&apos;  </div><div class="line">SLIB_INSTALL_NAME=&apos;$(SLIBNAME_WITH_MAJOR)&apos;  </div><div class="line">SLIB_INSTALL_LINKS=&apos;$(SLIBNAME)&apos;</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SLIBNAME_WITH_MAJOR='$(SLIBPREF)$(FULLNAME)-$(LIBMAJOR)$(SLIBSUF)'  </div><div class="line">LIB_INSTALL_EXTRA_CMD='$$(RANLIB)"$(LIBDIR)/$(LIBNAME)"'  </div><div class="line">SLIB_INSTALL_NAME='$(SLIBNAME_WITH_MAJOR)'  </div><div class="line">SLIB_INSTALL_LINKS='$(SLIBNAME)'</div></pre></td></tr></table></figure>
 <p>后保存。</p>
 
       
@@ -562,7 +546,7 @@ NDK  14.0.3770861
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

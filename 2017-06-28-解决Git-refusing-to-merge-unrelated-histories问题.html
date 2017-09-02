@@ -101,19 +101,18 @@
 
 
 
-<meta name="description" content="最近在使用brew更新了git之后，发现在与Github上的新创建的repo建立关联的之后，进行pull操作会出现类似于下面的这种错误：
-123 * branch            master     -&amp;gt; FETCH_HEAD * [new branch]      master     -&amp;gt; origin/masterfatal: refusing to merge unre">
+<meta name="description" content="最近在使用brew更新了git之后，发现在与Github上的新创建的repo建立关联的之后，进行pull操作会出现类似于下面的这种错误： 123 * branch            master     -&amp;gt; FETCH_HEAD * [new branch]      master     -&amp;gt; origin/masterfatal: refusing to merge unre">
+<meta name="keywords" content="Git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决Git refusing to merge unrelated histories问题">
 <meta property="og:url" content="https://notes.wanghao.work/2017-06-28-解决Git-refusing-to-merge-unrelated-histories问题.html">
 <meta property="og:site_name" content="Doublemine">
-<meta property="og:description" content="最近在使用brew更新了git之后，发现在与Github上的新创建的repo建立关联的之后，进行pull操作会出现类似于下面的这种错误：
-123 * branch            master     -&amp;gt; FETCH_HEAD * [new branch]      master     -&amp;gt; origin/masterfatal: refusing to merge unre">
+<meta property="og:description" content="最近在使用brew更新了git之后，发现在与Github上的新创建的repo建立关联的之后，进行pull操作会出现类似于下面的这种错误： 123 * branch            master     -&amp;gt; FETCH_HEAD * [new branch]      master     -&amp;gt; origin/masterfatal: refusing to merge unre">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-06-28T03:01:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决Git refusing to merge unrelated histories问题">
-<meta name="twitter:description" content="最近在使用brew更新了git之后，发现在与Github上的新创建的repo建立关联的之后，进行pull操作会出现类似于下面的这种错误：
-123 * branch            master     -&amp;gt; FETCH_HEAD * [new branch]      master     -&amp;gt; origin/masterfatal: refusing to merge unre">
+<meta name="twitter:description" content="最近在使用brew更新了git之后，发现在与Github上的新创建的repo建立关联的之后，进行pull操作会出现类似于下面的这种错误： 123 * branch            master     -&amp;gt; FETCH_HEAD * [new branch]      master     -&amp;gt; origin/masterfatal: refusing to merge unre">
 
 
 
@@ -390,7 +389,7 @@
 
       
         <p>最近在使用brew更新了git之后，发现在与Github上的新创建的<code>repo</code>建立关联的之后，进行<code>pull</code>操作会出现类似于下面的这种错误：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"> * branch            master     -&gt; FETCH_HEAD</div><div class="line"> * [new branch]      master     -&gt; origin/master</div><div class="line">fatal: refusing to merge unrelated histories</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"> * branch            master     -&gt; FETCH_HEAD</div><div class="line"> * [new branch]      master     -&gt; origin/master</div><div class="line">fatal: refusing to merge unrelated histories</div></pre></td></tr></table></figure>
 <p>通过查阅资料显示，GIt从版本<code>2.9.0</code>开始，预设行为不允许合并没有共同祖先的分支，需要加上<code>--allow-unrelated-histories</code>选项进行pull操作才不会出现此类错误信息：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git pull origin master --allow-unrelated-histories</div></pre></td></tr></table></figure>
 <p>相关参考：</p>
@@ -532,7 +531,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -107,6 +107,7 @@
 <meta property="og:url" content="https://notes.wanghao.work/index.html">
 <meta property="og:site_name" content="Doublemine">
 <meta property="og:description" content="Keep fucking the world">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Doublemine">
 <meta name="twitter:description" content="Keep fucking the world">
@@ -304,6 +305,142 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://notes.wanghao.work/2017-07-11-Docker非Root用户运行.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="夏末">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Doublemine">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017-07-11-Docker非Root用户运行.html" itemprop="url">
+                  Docker非Root运行
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-11T10:56:01+08:00">
+                2017-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017-07-11-Docker非Root用户运行.html" class="leancloud_visitors" data-flag-title="Docker非Root运行">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <div class="note info"><p>Docker Engine的Deamon进程是以root权限运行的，如果是普通用户要与之交互，需要使用<code>sudo</code>命令来提权与之交互。之前使用Docker官方的安装脚本安装完成之后，会给出一个提示将当前非root用户添加到doker组之中，以避免每次都需要输入<code>sudo</code>的麻烦。</p>
+</div>
+<p>然而随着Docker版本的迭代和官网的安装方式的更改，现在官方给出的安装方式是添加仓库源地址，然后使用默认的<code>apt</code>或者<code>yum</code>包管理工具来完成后安装。并不再提示用户添加非root用户到组。</p>
+<p>默认情况下，完成Docker Engine的安装之后，Docker将会自动创建一个名为<code>docker</code>的用户组，所以<code>root</code>用户和在<code>docker</code>组中的用户都可以免去<code>sudo</code>来与Docker Engine交互。知道原理之后就简单了：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo usermod -aG docker $&#123;whoami&#125; #添加当前用户到docker组</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://notes.wanghao.work/2017-06-30-Spring-Boot使用Swagger自动生成Api-Doc.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -393,7 +530,7 @@
         
           <div class="note info"><p>在做Android开发的时候，对于Api接口的对接有着深刻的体会：后端通过Markdown或者Word写好Api文档，然后通过类似Samba或者Dropbox这样的服务与移动端实现文档共享。有的时候因为接口出了问题，中间还得来回修改对接，效率低下不说，要是后端手抖写错参数而没有意识到，移动端埋头一顿调试。。。说多了都是泪。</p>
 </div>
-<p>为了避免同时维护代码和文档来保持两者之间的同步而带来的额外负担，同事推荐了<a href="http://apidocjs.com/"><code>ApiDoc</code></a>来生成文档，虽然生成的文档界面比较清爽然而前提是必须得按照规定的语法写上详细的注释，才能生成对应的文档，虽然写注释本身是一件好事，不过有能够自动生成的方法为啥不使用呢?</p>
+<p>为了避免同时维护代码和文档来保持两者之间的同步而带来的额外负担，同事推荐了<a href="http://apidocjs.com/" target="_blank" rel="external"><code>ApiDoc</code></a>来生成文档，虽然生成的文档界面比较清爽然而前提是必须得按照规定的语法写上详细的注释，才能生成对应的文档，虽然写注释本身是一件好事，不过有能够自动生成的方法为啥不使用呢?</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017-06-30-Spring-Boot使用Swagger自动生成Api-Doc.html#more" rel="contents">
@@ -531,7 +668,7 @@
         
           
             <p>最近在使用brew更新了git之后，发现在与Github上的新创建的<code>repo</code>建立关联的之后，进行<code>pull</code>操作会出现类似于下面的这种错误：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"> * branch            master     -&gt; FETCH_HEAD</div><div class="line"> * [new branch]      master     -&gt; origin/master</div><div class="line">fatal: refusing to merge unrelated histories</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"> * branch            master     -&gt; FETCH_HEAD</div><div class="line"> * [new branch]      master     -&gt; origin/master</div><div class="line">fatal: refusing to merge unrelated histories</div></pre></td></tr></table></figure>
 <p>通过查阅资料显示，GIt从版本<code>2.9.0</code>开始，预设行为不允许合并没有共同祖先的分支，需要加上<code>--allow-unrelated-histories</code>选项进行pull操作才不会出现此类错误信息：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git pull origin master --allow-unrelated-histories</div></pre></td></tr></table></figure>
 <p>相关参考：</p>
@@ -806,205 +943,11 @@
 
       
         
-          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>最近需要使用Django写点东西，由于自己的macbook上没有也不打算安装MySQL而是以Docker的MySQL镜像替代，Django文档提供了三种MySQL驱动供选择，官方推荐的是<a href="https://pypi.python.org/pypi/mysqlclient"><code>mysqlclient</code></a>,由于我本地没有安装MySQL，所以是没有Native Driver的以至于在安装MySQL驱动的时候遇到了点小问题，在此记录下。</p>
+          <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>最近需要使用Django写点东西，由于自己的macbook上没有也不打算安装MySQL而是以Docker的MySQL镜像替代，Django文档提供了三种MySQL驱动供选择，官方推荐的是<a href="https://pypi.python.org/pypi/mysqlclient" target="_blank" rel="external"><code>mysqlclient</code></a>,由于我本地没有安装MySQL，所以是没有Native Driver的以至于在安装MySQL驱动的时候遇到了点小问题，在此记录下。</p>
 <hr>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017-05-20-解决Mysql的Python驱动安装失败.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://notes.wanghao.work/2017-03-21-Android-Studio支持生成Java-Native方法签名.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="夏末">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Doublemine">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017-03-21-Android-Studio支持生成Java-Native方法签名.html" itemprop="url">
-                  Android Studio生成Java方法描述符
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-21T21:32:50+08:00">
-                2017-03-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017-03-21-Android-Studio支持生成Java-Native方法签名.html" class="leancloud_visitors" data-flag-title="Android Studio生成Java方法描述符">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <div class="note info"><p>在日常的Android NDK开发中，会不可避免的用到C与Java代码相互调用的情况。Java调用C的方法还好，C调用Java的方法就比较麻烦了。需要编写看着就头疼的Java方法描述符才能正确的调用Java方法。 </p>
-</div>
-<p>其中常见的Java方法域和描述符如下表所示：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">Java类型</th>
-<th style="text-align:center">签名</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Boolean</td>
-<td style="text-align:center">Z</td>
-</tr>
-<tr>
-<td style="text-align:center">Byte</td>
-<td style="text-align:center">B</td>
-</tr>
-<tr>
-<td style="text-align:center">Char</td>
-<td style="text-align:center">C</td>
-</tr>
-<tr>
-<td style="text-align:center">Short</td>
-<td style="text-align:center">S</td>
-</tr>
-<tr>
-<td style="text-align:center">Int</td>
-<td style="text-align:center">I</td>
-</tr>
-<tr>
-<td style="text-align:center">Long</td>
-<td style="text-align:center">J</td>
-</tr>
-<tr>
-<td style="text-align:center">Float</td>
-<td style="text-align:center">F</td>
-</tr>
-<tr>
-<td style="text-align:center">Double</td>
-<td style="text-align:center">D</td>
-</tr>
-<tr>
-<td style="text-align:center">Fully-qualified-class</td>
-<td style="text-align:center">Lfully-qualified-class</td>
-</tr>
-<tr>
-<td style="text-align:center">type[]</td>
-<td style="text-align:center">[type</td>
-</tr>
-<tr>
-<td style="text-align:center">Method type</td>
-<td style="text-align:center">(arg-type)ret-type</td>
-</tr>
-</tbody>
-</table>
-<p>通过上述对照表，我们可以通过C代码查找一个为<code>String</code>类型的Java静态字段，例如:</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">jfieldID staticJavaFieldId;</div><div class="line">staticJavaFieldId = env-&gt;GetStaticFieldID(clazz, <span class="string">"mStaticField"</span>, <span class="string">"Ljava/lang/String;"</span>);</div><div class="line"><span class="comment">/**</div><div class="line">* do something...</div><div class="line">**/</span></div></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017-03-21-Android-Studio支持生成Java-Native方法签名.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1090,7 +1033,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

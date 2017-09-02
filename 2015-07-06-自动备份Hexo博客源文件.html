@@ -101,19 +101,18 @@
 
 
 
-<meta name="description" content="&amp;ensp;&amp;ensp;用Hexo写博客是一件比较享受的事情，无奈如果换电脑的话，备份博客就是一件比较闹心的事情。
-前言&amp;ensp;&amp;ensp;我曾经给出过通过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于博主这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。">
+<meta name="description" content="&amp;ensp;&amp;ensp;用Hexo写博客是一件比较享受的事情，无奈如果换电脑的话，备份博客就是一件比较闹心的事情。 前言&amp;ensp;&amp;ensp;我曾经给出过通过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于博主这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。">
+<meta name="keywords" content="Hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自动备份Hexo博客源文件">
 <meta property="og:url" content="https://notes.wanghao.work/2015-07-06-自动备份Hexo博客源文件.html">
 <meta property="og:site_name" content="Doublemine">
-<meta property="og:description" content="&amp;ensp;&amp;ensp;用Hexo写博客是一件比较享受的事情，无奈如果换电脑的话，备份博客就是一件比较闹心的事情。
-前言&amp;ensp;&amp;ensp;我曾经给出过通过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于博主这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。">
+<meta property="og:description" content="&amp;ensp;&amp;ensp;用Hexo写博客是一件比较享受的事情，无奈如果换电脑的话，备份博客就是一件比较闹心的事情。 前言&amp;ensp;&amp;ensp;我曾经给出过通过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于博主这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-06-14T15:37:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自动备份Hexo博客源文件">
-<meta name="twitter:description" content="&amp;ensp;&amp;ensp;用Hexo写博客是一件比较享受的事情，无奈如果换电脑的话，备份博客就是一件比较闹心的事情。
-前言&amp;ensp;&amp;ensp;我曾经给出过通过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于博主这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。">
+<meta name="twitter:description" content="&amp;ensp;&amp;ensp;用Hexo写博客是一件比较享受的事情，无奈如果换电脑的话，备份博客就是一件比较闹心的事情。 前言&amp;ensp;&amp;ensp;我曾经给出过通过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于博主这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。">
 
 
 
@@ -469,7 +468,7 @@
 </li>
 </ul>
 <p>保存脚本并退出，然后执行<code>hexo deploy</code>命令，将会得到类似以下结果:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">INFO  Deploying: git&gt;</div><div class="line">INFO  Clearing .deploy folder...</div><div class="line">INFO  Copying files from public folder...</div><div class="line">[master 3020788] Site updated: 2015-07-06 15:08:06</div><div class="line"> 5 files changed, 160 insertions(+), 58 deletions(-)</div><div class="line">Branch master <span class="built_in">set</span> up to track remote branch gh-pages from git@github.com:smilexi</div><div class="line">amo/notes.git.</div><div class="line">To git@github.com:smilexiamo/notes.git</div><div class="line">   02adbe4..3020788  master -&gt; gh-pages</div><div class="line">On branch master</div><div class="line">nothing to commit, working directory clean</div><div class="line">Branch master <span class="built_in">set</span> up to track remote branch gitcafe-pages from git@gitcafe.com:s</div><div class="line">milexiamo/smilexiamo.git.</div><div class="line">To git@gitcafe.com:smilexiamo/smilexiamo.git</div><div class="line">   02adbe4..3020788  master -&gt; gitcafe-pages</div><div class="line">INFO  Deploy <span class="keyword">done</span>: git</div><div class="line">======================Auto Backup Begin===========================</div><div class="line">[master f044360] Form auto backup script<span class="string">'s commit</span></div><div class="line"> 2 files changed, 35 insertions(+), 2 deletions(-)</div><div class="line"> rewrite db.json (100%)</div><div class="line">To git@github.com:smilexiamo/hexo.git</div><div class="line">   8f2b4b4..f044360  master -&gt; master</div><div class="line">==================Auto Backup Complete============================</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">INFO  Deploying: git&gt;</div><div class="line">INFO  Clearing .deploy folder...</div><div class="line">INFO  Copying files from public folder...</div><div class="line">[master 3020788] Site updated: 2015-07-06 15:08:06</div><div class="line"> 5 files changed, 160 insertions(+), 58 deletions(-)</div><div class="line">Branch master <span class="built_in">set</span> up to track remote branch gh-pages from git@github.com:smilexi</div><div class="line">amo/notes.git.</div><div class="line">To git@github.com:smilexiamo/notes.git</div><div class="line">   02adbe4..3020788  master -&gt; gh-pages</div><div class="line">On branch master</div><div class="line">nothing to commit, working directory clean</div><div class="line">Branch master <span class="built_in">set</span> up to track remote branch gitcafe-pages from git@gitcafe.com:s</div><div class="line">milexiamo/smilexiamo.git.</div><div class="line">To git@gitcafe.com:smilexiamo/smilexiamo.git</div><div class="line">   02adbe4..3020788  master -&gt; gitcafe-pages</div><div class="line">INFO  Deploy <span class="keyword">done</span>: git</div><div class="line">======================Auto Backup Begin===========================</div><div class="line">[master f044360] Form auto backup script<span class="string">'s commit</span></div><div class="line"><span class="string"> 2 files changed, 35 insertions(+), 2 deletions(-)</span></div><div class="line"><span class="string"> rewrite db.json (100%)</span></div><div class="line"><span class="string">To git@github.com:smilexiamo/hexo.git</span></div><div class="line"><span class="string">   8f2b4b4..f044360  master -&gt; master</span></div><div class="line"><span class="string">==================Auto Backup Complete============================</span></div></pre></td></tr></table></figure>
 <p>这样子，每次更新博文并<code>deploy</code>到服务器上之后，备份就自动启动并完成备份啦~是不是很方便呢？</p>
 <p>Enjoy it！</p>
 
@@ -615,7 +614,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

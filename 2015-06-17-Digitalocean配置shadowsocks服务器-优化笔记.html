@@ -101,10 +101,12 @@
 
 
 
+<meta name="keywords" content="shadowsocks,digitalocean,科学上网">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Digitalocean配置shadowsocks服务器、优化笔记">
 <meta property="og:url" content="https://notes.wanghao.work/2015-06-17-Digitalocean配置shadowsocks服务器-优化笔记.html">
 <meta property="og:site_name" content="Doublemine">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/digitalocean_logo.jpg">
 <meta property="og:image" content="http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/1134591194eba9a1aao.jpg">
 <meta property="og:image" content="http://7xkj6q.com1.z0.glb.clouddn.com/blog/image/jpg/113459120364b2ec84o.jpg">
@@ -501,7 +503,7 @@
 <ul>
 <li>后台运行</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ssserver -c /etc/shadowsocks.json <span class="_">-d</span> start  <span class="comment">#开始</span></div><div class="line"></div><div class="line">ssserver -c /etc/shadowsocks.json <span class="_">-d</span> stop   <span class="comment">#停止</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ssserver -c /etc/shadowsocks.json -d start  <span class="comment">#开始</span></div><div class="line"></div><div class="line">ssserver -c /etc/shadowsocks.json -d stop   <span class="comment">#停止</span></div></pre></td></tr></table></figure>
 <h3 id="加入开机自启"><a href="#加入开机自启" class="headerlink" title="加入开机自启"></a>加入开机自启</h3><p>虽然这样子就可以运行Shadowsocks了，但是我们肯定不希望每次我们重启服务器之后还要手动启动Shadowsocks吧，因此，我们需要将Shadowsocks设置为开机自启。</p>
 <p>设置过程也非常的简单，只需要编辑<code>/etc/rc.local</code>文件，加入Shadowsocks命令即可。</p>
 <p>执行以下命令:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/rc.local       <span class="comment">#编辑rc.local文件</span></div></pre></td></tr></table></figure></p>
@@ -704,7 +706,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -101,114 +101,20 @@
 
 
 
-<meta name="description" content="在日常的Android NDK开发中，会不可避免的用到C与Java代码相互调用的情况。Java调用C的方法还好，C调用Java的方法就比较麻烦了。需要编写看着就头疼的Java方法描述符才能正确的调用Java方法。 
-
-其中常见的Java方法域和描述符如下表所示：
-
-
-
-Java类型
-签名
-
-
-
-
-Boolean
-Z
-
-
-Byte
-B
-
-
-Char
-C
-
-
-Short
-S
-
-
-Int
-I
-
-
-Lon">
+<meta name="description" content="在日常的Android NDK开发中，会不可避免的用到C与Java代码相互调用的情况。Java调用C的方法还好，C调用Java的方法就比较麻烦了。需要编写看着就头疼的Java方法描述符才能正确的调用Java方法。   其中常见的Java方法域和描述符如下表所示：    Java类型 签名     Boolean Z   Byte B   Char C   Short S   Int I   Lon">
+<meta name="keywords" content="Android,Android Studio,JNI">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Studio生成Java方法描述符">
 <meta property="og:url" content="https://notes.wanghao.work/2017-03-21-Android-Studio支持生成Java-Native方法签名.html">
 <meta property="og:site_name" content="Doublemine">
-<meta property="og:description" content="在日常的Android NDK开发中，会不可避免的用到C与Java代码相互调用的情况。Java调用C的方法还好，C调用Java的方法就比较麻烦了。需要编写看着就头疼的Java方法描述符才能正确的调用Java方法。 
-
-其中常见的Java方法域和描述符如下表所示：
-
-
-
-Java类型
-签名
-
-
-
-
-Boolean
-Z
-
-
-Byte
-B
-
-
-Char
-C
-
-
-Short
-S
-
-
-Int
-I
-
-
-Lon">
+<meta property="og:description" content="在日常的Android NDK开发中，会不可避免的用到C与Java代码相互调用的情况。Java调用C的方法还好，C调用Java的方法就比较麻烦了。需要编写看着就头疼的Java方法描述符才能正确的调用Java方法。   其中常见的Java方法域和描述符如下表所示：    Java类型 签名     Boolean Z   Byte B   Char C   Short S   Int I   Lon">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://7xkj6q.com1.z0.glb.clouddn.com/image/jni/external%20tools.png">
 <meta property="og:image" content="http://7xkj6q.com1.z0.glb.clouddn.com/image/jni/config.png">
 <meta property="og:updated_time" content="2017-03-29T15:53:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Studio生成Java方法描述符">
-<meta name="twitter:description" content="在日常的Android NDK开发中，会不可避免的用到C与Java代码相互调用的情况。Java调用C的方法还好，C调用Java的方法就比较麻烦了。需要编写看着就头疼的Java方法描述符才能正确的调用Java方法。 
-
-其中常见的Java方法域和描述符如下表所示：
-
-
-
-Java类型
-签名
-
-
-
-
-Boolean
-Z
-
-
-Byte
-B
-
-
-Char
-C
-
-
-Short
-S
-
-
-Int
-I
-
-
-Lon">
+<meta name="twitter:description" content="在日常的Android NDK开发中，会不可避免的用到C与Java代码相互调用的情况。Java调用C的方法还好，C调用Java的方法就比较麻烦了。需要编写看着就头疼的Java方法描述符才能正确的调用Java方法。   其中常见的Java方法域和描述符如下表所示：    Java类型 签名     Boolean Z   Byte B   Char C   Short S   Int I   Lon">
 <meta name="twitter:image" content="http://7xkj6q.com1.z0.glb.clouddn.com/image/jni/external%20tools.png">
 
 
@@ -543,7 +449,7 @@ Lon">
 </tbody>
 </table>
 <p>通过上述对照表，我们可以通过C代码查找一个为<code>String</code>类型的Java静态字段，例如:</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">jfieldID staticJavaFieldId;</div><div class="line">staticJavaFieldId = env-&gt;GetStaticFieldID(clazz, <span class="string">"mStaticField"</span>, <span class="string">"Ljava/lang/String;"</span>);</div><div class="line"><span class="comment">/**</span></div><div class="line">* do something...</div><div class="line">**/</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">jfieldID staticJavaFieldId;</div><div class="line">staticJavaFieldId = env-&gt;GetStaticFieldID(clazz, <span class="string">"mStaticField"</span>, <span class="string">"Ljava/lang/String;"</span>);</div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">* do something...</span></div><div class="line"><span class="comment">**/</span></div></pre></td></tr></table></figure>
 <a id="more"></a>
 <hr>
 <p>借助<code>javap</code>我们可以很方便的得知一个<code>class</code>文件其中包含对应的描述符。如下：</p>
@@ -708,7 +614,7 @@ Lon">
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

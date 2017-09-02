@@ -107,6 +107,7 @@
 <meta property="og:url" content="https://notes.wanghao.work/page/4/index.html">
 <meta property="og:site_name" content="Doublemine">
 <meta property="og:description" content="Keep fucking the world">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Doublemine">
 <meta name="twitter:description" content="Keep fucking the world">
@@ -304,6 +305,166 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://notes.wanghao.work/2015-08-28-同时部署PPTP-Server-and-OpenConnect-Server.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="夏末">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Doublemine">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015-08-28-同时部署PPTP-Server-and-OpenConnect-Server.html" itemprop="url">
+                  部署PPTP and OpenConnect VPN
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-08-28T23:17:55+08:00">
+                2015-08-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/折腾/" itemprop="url" rel="index">
+                    <span itemprop="name">折腾</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2015-08-28-同时部署PPTP-Server-and-OpenConnect-Server.html" class="leancloud_visitors" data-flag-title="部署PPTP and OpenConnect VPN">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>由于几天之前<a href="https://github.com/clowwindy" target="_blank" rel="external">@clowwindy</a>被某部门请喝茶，导致现Github上Shadowsocks项目源码被迫全部清除。非常感谢clowwindy所做的一切，希望他一切安好。</p>
+<p>虽然目前Shadowsocks还能正常使用，但是由于项目不在更新维护，还是要准备Shadowsocks的替代工具，以备不时之需，毕竟经常要上Google以及stackoverflow以及时不时看看YouTube。</p>
+<h2 id="PPTP-Server"><a href="#PPTP-Server" class="headerlink" title="PPTP Server"></a>PPTP Server</h2><p>如果对速度要求较高，又不那么在乎连接的安全性的话，PPTP VPN 是一个不错的选择，有着兼容性较好,速度快配置简单的优点。当然也有着加密强度不够，连接强度、抗干扰能力弱等缺点，但是基本上够用咯~</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2015-08-28-同时部署PPTP-Server-and-OpenConnect-Server.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://notes.wanghao.work/2015-08-20-MySQL开启远程访问权限.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -416,7 +577,7 @@
           <p>在做开发测试的时候，经常会用到MySQL数据库。测试使用的数据库不在本机上而在虚拟机里，访问数据库就比较蛋碎了。因为MySQL数据库默认是没有开放远程访问授权的。不能够直接访问，下面介绍两种常用的开启MySQL远程访问权限开启方法:</p>
 <h3 id="方法一：修改user表开启远程访问"><a href="#方法一：修改user表开启远程访问" class="headerlink" title="方法一：修改user表开启远程访问"></a>方法一：修改<code>user</code>表开启远程访问</h3><p>在终端中键入以下命令登录MySQL数据库:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql -uROOT -pPASSWORD</div></pre></td></tr></table></figure>
-<p>其中，<font color=red><code>ROOT</code></font>表示登录的用户名，<font color=red><code>PASSWORD</code></font>表示登录的该用户的密码。登录成功之后，访问<code>mysql</code>数据库，依次执行以下SQL语句:</p>
+<p>其中，<font color="red"><code>ROOT</code></font>表示登录的用户名，<font color="red"><code>PASSWORD</code></font>表示登录的该用户的密码。登录成功之后，访问<code>mysql</code>数据库，依次执行以下SQL语句:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt;  use mysql;</div><div class="line">mysql&gt;  select host,user from user;</div></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
@@ -579,8 +740,8 @@
 <hr>
 <p>去多说的官方一番折腾，找到了官方文档，有说到使用<code>data-author-key</code>可以设置主动邮件提醒,以下给出多说官网说明的传送门：</p>
 <ul>
-<li><strong><a href="http://dev.duoshuo.com/docs/51435552047fe92f490225de">同步用户到多说</a></strong></li>
-<li><strong><a href="http://dev.duoshuo.com/docs/5003ecd94cab3e7250000008/">评论框调用代码参数说明</a></strong></li>
+<li><strong><a href="http://dev.duoshuo.com/docs/51435552047fe92f490225de" target="_blank" rel="external">同步用户到多说</a></strong></li>
+<li><strong><a href="http://dev.duoshuo.com/docs/5003ecd94cab3e7250000008/" target="_blank" rel="external">评论框调用代码参数说明</a></strong></li>
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
@@ -748,8 +909,8 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo adduser git</div></pre></td></tr></table></figure>
 <p>创建用户的途中会要求输入用户密码，这个密码请务必记住，这个密码的作用我们后面再说。<code>git</code>用户的其它配置使用默认值直接回车就行。</p>
 <h3 id="禁用shell登录"><a href="#禁用shell登录" class="headerlink" title="禁用shell登录"></a>禁用shell登录</h3><p><code>git</code>用户创建完成之后，系统默认是为其分配的<code>bash</code>的，我们不希望<code>git</code>用户拥有shell执行权限，因此我们需要更改<code>git</code>用户的默认shell，使其不允许登录shell。</p>
-<p>我们可以通过编辑<font color=red><code>/etc/passwd</code></font>文件来完成对<code>git</code>用户shell的更改。</p>
-<p>键入以下命令编辑<font color=red><code>/etc/passwd</code></font>文件：</p>
+<p>我们可以通过编辑<font color="red"><code>/etc/passwd</code></font>文件来完成对<code>git</code>用户shell的更改。</p>
+<p>键入以下命令编辑<font color="red"><code>/etc/passwd</code></font>文件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/passwd</div></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
@@ -949,168 +1110,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://notes.wanghao.work/2015-07-02-EditPlus-Licenses在线生成器.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="夏末">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Doublemine">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015-07-02-EditPlus-Licenses在线生成器.html" itemprop="url">
-                  EditPlus Licenses在线生成器
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-07-02T19:22:03+08:00">
-                2015-07-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/折腾/" itemprop="url" rel="index">
-                    <span itemprop="name">折腾</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2015-07-02-EditPlus-Licenses在线生成器.html" class="leancloud_visitors" data-flag-title="EditPlus Licenses在线生成器">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>EditPlus是一款博主非常喜欢的文本编辑器，相比notepad++以及EverEdit有着轻便小巧迅速的优点。</p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>以下是来自维基百科简介：</p>
-<blockquote>
-<p>EditPlus是Windows下的一个文本编辑器。支持语法高亮，自动完成等功能。对HTML文件编辑特别方便。可通过FTP远程编辑。EditPlus由韩国人Kim Sang-il（김상일）开发。</p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015-07-02-EditPlus-Licenses在线生成器.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1160,7 +1159,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

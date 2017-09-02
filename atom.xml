@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://notes.wanghao.work/"/>
-  <updated>2017-09-02T16:13:16.000Z</updated>
+  <updated>2017-09-02T17:27:06.000Z</updated>
   <id>https://notes.wanghao.work/</id>
   
   <author>
@@ -14,6 +14,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Gradle、Maven项目相互转换</title>
+    <link href="https://notes.wanghao.work/2017-08-21-Gradle%E3%80%81Maven%E9%A1%B9%E7%9B%AE%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2.html"/>
+    <id>https://notes.wanghao.work/2017-08-21-Gradle、Maven项目相互转换.html</id>
+    <published>2017-08-21T15:01:21.000Z</published>
+    <updated>2017-09-02T17:27:06.000Z</updated>
+    
+    <content type="html"><![CDATA[  <div class="note info"><p>在开发Android项目的时候，使用的是<code>Gradle</code>构建工具，喜欢它的灵活和方便，在转向Java后端开发的时候更多时候使用的是<code>Maven</code>构建工具，然而看着漫天的尖括号，心里实在是难受。虽然只是一个构建工具，本着折腾的心，我还是更认可和看好<code>Gradle</code>。然而很多时候你的队友并没有习惯去使用或者快速熟悉<code>Gradle</code>构建工具，那么这个时候就需要将<code>Gradle</code>项目转换为Maven项目了，或者将Maven项目转换为<code>Gradle</code>项目了。</p>
+</div>
+<a id="more"></a>
+<h3 id="安装Gradle／Maven"><a href="#安装Gradle／Maven" class="headerlink" title="安装Gradle／Maven"></a>安装Gradle／Maven</h3><p>首先是安装构建工具，这个没啥好说的。</p>
+<h5 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h5><p>打开Powershell或者Cmder执行以下命令完成安装：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">choco install gradle</div><div class="line">choco install maven</div></pre></td></tr></table></figure>
+<p><code>choco</code>为windows下的一款包管理工具，可以方便安装管理配置一些常见的软件包，如果你没有安装<code>choco</code>的话，请移步：<a href="https://chocolatey.org/" target="_blank" rel="external">https://chocolatey.org/</a></p>
+<h4 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h4><p>打开Terminal，执行以下命令安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">brew install gradle</div><div class="line">brew install maven</div></pre></td></tr></table></figure>
+<h3 id="Maven-to-Gradle"><a href="#Maven-to-Gradle" class="headerlink" title="Maven to Gradle"></a>Maven to Gradle</h3><p>需要特别说明的是，<code>Gradle</code>对<code>Maven</code>的支持是比较完善的，因此，转换也是非常的简单，在<code>pom.xml</code>文件所在的目录下执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gradle init     # 根据pom.xml内容生成对应的gradle配置</div><div class="line">gradle build    # 开启gradle构建</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="Gradle-to-Maven"><a href="#Gradle-to-Maven" class="headerlink" title="Gradle to Maven"></a>Gradle to Maven</h3><p><code>Gradle</code>项目转<code>Maven</code>项目需要借助一个Gradle插件，在项目的<code>module</code>的<code>build.gradle</code>文件中加入以下配置即可：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apply <span class="string">plugin:</span> <span class="string">'maven'</span></div></pre></td></tr></table></figure>
+<p>通过双击<code>Idea</code>的Gradle Tasks GUI:</p>
+<p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fj5qcx3csoj20j20ee0ua.jpg" alt=""></p>
+<p>或者执行命令来完成转换:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gradle install</div></pre></td></tr></table></figure>
+<p>完成之后，将会在当前Module项目的<code>build</code>目录下的<code>poms</code>文件夹下生成<code>pom-default.xml</code>，将其拷贝到项目的根目录下即可。</p>
+<p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fj5pn78lbhj20ik0g4jsk.jpg" alt=""></p>
+<ul>
+<li>参考文档：<a href="https://guides.gradle.org/migrating-from-maven/" target="_blank" rel="external">https://guides.gradle.org/migrating-from-maven/</a></li>
+</ul>
+<hr>
+<p>通过实际测试，这样的生成的<code>pom-default.xml</code>文件是不能用于直接<code>maven</code>构建的，因为生成的<code>pom-default.xml</code>文件中的<code>groupId</code>还需要我们手动指定下。这样显然是不清真的，于是我们可以在<code>build.gradle</code>文件中将其事先定义好，这样生成的pom文件就不用我们再手动更改了：</p>
+<p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fj5pvzyw2xj20ni0dign1.jpg" alt=""></p>
+<p>然而这样我们还是觉得麻烦，毕竟需要手动复制到项目根目录，再重新命名。我们还可以通过Hook Gradle中Maven插件的<code>install</code>Task来完成自动的复制和命名,编辑<code>build.gradle</code>:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">task convert2Maven &#123;</div><div class="line">    doLast &#123;</div><div class="line">        file(<span class="string">"$buildDir/poms/pom-default.xml"</span>).renameTo(file(<span class="string">"$rootDir/pom.xml"</span>))</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">install.dependsOn(convert2Maven)</div></pre></td></tr></table></figure>
+<p>此时，再执行<code>gradle install</code>这个task就可以看到gradle已经自动为我们在项目的根目录下生成好了<code>pom.xml</code>文件啦。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;div class=&quot;note info&quot;&gt;&lt;p&gt;在开发Android项目的时候，使用的是&lt;code&gt;Gradle&lt;/code&gt;构建工具，喜欢它的灵活和方便，在转向Java后端开发的时候更多时候使用的是&lt;code&gt;Maven&lt;/code&gt;构建工具，然而看着漫天的尖括号，心里实在是难受。虽然只是一个构建工具，本着折腾的心，我还是更认可和看好&lt;code&gt;Gradle&lt;/code&gt;。然而很多时候你的队友并没有习惯去使用或者快速熟悉&lt;code&gt;Gradle&lt;/code&gt;构建工具，那么这个时候就需要将&lt;code&gt;Gradle&lt;/code&gt;项目转换为Maven项目了，或者将Maven项目转换为&lt;code&gt;Gradle&lt;/code&gt;项目了。&lt;/p&gt;
+&lt;/div&gt;
+    
+    </summary>
+    
+    
+      <category term="Gradle" scheme="https://notes.wanghao.work/tags/Gradle/"/>
+    
+      <category term="Maven" scheme="https://notes.wanghao.work/tags/Maven/"/>
+    
+  </entry>
   
   <entry>
     <title>Docker非Root运行</title>
@@ -101,11 +153,11 @@
     </summary>
     
     
+      <category term="Gradle" scheme="https://notes.wanghao.work/tags/Gradle/"/>
+    
       <category term="Swagger" scheme="https://notes.wanghao.work/tags/Swagger/"/>
     
       <category term="Spring Boot" scheme="https://notes.wanghao.work/tags/Spring-Boot/"/>
-    
-      <category term="Gradle" scheme="https://notes.wanghao.work/tags/Gradle/"/>
     
       <category term="Kotlin" scheme="https://notes.wanghao.work/tags/Kotlin/"/>
     
@@ -1263,90 +1315,6 @@
       <category term="Linux" scheme="https://notes.wanghao.work/tags/Linux/"/>
     
       <category term="Git" scheme="https://notes.wanghao.work/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>自动备份Hexo博客源文件</title>
-    <link href="https://notes.wanghao.work/2015-07-06-%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6.html"/>
-    <id>https://notes.wanghao.work/2015-07-06-自动备份Hexo博客源文件.html</id>
-    <published>2015-07-06T04:49:01.000Z</published>
-    <updated>2017-06-14T15:37:04.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>&ensp;&ensp;用Hexo写博客是一件比较享受的事情，无奈如果换电脑的话，备份博客就是一件比较闹心的事情。</p>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>&ensp;&ensp;我曾经给出过通过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于博主这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。</p>
-<a id="more"></a>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>前两天博主刚刚编写过关于<strong><a href="https://notes.wanghao.work/2015-06-29-Hexo%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E6%97%B6%E8%87%AA%E5%8A%A8%E6%89%93%E5%BC%80%E7%BC%96%E8%BE%91%E5%99%A8.html">Hexo添加文章时自动打开编辑器</a></strong>的相关文章，其原理就是利用<code>NodeJS</code>的事件监听机制实现监听Hexo的<code>new</code>事件来启动编辑器，完成自动启动编辑器的操作。</p>
-<p>那么可不可以通过通过监听Hexo的其它事件来完成自动执行Git命令完成自动备份呢？通过查阅<a href="https://hexo.io/zh-cn/api/events.html" target="_blank" rel="external">Hexo文档</a>，找到了Hexo的主要事件，见下表：</p>
-<table>
-<thead>
-<tr>
-<th>事件名</th>
-<th>事件发生时间</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>deployBefore</td>
-<td>在部署完成前发布</td>
-</tr>
-<tr>
-<td>deployAfter</td>
-<td>在部署成功后发布</td>
-</tr>
-<tr>
-<td>exit</td>
-<td>在 Hexo 结束前发布</td>
-</tr>
-<tr>
-<td>generateBefore</td>
-<td>在静态文件生成前发布</td>
-</tr>
-<tr>
-<td>generateAfter</td>
-<td>在静态文件生成后发布</td>
-</tr>
-<tr>
-<td>new</td>
-<td>在文章文件建立后发布</td>
-</tr>
-</tbody>
-</table>
-<p>于是我们就可以通过监听Hexo的<code>deployAfter</code>事件，待上传完成之后自动运行Git备份命令，从而达到自动备份的目的。</p>
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h4 id="将Hexo目录加入Git仓库"><a href="#将Hexo目录加入Git仓库" class="headerlink" title="将Hexo目录加入Git仓库"></a>将Hexo目录加入Git仓库</h4><p>本脚本需要<font color="red"><code>提前</code></font>将Hexo加入Git仓库并与Github或者Gitcafe远程仓库绑定之后，才能正常工作。如果你不知道怎么操作，请参考这篇博文：</p>
-<ul>
-<li><strong><a href="https://notes.wanghao.work/2015-04-06-%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6.html">备份Hexo博客源文件</a></strong></li>
-</ul>
-<h4 id="安装shelljs模块"><a href="#安装shelljs模块" class="headerlink" title="安装shelljs模块"></a>安装<code>shelljs</code>模块</h4><p>要实现这个自动备份功能，需要依赖NodeJs的一个<code>shelljs</code>模块,该模块重新包装了<code>child_process</code>,调用系统命令更加的方便。（其实就是因为博主懒( ╯▽╰)）该模块需要安装后使用。</p>
-<p>在命令中键入以下命令，完成<code>shelljs</code>模块的安装：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install --save shelljs</div></pre></td></tr></table></figure>
-<h4 id="编写自动备份脚本"><a href="#编写自动备份脚本" class="headerlink" title="编写自动备份脚本"></a>编写自动备份脚本</h4><p>待到模块安装完成，在<code>Hexo</code>根目录的<code>scripts</code>文件夹下新建一个js文件，文件名随意取。</p>
-<p><strong>如果没有<code>scripts</code>目录，请新建一个。</strong></p>
-<p>然后在脚本中，写入以下内容：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>(<span class="string">'shelljs/global'</span>);</div><div class="line"></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">	hexo.on(<span class="string">'deployAfter'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;<span class="comment">//当deploy完成后执行备份</span></div><div class="line">		run();</div><div class="line">	&#125;);</div><div class="line">&#125; <span class="keyword">catch</span> (e) &#123;</div><div class="line">	<span class="built_in">console</span>.log(<span class="string">"产生了一个错误&lt;(￣3￣)&gt; !，错误详情为："</span> + e.toString());</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">run</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">if</span> (!which(<span class="string">'git'</span>)) &#123;</div><div class="line">		echo(<span class="string">'Sorry, this script requires git'</span>);</div><div class="line">		exit(<span class="number">1</span>);</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		echo(<span class="string">"======================Auto Backup Begin==========================="</span>);</div><div class="line">		cd(<span class="string">'D:/hexo'</span>);    <span class="comment">//此处修改为Hexo根目录路径</span></div><div class="line">		<span class="keyword">if</span> (exec(<span class="string">'git add --all'</span>).code !== <span class="number">0</span>) &#123;</div><div class="line">			echo(<span class="string">'Error: Git add failed'</span>);</div><div class="line">			exit(<span class="number">1</span>);</div><div class="line"></div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (exec(<span class="string">'git commit -am "Form auto backup script\'s commit"'</span>).code !== <span class="number">0</span>) &#123;</div><div class="line">			echo(<span class="string">'Error: Git commit failed'</span>);</div><div class="line">			exit(<span class="number">1</span>);</div><div class="line"></div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (exec(<span class="string">'git push origin master'</span>).code !== <span class="number">0</span>) &#123;</div><div class="line">			echo(<span class="string">'Error: Git push failed'</span>);</div><div class="line">			exit(<span class="number">1</span>);</div><div class="line"></div><div class="line">		&#125;</div><div class="line">		echo(<span class="string">"==================Auto Backup Complete============================"</span>)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li><p><strong>其中，需要修改第<font color="red"><code>17</code></font>行的<font color="red"><code>D:/hexo</code></font>路径为Hexo的根目录路径。（脚本中的路径为博主的Hexo路径）</strong></p>
-</li>
-<li><p><strong>如果你的Git远程仓库名称不为<font color="red"><code>origin</code></font>的话，还需要修改第<font color="red"><code>28</code></font>行执行的push命令，修改成自己的远程仓库名和相应的分支名。</strong></p>
-</li>
-</ul>
-<p>保存脚本并退出，然后执行<code>hexo deploy</code>命令，将会得到类似以下结果:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">INFO  Deploying: git&gt;</div><div class="line">INFO  Clearing .deploy folder...</div><div class="line">INFO  Copying files from public folder...</div><div class="line">[master 3020788] Site updated: 2015-07-06 15:08:06</div><div class="line"> 5 files changed, 160 insertions(+), 58 deletions(-)</div><div class="line">Branch master <span class="built_in">set</span> up to track remote branch gh-pages from git@github.com:smilexi</div><div class="line">amo/notes.git.</div><div class="line">To git@github.com:smilexiamo/notes.git</div><div class="line">   02adbe4..3020788  master -&gt; gh-pages</div><div class="line">On branch master</div><div class="line">nothing to commit, working directory clean</div><div class="line">Branch master <span class="built_in">set</span> up to track remote branch gitcafe-pages from git@gitcafe.com:s</div><div class="line">milexiamo/smilexiamo.git.</div><div class="line">To git@gitcafe.com:smilexiamo/smilexiamo.git</div><div class="line">   02adbe4..3020788  master -&gt; gitcafe-pages</div><div class="line">INFO  Deploy <span class="keyword">done</span>: git</div><div class="line">======================Auto Backup Begin===========================</div><div class="line">[master f044360] Form auto backup script<span class="string">'s commit</span></div><div class="line"><span class="string"> 2 files changed, 35 insertions(+), 2 deletions(-)</span></div><div class="line"><span class="string"> rewrite db.json (100%)</span></div><div class="line"><span class="string">To git@github.com:smilexiamo/hexo.git</span></div><div class="line"><span class="string">   8f2b4b4..f044360  master -&gt; master</span></div><div class="line"><span class="string">==================Auto Backup Complete============================</span></div></pre></td></tr></table></figure>
-<p>这样子，每次更新博文并<code>deploy</code>到服务器上之后，备份就自动启动并完成备份啦~是不是很方便呢？</p>
-<p>Enjoy it！</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&amp;ensp;&amp;ensp;用Hexo写博客是一件比较享受的事情，无奈如果换电脑的话，备份博客就是一件比较闹心的事情。&lt;/p&gt;
-&lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;&amp;ensp;&amp;ensp;我曾经给出过通过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于博主这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Hexo" scheme="https://notes.wanghao.work/categories/Hexo/"/>
-    
-    
-      <category term="Hexo" scheme="https://notes.wanghao.work/tags/Hexo/"/>
     
   </entry>
   

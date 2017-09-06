@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://notes.wanghao.work/"/>
-  <updated>2017-09-02T17:27:06.000Z</updated>
+  <updated>2017-09-06T15:50:32.000Z</updated>
   <id>https://notes.wanghao.work/</id>
   
   <author>
@@ -14,6 +14,71 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>聊聊Mybatis Update操作返回值</title>
+    <link href="https://notes.wanghao.work/2017-09-06-%E8%81%8A%E8%81%8AMybatis-Update%E6%93%8D%E4%BD%9C%E8%BF%94%E5%9B%9E%E5%80%BC.html"/>
+    <id>https://notes.wanghao.work/2017-09-06-聊聊Mybatis-Update操作返回值.html</id>
+    <published>2017-09-06T12:00:03.000Z</published>
+    <updated>2017-09-06T15:50:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note info"><p>后端的数据持久化使用的是 Mybatis ，在做高并发下账户增减余额的时候，打算使用乐观锁来解决这个问题。在获取update操作的返回值时遇到了一个问题，似乎 Mybatis 进行 update 操作得到的 <code>int</code> 返回值并不是影响的行数。这下就尴尬了。</p>
+</div>
+<p>一般而言，我们知道当我们使用 Mybatis 在 <code>mapper</code> 接口中定义 <code>insert</code> <code>delete</code> 等操作，定义一个 <code>int</code> 类型的返回值，通过该值是否为 0 来判断数据库中受影响的行数进而判断操作是否成功。</p>
+<a id="more"></a>
+<hr>
+<p>到底 <code>update</code> 返回值代表什么呢？我们来验证一下便知道了，假设有如下一张表以及两条数据：</p>
+<p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fja7y057g3j20x004yjst.jpg" alt="" title="数据库更新之前记录"></p>
+<p>我们来编写一个简单的单元测试用例来验证下,首先使用 mybatis 简单的写个 mapper 进行更新操作，其中 xml 中的内容为：</p>
+<p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fja7tn625wj210q0ekgnn.jpg" alt="" title="mapper 更新语句"></p>
+<p>数据库连接配置为：</p>
+<p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fja7wi2iv9j20se0k076a.jpg" alt="" title="数据库连接配置"></p>
+<p>接来下，我们来编写一个简单的单元测试来验证下：<strong>update 的返回值是不是受影响的记录的条数</strong>，对应的单元测试代码如下：</p>
+<p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fja83t5sf3j20sg0oggoq.jpg" alt="" title="单元测试代码"></p>
+<p>由单元测试代码可以得知，我们将要把数据库中两条记录的 <code>phone</code> 字段的值由 <code>12345678</code> 修改为 <code>66666666</code> ,正常情况下，<code>resultCode</code> 将会返回 2 。因为 <code>update</code> 操作影响到数据库中这 2 条记录，这和我们期望 2 是相符合的。那么一切正常的情况下，这次单元测试将会通过，那么我们运行看看结果：</p>
+<p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fja8bdifgjj20jq0423yx.jpg" alt="" title="单元测试通过"></p>
+<p>单元测试通过了，再查看数据库中的记录：</p>
+<p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fja8ifpsyyj20x206u3zr.jpg" alt="" title="更新后的数据库记录"></p>
+<p>这说明 mybatis 的 update 更新操作返回值的确是返回受影响的行数……真的是这样吗？</p>
+<p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fja8m25otsj204305h0sm.jpg" alt=""></p>
+<p>我们知道，当数据库中的记录被修改之后，再次执行重复的 <code>update</code> 操作将不会影响到新的行数，为了验证我说的话，我们试试：</p>
+<p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fja8rrcju0j20ne03i74t.jpg" alt=""></p>
+<p>那么，按照这个逻辑：我们再次执行这个单元测试应该是，<code>resultCode</code> 返回的应该是 <code>0</code> ，和我们的期望的数字 <code>2</code> 不一致，将会导致测试不通过。再次运行单元测试：</p>
+<p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fja8xe6fwgj20ju050t9b.jpg" alt="" title="单元测试依然通过"></p>
+<p>居然还是 <code>passed</code> ,看到这里聪明的你已经看出来了，<font color="red">默认情况下，mybatis 的 <code>update</code> 操作返回值是记录的  <code>matched</code> 的条数，并不是影响的记录条数。</font></p>
+<hr>
+<p>严格意义上来将，这并不是 mybatis 的返回值，mybatis 仅仅只是返回的数据库连接驱动（通常是 <code>JDBC</code> ）的返回值，也就是说，如果驱动告知更新 2 条记录受影响，那么我们将得到 mybatis 的返回值就会是 2 和 mybatis 本身是没有关系的。</p>
+<p>道理我都懂，如果我们非得要 mybatis 的 <code>update</code> 操作明确的返回受影响的记录条数，有没有什么办法呢？</p>
+<p>当然是有的。</p>
+<p>通过对 <code>JDBC</code> URL 显式的指定 <strong><code>useAffectedRows</code></strong>选项，我们将可以得到受影响的记录的条数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jdbc:mysql:<span class="comment">//$&#123;jdbc.host&#125;/$&#123;jdbc.db&#125;?useAffectedRows=true</span></div></pre></td></tr></table></figure>
+<p>我们对我们的数据库连接配置稍做修改，添加 <code>useAffectedRows</code> 字段：</p>
+<p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fja9nv1e5xj20u80kcdhz.jpg" alt="" title="修改之后的数据库连接配置"></p>
+<p>此时，mybatis 的 update 操作返回的应该是受影响的条数了，我们再次运行单元测试试试看：</p>
+<p><img src="https://ws1.sinaimg.cn/large/694830ebgy1fja9psbcjpj21hy08eabi.jpg" alt="" title="单元测试不通过"></p>
+<p><code>update</code> 操作返回的是受影响的记录条数，我们知道为 <code>0</code> 和我们预期的 <code>2</code> 不一致，自然而然单元测试不通过咯～。</p>
+<h5 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h5><ul>
+<li><a href="http://mybatis-user.963551.n3.nabble.com/Return-number-of-changed-rows-td3888464.html" target="_blank" rel="external">“Return number of changed rows”</a></li>
+<li><a href="http://www.peristblog.com/c?id=10164" target="_blank" rel="external">“mybatis实现乐观锁”</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;div class=&quot;note info&quot;&gt;&lt;p&gt;后端的数据持久化使用的是 Mybatis ，在做高并发下账户增减余额的时候，打算使用乐观锁来解决这个问题。在获取update操作的返回值时遇到了一个问题，似乎 Mybatis 进行 update 操作得到的 &lt;code&gt;int&lt;/code&gt; 返回值并不是影响的行数。这下就尴尬了。&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;一般而言，我们知道当我们使用 Mybatis 在 &lt;code&gt;mapper&lt;/code&gt; 接口中定义 &lt;code&gt;insert&lt;/code&gt; &lt;code&gt;delete&lt;/code&gt; 等操作，定义一个 &lt;code&gt;int&lt;/code&gt; 类型的返回值，通过该值是否为 0 来判断数据库中受影响的行数进而判断操作是否成功。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="MySQL" scheme="https://notes.wanghao.work/tags/MySQL/"/>
+    
+      <category term="Mybatis" scheme="https://notes.wanghao.work/tags/Mybatis/"/>
+    
+      <category term="JDBC" scheme="https://notes.wanghao.work/tags/JDBC/"/>
+    
+  </entry>
   
   <entry>
     <title>Gradle、Maven项目相互转换</title>
@@ -72,7 +137,7 @@
     <link href="https://notes.wanghao.work/2017-07-11-Docker%E9%9D%9ERoot%E7%94%A8%E6%88%B7%E8%BF%90%E8%A1%8C.html"/>
     <id>https://notes.wanghao.work/2017-07-11-Docker非Root用户运行.html</id>
     <published>2017-07-11T02:56:01.000Z</published>
-    <updated>2017-09-02T16:13:16.000Z</updated>
+    <updated>2017-09-02T17:28:21.000Z</updated>
     
     <content type="html"><![CDATA[<div class="note info"><p>Docker Engine的Deamon进程是以root权限运行的，如果是普通用户要与之交互，需要使用<code>sudo</code>命令来提权与之交互。之前使用Docker官方的安装脚本安装完成之后，会给出一个提示将当前非root用户添加到doker组之中，以避免每次都需要输入<code>sudo</code>的麻烦。</p>
 </div>
@@ -1234,87 +1299,6 @@
       <category term="Hexo" scheme="https://notes.wanghao.work/tags/Hexo/"/>
     
       <category term="多说" scheme="https://notes.wanghao.work/tags/%E5%A4%9A%E8%AF%B4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>基于Debian Linux搭建Git服务器</title>
-    <link href="https://notes.wanghao.work/2015-07-18-%E5%9F%BA%E4%BA%8EDebian-Linux%E6%90%AD%E5%BB%BAGit%E6%9C%8D%E5%8A%A1%E5%99%A8.html"/>
-    <id>https://notes.wanghao.work/2015-07-18-基于Debian-Linux搭建Git服务器.html</id>
-    <published>2015-07-18T09:47:37.000Z</published>
-    <updated>2017-06-14T15:36:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>&ensp;&ensp;&ensp;&ensp;因为一些众所周知的原因，某些项目不适合开源（代码写的烂我会乱说？(╯﹏╰)b ）。又因为博主不是壕，买不起Github的私有空间，所以只能利用手头上的Debian服务器搭建Git服务器咯~</p>
-<hr>
-<h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><p>    要搭建Git服务器，第一步当然是要安装Git了，键入以下命令来完成Git的安装：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install git</div></pre></td></tr></table></figure>
-<h3 id="新建Git用户"><a href="#新建Git用户" class="headerlink" title="新建Git用户"></a>新建Git用户</h3><p>&ensp;&ensp;&ensp;&ensp;出于安全的原因考虑，我们肯定是不会使用<code>root</code>或者其它具有完整的shell执行权限的用户来运行Git的。因此，我们需要创建一个<code>git</code>用户来运行<code>git</code>服务。</p>
-<p>键入以下命令来完成<code>git</code>用户的创建：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo adduser git</div></pre></td></tr></table></figure>
-<p>创建用户的途中会要求输入用户密码，这个密码请务必记住，这个密码的作用我们后面再说。<code>git</code>用户的其它配置使用默认值直接回车就行。</p>
-<h3 id="禁用shell登录"><a href="#禁用shell登录" class="headerlink" title="禁用shell登录"></a>禁用shell登录</h3><p><code>git</code>用户创建完成之后，系统默认是为其分配的<code>bash</code>的，我们不希望<code>git</code>用户拥有shell执行权限，因此我们需要更改<code>git</code>用户的默认shell，使其不允许登录shell。</p>
-<p>我们可以通过编辑<font color="red"><code>/etc/passwd</code></font>文件来完成对<code>git</code>用户shell的更改。</p>
-<p>键入以下命令编辑<font color="red"><code>/etc/passwd</code></font>文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/passwd</div></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>找到类似下面的一行（一般在文件的末尾）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git:x:1000:1000:,,,:/home/git:/usr/bin/bash</div></pre></td></tr></table></figure>
-<p>修改为：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git:x:1000:1000:,,,:/home/git:/usr/bin/git-shell</div></pre></td></tr></table></figure></p>
-<p>如果你不确定<font color="red"><code>git-shell</code></font>是不是在<font color="red"><code>/usr/bin/git-shell</code></font>这个位置的话，可以使用以下命令来查看<code>git-shell</code>的路径：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">which</span> git-shell</div></pre></td></tr></table></figure></p>
-<p>这样，<code>git</code>用户可以正常通过<code>ssh</code>使用git，但无法登录shell，因为我们为<code>git用户</code>指定的<code>git-shell</code>每次一登录就自动退出。</p>
-<h3 id="Git密钥登录"><a href="#Git密钥登录" class="headerlink" title="Git密钥登录"></a>Git密钥登录</h3><p>既然是私有Git服务器，当然必要的<code>push</code>和<code>pull</code>以及<code>clone</code>等操作不能让其他未经允许的人使用了。当然，我们也不想每次进行远程仓库操作的时候都输入<code>git</code>用户的密码。</p>
-<p>因此，通过ssh密钥证书的方式就很有必要了~</p>
-<ul>
-<li>如同Github导入公钥一样，首先收集授权访问用户的公钥文件，也就是他们的<font color="red"><code>id_rsa.pub</code></font>文件。</li>
-<li>复制<code>id_rsa.pub</code>文件其中全部的内容。</li>
-<li>将<font color="red"><code>id_rsa.pub</code></font>文件其中全部的内容导入到Git服务器的<font color="red"><code>/home/git/.ssh/authorized_keys</code></font>文件中，每一行导入一个公钥文件。</li>
-</ul>
-<p>如果没有<font color="red"><code>/home/git/.ssh/authorized_keys</code></font>文件，请执行以下命令自行创建：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /home/git</div><div class="line">mkdir .ssh</div><div class="line"><span class="built_in">cd</span> .ssh</div><div class="line">touch authorized_keys</div></pre></td></tr></table></figure></p>
-<p><strong>这样，凡是添加了公钥到<font color="red"><code>/home/git/.ssh/authorized_keys</code></font>文件的用户都能够正常的使用远程仓库的常用操作了，如果Git公钥没有被添加到<font color="red"><code>/home/git/.ssh/authorized_keys</code></font>文件中又想执行远程仓库的操作的话，那么就需要用到上面<code>git</code>用户的密码了，因为<code>git</code>会要求输入Git服务器的<code>git</code>用户的密码。这就是上面设置<code>git</code>用户密码的作用了~</strong></p>
-<h3 id="初始化服务器Git仓库"><a href="#初始化服务器Git仓库" class="headerlink" title="初始化服务器Git仓库"></a>初始化服务器Git仓库</h3><p>上面的准备工作做完，就需要在Git服务器上选定一个目录作为Git仓库了。假定我们选择<font color="red"><code>/gitserver/Demo.git</code></font>作为Git仓库，那么我们首先需要执行以下命令创建<font color="red"><code>/gitserver</code></font>目录：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /</div><div class="line">mkdir gitserver</div><div class="line"><span class="built_in">cd</span> gitserver</div></pre></td></tr></table></figure>
-<p>然后进入<code>gitserver</code>目录，执行以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo git init --bare demo.git</div></pre></td></tr></table></figure>
-<p>Git就会创建一个裸仓库，裸仓库没有工作区，因为Git服务器上的Git仓库主要是为了共享，所以不让用户直接登录到Git服务器上去修改工作区。</p>
-<p><strong>Git服务器上的Git仓库通常都以<font color="red"><code>.git</code></font>结尾。</strong></p>
-<h3 id="修改Git仓库owner"><a href="#修改Git仓库owner" class="headerlink" title="修改Git仓库owner"></a>修改Git仓库owner</h3><p>创建好仓库之后，我们需要将仓库的owner设置为<code>git</code>用户，不让我们前面为<code>git</code>用户所做的配置就没啥意义了~</p>
-<p>执行以下命令，修改仓库的owner：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chown -R git:git demo.git</div></pre></td></tr></table></figure></p>
-<h3 id="克隆远程仓库"><a href="#克隆远程仓库" class="headerlink" title="克隆远程仓库"></a>克隆远程仓库</h3><p>现在就可以通过<code>git clone</code>命令克隆Git服务器上的<code>demo</code>仓库了，在各自的PC上执行以下命令以完成克隆：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> ssh://git@server:/gitserver/demo.git</div><div class="line">Cloning into <span class="string">'demo'</span>...</div><div class="line">warning: You appear to have cloned an empty repository.</div></pre></td></tr></table></figure>
-<p>其中需要注意的是：</p>
-<ul>
-<li>上述命令<code>git clone ssh://git@SERVER:/gitserver/demo.git</code>中,<font color="red"><code>SERVER</code></font>的值为你的服务器的<font color="red"><code>ip地址</code></font>或者<font color="red"><code>域名</code></font>。</li>
-<li>如果你的服务器更改了默认的ssh端口号，那么需要在地址中指出，像这样：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> ssh://git@server:PORT/gitserver/demo.git</div></pre></td></tr></table></figure>
-<p>其中<font color="red"><code>PORT</code></font>即为更改之后的ssh端口号。</p>
-<p>例如，博主对服务器做了A记录的域名解析，也更改了默认端口号为9669，那么执行的克隆地址的命令即为：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> ssh://git@server.xiamo.tk:9669/gitserver/demo.git</div></pre></td></tr></table></figure></p>
-<p>后面的操作不用我多说，大家也都懂的了~</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;因为一些众所周知的原因，某些项目不适合开源（代码写的烂我会乱说？(╯﹏╰)b ）。又因为博主不是壕，买不起Github的私有空间，所以只能利用手头上的Debian服务器搭建Git服务器咯~&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3 id=&quot;安装Git&quot;&gt;&lt;a href=&quot;#安装Git&quot; class=&quot;headerlink&quot; title=&quot;安装Git&quot;&gt;&lt;/a&gt;安装Git&lt;/h3&gt;&lt;p&gt;    要搭建Git服务器，第一步当然是要安装Git了，键入以下命令来完成Git的安装：&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;sudo apt-get install git&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h3 id=&quot;新建Git用户&quot;&gt;&lt;a href=&quot;#新建Git用户&quot; class=&quot;headerlink&quot; title=&quot;新建Git用户&quot;&gt;&lt;/a&gt;新建Git用户&lt;/h3&gt;&lt;p&gt;&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;出于安全的原因考虑，我们肯定是不会使用&lt;code&gt;root&lt;/code&gt;或者其它具有完整的shell执行权限的用户来运行Git的。因此，我们需要创建一个&lt;code&gt;git&lt;/code&gt;用户来运行&lt;code&gt;git&lt;/code&gt;服务。&lt;/p&gt;
-&lt;p&gt;键入以下命令来完成&lt;code&gt;git&lt;/code&gt;用户的创建：&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;sudo adduser git&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;创建用户的途中会要求输入用户密码，这个密码请务必记住，这个密码的作用我们后面再说。&lt;code&gt;git&lt;/code&gt;用户的其它配置使用默认值直接回车就行。&lt;/p&gt;
-&lt;h3 id=&quot;禁用shell登录&quot;&gt;&lt;a href=&quot;#禁用shell登录&quot; class=&quot;headerlink&quot; title=&quot;禁用shell登录&quot;&gt;&lt;/a&gt;禁用shell登录&lt;/h3&gt;&lt;p&gt;&lt;code&gt;git&lt;/code&gt;用户创建完成之后，系统默认是为其分配的&lt;code&gt;bash&lt;/code&gt;的，我们不希望&lt;code&gt;git&lt;/code&gt;用户拥有shell执行权限，因此我们需要更改&lt;code&gt;git&lt;/code&gt;用户的默认shell，使其不允许登录shell。&lt;/p&gt;
-&lt;p&gt;我们可以通过编辑&lt;font color=&quot;red&quot;&gt;&lt;code&gt;/etc/passwd&lt;/code&gt;&lt;/font&gt;文件来完成对&lt;code&gt;git&lt;/code&gt;用户shell的更改。&lt;/p&gt;
-&lt;p&gt;键入以下命令编辑&lt;font color=&quot;red&quot;&gt;&lt;code&gt;/etc/passwd&lt;/code&gt;&lt;/font&gt;文件：&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;vim /etc/passwd&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="https://notes.wanghao.work/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="https://notes.wanghao.work/tags/Linux/"/>
-    
-      <category term="Git" scheme="https://notes.wanghao.work/tags/Git/"/>
     
   </entry>
   
